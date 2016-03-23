@@ -1,0 +1,47 @@
+img {
+    height: 80px;
+    width: 80px;
+    background-color: #eee;
+    margin: 5px;
+}
+
+body {
+    background-color: #fff;
+}
+
+.team-logo {
+    background-color: #fff;
+    width: 200px;
+    height: 100px;
+    border: solid 1px #999;
+    float: left;
+}
+
+.team-name {
+    display: inline;
+}
+
+.members {
+    width: 120px;
+    background-color: #fff;
+    height: 400px;
+    border: solid 1px #999;
+    float: right;
+}
+
+figure {
+    margin: 10px;
+}
+
+.team-description {
+    background-color: #fff;
+    border: solid 1px #999;
+    padding: 10px;
+}
+
+.container {
+    background-color: #ccc;
+    border: solid 1px #222;
+    padding: 20px;
+    overflow: auto;
+}
