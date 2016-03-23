@@ -18,7 +18,9 @@ body {
 }
 
 .team-name {
-    display: inline;
+    position: absolute;
+    top: 10px;
+    left: 130px;
 }
 
 .members {
@@ -50,4 +52,5 @@ figure {
     border: solid 1px #222;
     padding: 20px;
     overflow: auto;
+    min-height: 400px;
 }
