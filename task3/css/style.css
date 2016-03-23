@@ -34,12 +34,17 @@ figure {
 }
 
 .team-description {
+    position: relative;
+    margin-left: 220px;
+    margin-right: 140px;
     background-color: #fff;
-    border: solid 1px #999;
-    padding: 10px;
+    border-style: solid;
+    border-color: #999;
+    border-width: 1px;
 }
 
 .container {
+    position: relative;
     background-color: #ccc;
     border: solid 1px #222;
     padding: 20px;
