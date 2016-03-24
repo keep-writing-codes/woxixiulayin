@@ -2,18 +2,21 @@ body {
     background-color: #aaa;
 }
 nav {
-    height: 30px;
     background-color: #3c3c3c;
+    overflow: auto;
+    padding: 5px;
 }
 
 nav h3 {
+    position: relative;
+    margin-left: 5px;
     float: left;
     color: #ddd;
     margin-top: 0px;
 }
 nav ul {
     float: right;
-    margin-top: 0px;
+    margin-top: 5px;
     list-style-type: none;
 }
 a {
@@ -26,10 +29,15 @@ body nav ul li {
 
 footer {
     width: 100%;
+    height: 30px;
     position: fixed;
     bottom: 0;
     align: center;
     background-color: #111;
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    padding: 10px;
 }
 
 .article-wrap {
@@ -39,6 +47,7 @@ footer {
     width: 70%;
     margin-top: -1px;
     border: solid 1px #333;
+    background: #fff;
 }
 
 article {
@@ -48,8 +57,8 @@ article {
 aside {
     width: 20%;
     position: absolute;
-    float: left;
     right: 20px;
     border: solid 1px #555;
     text-align: center;
+    background: #fff;
 }
