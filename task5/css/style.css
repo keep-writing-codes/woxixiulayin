@@ -1,0 +1,55 @@
+body {
+    background-color: #aaa;
+}
+nav {
+    height: 30px;
+    background-color: #3c3c3c;
+}
+
+nav h3 {
+    float: left;
+    color: #ddd;
+    margin-top: 0px;
+}
+nav ul {
+    float: right;
+    margin-top: 0px;
+    list-style-type: none;
+}
+a {
+    color: #eee;
+}
+
+body nav ul li {
+    display: inline;
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    align: center;
+    background-color: #111;
+}
+
+.article-wrap {
+    position: absolute;
+    left: 20px;
+    float: left;
+    width: 70%;
+    margin-top: -1px;
+    border: solid 1px #333;
+}
+
+article {
+    text-align: center;
+}
+
+aside {
+    width: 20%;
+    position: absolute;
+    float: left;
+    right: 20px;
+    border: solid 1px #555;
+    text-align: center;
+}
