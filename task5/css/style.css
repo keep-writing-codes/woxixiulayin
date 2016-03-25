@@ -20,13 +20,23 @@ nav ul {
     float: right;
     list-style-type: none;
 }
-a {
+nav a {
     color: #eee;
 }
 
 body nav ul li {
     display: inline;
 }
+
+.container {
+    padding: 15px;
+}
+.article-wrap {
+    margin-top: -10px;
+    margin-right: 310px;
+    margin-bottom: 40px;
+}
+
 
 footer {
     width: 100%;
@@ -39,29 +49,44 @@ footer {
     font-size: 15px;
     padding: 10px;
 }
-
-.container {
-    padding: 15px;
-}
-.article-wrap {
-    margin-top: -10px;
-    margin-right: 310;
-}
-
 article {
     border: solid 1px #333;
     background: #fff;
-    text-align: center;
     margin: 10px;
     border-radius: 5px;
     color: green;
+    padding: 8px;
 }
 
-aside {
+body div>aside {
     width: 300px;
     float: right;
     border: solid 1px #555;
-    text-align: center;
     background: #fff;
     margin-left: 0;
+}
+
+article img {
+    height: 120px;
+    width: 120px;
+    border: solid 1px #666;
+    margin: 3px;
+}
+
+.inline {
+    display: inline;
+}
+
+article h1{
+    color: #555;
+}
+article h2{
+    color: #777;
+}
+article h3{
+    color: #999;
+}
+
+article ul {
+    list-style-type: none;
 }
