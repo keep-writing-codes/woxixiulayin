@@ -30,6 +30,7 @@ body nav ul li {
 
 .container {
     padding: 15px;
+    position: relative;
 }
 .article-wrap {
     margin-top: -10px;
@@ -60,10 +61,11 @@ article {
 
 body div>aside {
     width: 300px;
-    float: right;
+    position: absolute;
+    top: 15px;
+    right: 5px;
     border: solid 1px #555;
     background: #fff;
-    margin-left: 0;
 }
 
 article img {
