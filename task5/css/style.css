@@ -115,6 +115,7 @@ article table tr:last-of-type {
 
 aside {
     position: relative;
+    overflow: auto;
 }
 
 /*p.hint {
@@ -123,16 +124,23 @@ aside {
 }*/
 
 .aside-input {
-    float: right;
-    left: 150px;
+    position: absolute;
+    left: 140px;
+    margin: 5px 0;
 }
 
+aside span {
+    position: absolute;
+    right: 190px;
+    margin: 5px 0;
+}
 aside form p{
-    left: 20px;
+    margin-left: 130px; 
+    color: #ccc;
 }
 
 aside>form>input[type="submit"] {
-    margin: 0 auto;
+    margin: 80px 5px auto;
     background-color: blue;
     border-radius: 15px;
     color: #fff;
