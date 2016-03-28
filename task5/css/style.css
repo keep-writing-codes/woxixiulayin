@@ -112,3 +112,34 @@ article table tr:last-of-type {
     background: #555;
     color: #eee;
 }
+
+aside {
+    position: relative;
+}
+
+/*p.hint {
+    position: absolute;
+    left: 120px;
+}*/
+
+.aside-input {
+    float: right;
+    left: 150px;
+}
+
+aside form p{
+    left: 20px;
+}
+
+aside>form>input[type="submit"] {
+    margin: 0 auto;
+    background-color: blue;
+    border-radius: 15px;
+    color: #fff;
+    height: 35px;
+    width: 100%;
+}
+
+aside>form>input[type="submit"]:hover {
+    background-color: #ecf;
+}
