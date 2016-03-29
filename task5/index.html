@@ -100,31 +100,33 @@
                 <form>
                     <span>请输入邮箱地址</span><input type="text" value="这是一个文本框" name="mail" class="aside-input"></input>
                     <br/>
+                    <p class="hint">请按邮箱格式输入</p>
                     <span>请输入密码</span><input type="password" name="password" class="aside-input"></input>
-                    <p class="hint">按格式输入邮箱地址</p>
+                    <div class="gap"></div>
                     <span>请重复输入密码</span><input type="password" name="password" class="aside-input"></input>
                     <br/>
+                    <p class="hint">密码请为6-16位英文数字</p>
                     <span>性别</span>
                     <div class="aside-input">
-                    <input type="radio" name="gender" value="男"></input>
-                    <input type="radio" name="gender" value="女"></input>
+                    <input type="radio" name="gender" >男</input>
+                    <input type="radio" name="gender" >女</input>
                     </div>
-                    <br/>
+                    <div class="gap"></div>
                     <span>城市</span><select class="aside-input">
                         <option value="北京">北京</option>
                         <option value="上海">上海</option>
                         <option value="广州">广州</option>
                         <option value="深圳">深圳</option>
                         </select>
-                        <br/>
+                        <div class="gap"></div>
                         <span>爱好</span>
                         <div class="aside-input"><input type="checkbox" name="bobby" value="运动" class="aside-input">运动</input>
                         <input type="checkbox" name="bobby" value="艺术" />艺术
                         <input type="checkbox" name="bobby" value="科学" />科学
                         </div>
-                        <br/>
-                        <span>个人描述</span><textarea rows="6" cols="20" class="aside-input"></textarea>
-                        <br/>
+                        <div class="gap"></div>
+                        <span>个人描述</span><textarea rows="6" cols="20" class="aside-input" placeholder="请填入各人描述"></textarea>
+                        <div class="gap"></div>
                         <input type="submit" value="确认提交" class="btn"></input>
                     </form>
                 </aside>

@@ -126,28 +126,34 @@ aside {
 .aside-input {
     position: absolute;
     left: 140px;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 aside span {
     position: absolute;
     right: 190px;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 aside form p{
+    margin-top: 15px;
     margin-left: 130px; 
     color: #ccc;
+    font-size: 13px;
 }
 
 aside>form>input[type="submit"] {
-    margin: 80px 5px auto;
     background-color: blue;
     border-radius: 15px;
     color: #fff;
     height: 35px;
     width: 100%;
+    margin-top: 80px;
 }
 
 aside>form>input[type="submit"]:hover {
     background-color: #ecf;
+}
+
+.gap {
+    height: 30px;
 }
