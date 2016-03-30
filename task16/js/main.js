@@ -20,12 +20,18 @@ function addAqiData() {
     console.log(aqiData);
 }
 
+
 /**
  * 渲染aqi-table表格
  */
 function renderAqiList() {
   var table = document.getElementById('aqi-table');
-  table.innerHTML = "<tr><td>城市<\/td><td>空气质量<\/td><td>操作<\/td><\/tr>"
+  table.innerHTML = "<tr><td>城市<\/td><td>空气质量<\/td><td>操作<\/td><\/tr>";
+  for(var cityData in aqiData){
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+cityData+"<\/td><td>"+aqiData[cityData]+"<\/td><td><button id='del-btn'>删除</button><\/td>";
+    table.appendChild(tr);
+  }
 }
 
 /**
@@ -53,6 +59,7 @@ function init() {
   var btn = document.getElementById('add-btn');
   btn.onclick = addBtnHandle;
   // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数
+  document.getElementById('del-btn').onclick = delBtnHandle;
 
 }
 
