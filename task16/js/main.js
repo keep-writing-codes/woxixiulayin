@@ -15,12 +15,38 @@ var aqiData = {};
 function addAqiData() {
     var cityData = [];
     var city = document.getElementById('aqi-city-input').value;
+
     var value = document.getElementById('aqi-value-input').value;
+    city = refineCity(city);
+    if(!city){
+      alert("输入正确的城市名字");
+      return;
+    }
+    if(!value){
+      alert("输入正确的空气指数");
+      return;
+    }
     aqiData[city] = value;
     console.log(aqiData);
 }
 
+function refineCity(city) {
+   var _city = city.trim();
+  for(var i =0;i<_city.length;i++){
+    if(!isNaN(_city.charAt(i)))
+      return false;
+  }
+  return _city;
+}
 
+function refineValue(value) {
+  var _value = value.trim();
+  for(var i =0;i<_value.length;i++){
+    if(isNaN(_value.charAt(i)))
+      return false;
+  }
+  return _value;
+}
 /**
  * 渲染aqi-table表格
  */
