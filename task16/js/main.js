@@ -22,6 +22,7 @@ function addAqiData() {
       alert("输入正确的城市名字");
       return;
     }
+    value = refineValue(value);
     if(!value){
       alert("输入正确的空气指数");
       return;
