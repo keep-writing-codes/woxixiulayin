@@ -103,12 +103,20 @@ function initCitySelector() {
 function initAqiChartData(data, period) {
   // 将原始的源数据处理成图表需要的数据格式
   // 处理好的数据存到 chartData 中
+  charData = {};
   if(period == '天') {
-    return data;
+    charData = data;
   }
   else if (period == '周') {
-    
+    var count = 0;
+    while (data.length != 0) {
+      count += 1;
+      charData['第'+'count'+'周'] = eval(temp.join('+'))/7;
+    }
   }
+
+
+  return charData;
 }
 
 /**
