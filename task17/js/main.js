@@ -111,7 +111,7 @@ function initAqiChartData(data, period) {
       charData.push(Math.round(eval(temp.join('+'))/7));
     }
   }
-  else {
+  else if (period == '月') {
     var tempday=data.shift();
     var tempMonth=[];
     for(x in Data){
@@ -125,7 +125,9 @@ function initAqiChartData(data, period) {
     }
 
   }
-
+  else {
+    alert('输入天周或者月');
+  }
 
   return charData;
 }
