@@ -126,7 +126,7 @@ function initAqiChartData(data, period) {
 
   }
   else {
-    alert('输入天周或者月');
+    alert('输入天、周或者月');
   }
 
   return charData;
@@ -142,3 +142,6 @@ function init() {
 }
 
 init();
+
+//for test
+module.exports = initAqiChartData;
