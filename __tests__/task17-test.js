@@ -2,6 +2,8 @@ jest.unmock('../task17/js/main'); // unmock to use the actual implementation of
 
 describe('initAqiChartData', () => {
 
+  it('initAqiChartData', () => {
+    const initAqiChartData = require('../task17/js/main');
     var data = { '2016-01-01': 271,
   '2016-01-02': 236,
   '2016-01-03': 77,
@@ -93,9 +95,7 @@ describe('initAqiChartData', () => {
   '2016-03-29': 198,
   '2016-03-30': 313,
   '2016-03-31': 28 };
-  it('initAqiChartData', () => {
-    const initAqiChartData = require('../task17/js/main');
-    console.log(initAqiChartData(data, '周'))
+    //console.log(initAqiChartData(data, '周'));
     expect(initAqiChartData(data, '周')).toBe(3);
   });
 });

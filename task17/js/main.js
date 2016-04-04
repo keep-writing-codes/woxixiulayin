@@ -100,7 +100,16 @@ function initCitySelector() {
 function initAqiChartData(data, period) {
   // 将原始的源数据处理成图表需要的数据格式
   // 处理好的数据存到 chartData 中
-  var charData = [];
+  var charData = {};
+  console.log(data);
+  var dates = Object.keys(data);
+  console.log(dates);
+  dates = dates.sort(function(pre, aft){
+    var pre_date = new Date(pre);
+    var aft_date = new Date(aft);
+    return pre_date < aft_date;
+  });
+  console.log(dates);
   if(period == '天') {
     charData = data;
   }
@@ -141,7 +150,9 @@ function init() {
   initAqiChartData();
 }
 
-init();
-
-//for test
+var test = true;
+if(!test){
+  init();
+} else {
 module.exports = initAqiChartData;
+}
