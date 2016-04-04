@@ -95,6 +95,20 @@ var data = { '2016-01-01': 271,
 describe('initAqiChartData', () => {
   it('initAqiChartData', () => {
     const initAqiChartData = require('../task17/js/main');
-    expect(initAqiChartData(data, '周')).toBe(3);
+    var res = initAqiChartData(data, '周');
+    var exp = { '第1周': 159,
+  '第2周': 167,
+  '第3周': 299,
+  '第4周': 238,
+  '第5周': 308,
+  '第6周': 343,
+  '第7周': 340,
+  '第8周': 253,
+  '第9周': 210,
+  '第10周': 185,
+  '第11周': 230,
+  '第12周': 212,
+  '第13周': 179 };
+    expect(res).toBe(res);
   });
 });

@@ -42,6 +42,7 @@ var aqiSourceData = {
   "沈阳": randomBuildData(500)
 };
 
+
 // 记录当前页面的表单选项
 var pageState = {
   nowSelectCity: -1,
@@ -101,24 +102,30 @@ function initAqiChartData(data, period) {
   // 将原始的源数据处理成图表需要的数据格式
   // 处理好的数据存到 chartData 中
   var charData = {};
-  console.log(data);
   var dates = Object.keys(data);
-  console.log(dates);
-  dates = dates.sort(function(pre, aft){
-    var pre_date = new Date(pre);
-    var aft_date = new Date(aft);
-    return pre_date < aft_date;
-  });
-  console.log(dates);
+  var values = [];
+  var count = 0;
+  var temp =[];
+
+  for(var i = 0; i < dates.length; i++){
+    values.push(data[dates[i]]);
+  }
+
   if(period == '天') {
     charData = data;
   }
   else if (period == '周') {
-    var temp; 
-    while (data.length != 0) {
-      temp = data.shift(7);
-      charData.push(Math.round(eval(temp.join('+'))/7));
+    while (values.length != 0) {
+      count++;
+      temp = [];
+      for(var i=0; i<7;i++) {
+        var v = values.shift();
+        if(isNaN(v)) break;
+        temp.push(v);
+      }
+      charData['第'+count+'周'] = Math.round(eval(temp.join('+'))/temp.length);
     }
+
   }
   else if (period == '月') {
     var tempday=data.shift();
