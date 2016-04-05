@@ -21,7 +21,7 @@ function getDateStr(dat) {
 function randomBuildData(seed) {
   var returnData = {};
   var dat = new Date("2016-01-01");
-  var datStr = ''
+  var datStr = '';
   for (var i = 1; i < 92; i++) {
     datStr = getDateStr(dat);
     returnData[datStr] = Math.ceil(Math.random() * seed);
@@ -125,20 +125,31 @@ function initAqiChartData(data, period) {
       }
       charData['第'+count+'周'] = Math.round(eval(temp.join('+'))/temp.length);
     }
-
   }
   else if (period == '月') {
-    var tempday=data.shift();
-    var tempMonth=[];
-    for(x in Data){
-      if(x.split('-')[1] == tempday.split('-')[1]) {
-        tempMonth.push(tempday.split('-')[2])
+    var tempday="2016-01-01";
+    for(var i =0;i<dates.lenght;i++){
+      if(dates[i].split('-')[1] == tempday.split('-')[1]) {
+        var v = values.shift();
+        if(isNaN(v)) break;
+        temp.push(v);
       }
       else {
         charData.push(Math.round(eval(tempMonth.join('+'))/7));
       }
       tempday=data.shift();
     }
+
+    // while (values.length != 0) {
+    //   count++;
+    //   temp = [];
+    //   for(var i=0; i<7;i++) {
+    //     var v = values.shift();
+    //     if(isNaN(v)) break;
+    //     temp.push(v);
+    //   }
+    //   charData['第'+count+'周'] = Math.round(eval(temp.join('+'))/temp.length);
+    // }
 
   }
   else {
@@ -158,8 +169,13 @@ function init() {
 }
 
 var test = true;
+console.log("************test mode on?:" + test);
 if(!test){
   init();
 } else {
-module.exports = initAqiChartData;
+var main = {
+    initAqiChartData: initAqiChartData
+
+}
+module.exports = main;
 }

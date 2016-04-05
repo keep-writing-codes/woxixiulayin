@@ -94,8 +94,8 @@ var data = { '2016-01-01': 271,
 
 describe('initAqiChartData', () => {
   it('initAqiChartData', () => {
-    const initAqiChartData = require('../task17/js/main');
-    var res = initAqiChartData(data, '周');
+    const main = require('../task17/js/main');
+    var res = main.initAqiChartData(data, '月');
     var exp = { '第1周': 159,
   '第2周': 167,
   '第3周': 299,
