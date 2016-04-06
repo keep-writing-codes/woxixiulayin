@@ -50,32 +50,61 @@ var pageState = {
   nowGraTime: "day"
 }
 
+var can = document.getElementById("aqi-canvas");
+var cxt = can.getContext("2d");
+
+function draw_rect(middle_x, width, height) {
+  cxt.fillStyle("#FF00FF");
+  cxt.fillRect(middle_x-width/2,height,middle_x+width/2,0);
+}
+
 /**
  * 渲染图表
  */
-function renderChart() {
+function renderChart(chardata) {
 
+draw_rect(200,10,100);
+}
+
+function getDatabyCity(city) {
+  var citys = [];
+  var data = {};
+  citys = Object.keys(aqiSourceData);
+  if(citys.indexOf(city) == -1){
+    console.log(city + 'is not included');
+    return;
+  }
+  data = aqiSourceData[city];
+  console.log(data);
+  return data;
 }
 
 /**
  * 日、周、月的radio事件点击时的处理函数
  */
-function graTimeChange() {
+function graTimeChange(e) {
+  var radio = document.getElementsByName('gra-time');
+  var graTime = e.target.value;
+  var charData = {}
   // 确定是否选项发生了变化 
-
+  if(graTime == pageState.nowGraTime)
+    return;
   // 设置对应数据
-
+  pageState.nowGraTime = graTime;
+  charData = initAqiChartData(getDatabyCity(pageState.nowSelectCity),graTime);
+  console.log(charData);
   // 调用图表渲染函数
 }
 
 /**
  * select发生变化时的处理函数
  */
-function citySelectChange() {
+function citySelectChange(e) {
   // 确定是否选项发生了变化 
-
+  var radio = document.getElementsByName("gra-time");
+  console.log(e);
   // 设置对应数据
-
+  // var charData = initAqiChartData(,);
   // 调用图表渲染函数
 }
 
@@ -83,7 +112,10 @@ function citySelectChange() {
  * 初始化日、周、月的radio事件，当点击时，调用函数graTimeChange
  */
 function initGraTimeForm() {
-
+  var radio = document.getElementsByName("gra-time");
+  for(var i=0;i<radio.length;i++) {
+    radio[i].onclick = graTimeChange;
+  }
 }
 
 /**
@@ -157,10 +189,10 @@ function initAqiChartData(data, period) {
 function init() {
   initGraTimeForm()
   initCitySelector();
-  initAqiChartData();
+  // initAqiChartData();
 }
 
-var test = true;
+var test = false;
 console.log("************test mode on?:" + test);
 if (!test) {
   init();
