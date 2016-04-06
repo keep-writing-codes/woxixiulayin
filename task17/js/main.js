@@ -54,17 +54,36 @@ var can = document.getElementById("aqi-canvas");
 var cxt = can.getContext("2d");
 
 function draw_rect(middle_x, width, height) {
-  cxt.fillStyle = "#FF00FF";
-  cxt.fillRect(middle_x-width/2,height,width, height);
+  cxt.fillStyle = "333333";
+  cxt.fillRect(Math.round(middle_x-width/2),can.height-height,width, height);
 }
 
+function colum(time, height){
+  this.time = time;
+  this.height = height;
+}
+
+function colum_arry(chardata) {
+  var cols = [];
+  var times = Object.keys(chardata);
+  var width = Math.round(can.width/times.length);
+  var x_temp = Math.round(width/2);
+  for(var i in times) {
+    x_temp += width;
+    cols.push(new colum(x_temp, chardata[times[i]]));
+  }
+  return cols;
+}
 /**
  * 渲染图表
  */
 function renderChart(chardata) {
-
-draw_rect(200,10,100);
-
+  var cols = colum_arry(chardata);
+  console.log(cols);
+  var width = can.width/cols.length;
+  for(var i in cols) {
+    draw_rect(cols[i].time, width, cols[i].height);
+  }
 }
 
 function getDatabyCity(city) {
