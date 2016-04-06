@@ -54,7 +54,7 @@ var can = document.getElementById("aqi-canvas");
 var cxt = can.getContext("2d");
 
 function draw_rect(middle_x, width, height) {
-  cxt.fillStyle("#FF00FF");
+  cxt.fillStyle = "#FF00FF";
   cxt.fillRect(middle_x-width/2,height,middle_x+width/2,0);
 }
 
@@ -64,6 +64,7 @@ function draw_rect(middle_x, width, height) {
 function renderChart(chardata) {
 
 draw_rect(200,10,100);
+
 }
 
 function getDatabyCity(city) {
@@ -94,6 +95,7 @@ function graTimeChange(e) {
   charData = initAqiChartData(getDatabyCity(pageState.nowSelectCity),graTime);
   console.log(charData);
   // 调用图表渲染函数
+  renderChart(charData);
 }
 
 /**
@@ -115,7 +117,7 @@ function citySelectChange(e) {
   // 设置对应数据
     charData = initAqiChartData(city,pageState.nowGraTime);
   // 调用图表渲染函数
-  
+
 }
 
 /**
@@ -141,7 +143,7 @@ function initCitySelector() {
     opt.innerHTML = citys[i];
     sel.appendChild(opt);
   }
-
+  pageState.nowSelectCity = citys[1];
   // 给select设置事件，当选项发生变化时调用函数citySelectChange
   sel.onchange = citySelectChange;
 }
@@ -162,9 +164,9 @@ function initAqiChartData(data, period) {
     values.push(data[dates[i]]);
   }
 
-  if (period == '天') {
+  if (period == 'day') {
     charData = data;
-  } else if (period == '周') {
+  } else if (period == 'week') {
     while (values.length != 0) {
       count++;
       temp = [];
@@ -175,7 +177,7 @@ function initAqiChartData(data, period) {
       }
       charData['第' + count + '周'] = Math.round(eval(temp.join('+')) / temp.length);
     }
-  } else if (period == '月') {
+  } else if (period == 'month') {
     var tempday = "2016-01-01";
     while (values.length != 0) {
       count++;
@@ -195,7 +197,7 @@ function initAqiChartData(data, period) {
     }
 
   } else {
-    alert('输入天、周或者月');
+    alert('please input day/week/month');
   }
   console.log(charData);
   return charData;
