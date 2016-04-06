@@ -55,7 +55,7 @@ var cxt = can.getContext("2d");
 
 function draw_rect(middle_x, width, height) {
   cxt.fillStyle = "#FF00FF";
-  cxt.fillRect(middle_x-width/2,height,middle_x+width/2,0);
+  cxt.fillRect(middle_x-width/2,height,width, height);
 }
 
 /**
@@ -105,7 +105,8 @@ function citySelectChange(e) {
   // 确定是否选项发生了变化 
   var sel = document.getElementById("city-select");
   var city;
-  for(var i in sel) {
+  console.log(sel)
+  for(var i in sel.getElementsByTagName("option")) {
     if(sel[i].selected == true) {
       city = sel[i].value;
     }
@@ -117,7 +118,7 @@ function citySelectChange(e) {
   // 设置对应数据
     charData = initAqiChartData(city,pageState.nowGraTime);
   // 调用图表渲染函数
-
+  renderChart(charData);
 }
 
 /**
