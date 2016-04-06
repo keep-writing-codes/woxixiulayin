@@ -92,11 +92,7 @@ var data = { '2016-01-01': 271,
   '2016-03-30': 313,
   '2016-03-31': 28 };
 
-describe('initAqiChartData', () => {
-  it('initAqiChartData', () => {
-    const main = require('../task17/js/main');
-    var res = main.initAqiChartData(data, '月');
-    var exp = { '第1周': 159,
+    var week = { '第1周': 159,
   '第2周': 167,
   '第3周': 299,
   '第4周': 238,
@@ -109,6 +105,15 @@ describe('initAqiChartData', () => {
   '第11周': 230,
   '第12周': 212,
   '第13周': 179 };
-    expect(res).toBe(res);
+  var month =  {
+     第1月: 231,
+     第2月: 290,
+     第3月: 202
+    };
+describe('initAqiChartData', () => {
+  it('initAqiChartData', () => {
+    const main = require('../task17/js/main');
+    expect(main.initAqiChartData(data, '周')['第4周']).toBe(238);
+    expect(main.initAqiChartData(data, '月')['第2月']).toBe(290);
   });
 });

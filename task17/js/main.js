@@ -18,6 +18,7 @@ function getDateStr(dat) {
   d = d < 10 ? '0' + d : d;
   return y + '-' + m + '-' + d;
 }
+
 function randomBuildData(seed) {
   var returnData = {};
   var dat = new Date("2016-01-01");
@@ -105,57 +106,48 @@ function initAqiChartData(data, period) {
   var dates = Object.keys(data);
   var values = [];
   var count = 0;
-  var temp =[];
+  var temp = [];
 
-  for(var i = 0; i < dates.length; i++){
+  for (var i = 0; i < dates.length; i++) {
     values.push(data[dates[i]]);
   }
 
-  if(period == '天') {
+  if (period == '天') {
     charData = data;
-  }
-  else if (period == '周') {
+  } else if (period == '周') {
     while (values.length != 0) {
       count++;
       temp = [];
-      for(var i=0; i<7;i++) {
+      for (var i = 0; i < 7; i++) {
         var v = values.shift();
-        if(isNaN(v)) break;
+        if (isNaN(v)) break;
         temp.push(v);
       }
-      charData['第'+count+'周'] = Math.round(eval(temp.join('+'))/temp.length);
+      charData['第' + count + '周'] = Math.round(eval(temp.join('+')) / temp.length);
     }
-  }
-  else if (period == '月') {
-    var tempday="2016-01-01";
-    for(var i =0;i<dates.lenght;i++){
-      if(dates[i].split('-')[1] == tempday.split('-')[1]) {
-        var v = values.shift();
-        if(isNaN(v)) break;
-        temp.push(v);
+  } else if (period == '月') {
+    var tempday = "2016-01-01";
+    while (values.length != 0) {
+      count++;
+      temp = [];
+      while (true) {
+        if (!isNaN(values[0]) && dates[0].split('-')[1] == tempday.split('-')[1]) {
+          temp.push(values.shift());
+          dates.shift();
+        } else {
+          if(!isNaN(values[0])) {
+            tempday = dates[0];
+          }
+          charData['第' + count + '月'] = Math.round(eval(temp.join('+')) / temp.length);
+          break;
+        }
       }
-      else {
-        charData.push(Math.round(eval(tempMonth.join('+'))/7));
-      }
-      tempday=data.shift();
     }
 
-    // while (values.length != 0) {
-    //   count++;
-    //   temp = [];
-    //   for(var i=0; i<7;i++) {
-    //     var v = values.shift();
-    //     if(isNaN(v)) break;
-    //     temp.push(v);
-    //   }
-    //   charData['第'+count+'周'] = Math.round(eval(temp.join('+'))/temp.length);
-    // }
-
-  }
-  else {
+  } else {
     alert('输入天、周或者月');
   }
-
+  console.log(charData);
   return charData;
 }
 
@@ -170,12 +162,12 @@ function init() {
 
 var test = true;
 console.log("************test mode on?:" + test);
-if(!test){
+if (!test) {
   init();
 } else {
-var main = {
+  var main = {
     initAqiChartData: initAqiChartData
 
-}
-module.exports = main;
+  }
+  module.exports = main;
 }
