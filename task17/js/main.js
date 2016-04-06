@@ -101,11 +101,21 @@ function graTimeChange(e) {
  */
 function citySelectChange(e) {
   // 确定是否选项发生了变化 
-  var radio = document.getElementsByName("gra-time");
-  console.log(e);
+  var sel = document.getElementById("city-select");
+  var city;
+  for(var i in sel) {
+    if(sel[i].selected == true) {
+      city = sel[i].value;
+    }
+  }
+  if(city == pageState.nowSelectCity) {
+    return;
+  }
+  pageState.nowSelectCity = city;
   // 设置对应数据
-  // var charData = initAqiChartData(,);
+    charData = initAqiChartData(city,pageState.nowGraTime);
   // 调用图表渲染函数
+  
 }
 
 /**
@@ -133,7 +143,7 @@ function initCitySelector() {
   }
 
   // 给select设置事件，当选项发生变化时调用函数citySelectChange
-
+  sel.onchange = citySelectChange;
 }
 
 /**
