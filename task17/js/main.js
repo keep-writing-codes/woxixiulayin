@@ -66,7 +66,7 @@ function colum(time, height){
 function colum_arry(chardata) {
   var cols = [];
   var times = Object.keys(chardata);
-  var width = Math.round(can.width/times.length);
+  var width = Math.ceil(can.width/times.length);
   var x_temp = Math.round(width/2);
   for(var i in times) {
     x_temp += width;
