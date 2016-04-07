@@ -53,24 +53,43 @@ var pageState = {
 var can = document.getElementById("aqi-canvas");
 var cxt = can.getContext("2d");
 
-function draw_rect(middle_x, width, height) {
-  cxt.fillStyle = "333333";
+function draw_rect(col) {
+  var width = col.width;
+  var height = col.height;
+  var middle_x = col.time;
+  cxt.fillStyle = "#333333";
   cxt.fillRect(Math.round(middle_x-width/2),can.height-height,width, height);
 }
 
-function colum(time, height){
+function colum(time, height, width){
   this.time = time;
   this.height = height;
+  this.width = width;
 }
 
+function refresg_can(){
+  cxt.fillStyle = "#FFFFFF";
+  cxt.fillRect(0, 0, can.width, can.height);
+}
 function colum_arry(chardata) {
   var cols = [];
   var times = Object.keys(chardata);
-  var width = Math.ceil(can.width/times.length);
-  var x_temp = Math.round(width/2);
+  var base_width = Math.ceil(can.width/times.length);
+  var width;
+  var x_start;
+  if(pageState.nowGraTime == "day") {
+    width = base_width;
+    x_start = 0;
+  } else if (pageState.nowGraTime == "week") {
+    width = base_width * 3;
+  } else {
+    width = base_width * 5;
+  }
+  x_start = Math.round((can.width - width * times.length)/2);
+  refresg_can();
   for(var i in times) {
-    x_temp += width;
-    cols.push(new colum(x_temp, chardata[times[i]]));
+    x_start += width;
+    cols.push(new colum(x_start, chardata[times[i]], width));
   }
   return cols;
 }
@@ -82,7 +101,7 @@ function renderChart(chardata) {
   console.log(cols);
   var width = can.width/cols.length;
   for(var i in cols) {
-    draw_rect(cols[i].time, width, cols[i].height);
+    draw_rect(cols[i]);
   }
 }
 
