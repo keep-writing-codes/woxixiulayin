@@ -74,22 +74,23 @@ function refresg_can(){
 function colum_arry(chardata) {
   var cols = [];
   var times = Object.keys(chardata);
-  var base_width = Math.ceil(can.width/times.length);
+  var base_width = Math.ceil(can.width/100);
   var width;
   var x_start;
   if(pageState.nowGraTime == "day") {
     width = base_width;
-    x_start = 0;
+    x_start = Math.ceil(width/2);
   } else if (pageState.nowGraTime == "week") {
-    width = base_width * 3;
+    width = base_width * 2;
+    x_start = Math.ceil(can.width*5/7/2);
   } else {
-    width = base_width * 5;
+    width = base_width * 4;
+    x_start = Math.ceil(can.width*26/30/2);
   }
-  x_start = Math.round((can.width - width * times.length)/2);
   refresg_can();
   for(var i in times) {
+    cols.push(new colum(x_start, chardata[times[i]], width-1));
     x_start += width;
-    cols.push(new colum(x_start, chardata[times[i]], width));
   }
   return cols;
 }
@@ -153,8 +154,9 @@ function citySelectChange(e) {
     return;
   }
   pageState.nowSelectCity = city;
+  console.log(city);
   // 设置对应数据
-    charData = initAqiChartData(city,pageState.nowGraTime);
+  charData = initAqiChartData(getDatabyCity(city),pageState.nowGraTime);
   // 调用图表渲染函数
   renderChart(charData);
 }
@@ -248,7 +250,7 @@ function initAqiChartData(data, period) {
 function init() {
   initGraTimeForm()
   initCitySelector();
-  // initAqiChartData();
+  initAqiChartData(getDatabyCity(pageState.nowSelectCity),pageState.nowGraTime);
 }
 
 var test = false;
