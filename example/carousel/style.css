@@ -13,7 +13,9 @@
 }
 
 #imgs {
+    width: 5600px;
     position: absolute;
+    left: -800px;
     z-index: 1;
 }
 
