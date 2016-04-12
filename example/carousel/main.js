@@ -4,11 +4,19 @@ window.onload = function() {
     var next = document.getElementById("next");
     console.log(next);
 
-    function moveRight() {
-        var newleft = parseInt(imgs.style.left) - 800;
-        imgs.style.left = newleft + "px";
-        console.log(imgs.style.left);
-    };
 
-    next.onclick = moveRight;
+    function move(offset) {
+        var newleft = parseInt(imgs.style.left) + offset;
+        imgs.style.left = newleft + "px";
+
+    }
+
+    pre.onclick = function(){
+        move(800);
+        return false;  //return false to prevent default <a> tag link event        
+    };
+    next.onclick = function(){
+        move(-800);
+        return false;  //return false to prevent default <a> tag link event 
+    };
 };
