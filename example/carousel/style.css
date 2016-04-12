@@ -19,6 +19,9 @@
     z-index: 1;
 }
 
+#imgs img {
+    float: left;
+}
 #btns {
     width: 100px;
     height: 20px;
