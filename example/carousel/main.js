@@ -19,6 +19,7 @@ window.onload = function() {
             moveOn  = true;
         }
         var newleft = parseInt(imgs.style.left) + offset;
+        console.log("newleft = " + newleft);
         var step = offset / moveCounts;
         var stepTime = moveTime / moveCounts;
         var go = function() {
@@ -28,7 +29,7 @@ window.onload = function() {
                 imgs.style.left = nextLeft + "px";
                 setTimeout(go, stepTime);
             } else {
-                imgs.style.left = newleft;
+                imgs.style.left = newleft + "px";
                 moveOn = false;
                 if (parseInt(imgs.style.left) == -4800) {
                     imgs.style.left = -800;
@@ -102,4 +103,5 @@ window.onload = function() {
 
     addBtnClick();
     autoMove(3000);
+    console.log(container.childNodes[0].nodeValue)
 };
