@@ -62,6 +62,22 @@ window.onload = function() {
         }
     }
 
+    function autoMove() {
+        var auto = true;
+        var trueMove = function() {
+            if (auto) {
+                move(-800);
+            }
+        }
+        setInterval(trueMove, 3000);
+        imgs.onmouseover = function() {
+            auto = false;
+        };
+        imgs.onmouseout = function() {
+            auto = true;
+        }
+    }
+
     pre.onclick = function() {
         move(800);
         return false; //return false to prevent default <a> tag link event
@@ -72,5 +88,5 @@ window.onload = function() {
     };
 
     addBtnClic();
-
+    autoMove();
 };
