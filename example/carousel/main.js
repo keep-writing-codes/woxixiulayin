@@ -5,8 +5,15 @@ window.onload = function() {
     var width = 800;
     var moveTime = 600;
     var moveCounts = 10;
+    var moveOn = false; //move flag, prevent  move again when moving
 
     function move(offset) {
+        if(moveOn) {
+            return;
+        }
+        else {
+            moveOn  = true;
+        }
         var newleft = parseInt(imgs.style.left) + offset;
         var step = offset / moveCounts;
         var stepTime = moveTime / moveCounts;
@@ -18,6 +25,7 @@ window.onload = function() {
                 setTimeout(go, stepTime);
             } else {
                 imgs.style.left = newleft;
+                moveOn = false;
                 if (parseInt(imgs.style.left) == -4800) {
                     imgs.style.left = -800;
                 } else if (parseInt(imgs.style.left) == 0) {
