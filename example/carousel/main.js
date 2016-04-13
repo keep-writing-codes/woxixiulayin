@@ -52,7 +52,7 @@ window.onload = function() {
         ele.style.backgroundColor = "red";
     }
 
-    function addBtnClic(){
+    function addBtnClick(){
         for(var i=0,len=btns.length; i<len; i++){
             btns[i].onclick = function(){
                 if (this.getAttribute("index") == picIndex) return;
@@ -81,6 +81,6 @@ window.onload = function() {
         return false; //return false to prevent default <a> tag link event
     };
 
-    addBtnClic();
+    addBtnClick();
     autoMove(3000);
 };
