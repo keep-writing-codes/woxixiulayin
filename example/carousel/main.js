@@ -78,7 +78,7 @@ window.onload = function() {
     }
 
     pre.onclick = function() {
-        if (moveOn) return;
+        if (moveOn) return false;
         if (1 == picIndex) {
             picIndex = 5;
         } else {
@@ -89,7 +89,7 @@ window.onload = function() {
         return false; //return false to prevent default <a> tag link event
     };
     next.onclick = function() {
-        if (moveOn) return;
+        if (moveOn) return false;
         if (5 == picIndex) {
             picIndex = 1;
         } else {
@@ -102,5 +102,4 @@ window.onload = function() {
 
     addBtnClick();
     autoMove(3000);
-
 };
