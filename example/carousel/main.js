@@ -2,6 +2,8 @@ window.onload = function() {
     var imgs = document.getElementById("imgs");
     var pre = document.getElementById("pre");
     var next = document.getElementById("next");
+    var btnsDiv = document.getElementById("btns");
+    var btns = btnsDiv.getElementsByTagName("span");
     var width = 800;
     var moveTime = 600;
     var moveCounts = 10;
@@ -45,11 +47,16 @@ window.onload = function() {
         move(offset);
     }
 
+    function chagneBtn(ele){
+        btns[picIndex-1].style.backgroundColor = "#333";
+        ele.style.backgroundColor = "red";
+    }
+
     function addBtnClic(){
-        var btnsDiv = document.getElementById("btns");
-        var btns = btnsDiv.getElementsByTagName("span");
         for(var i=0,len=btns.length; i<len; i++){
             btns[i].onclick = function(){
+                if (this.getAttribute("index") == picIndex) return;
+                chagneBtn(this);
                 jump(this);
             };
         }
