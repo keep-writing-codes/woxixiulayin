@@ -1,4 +1,5 @@
 window.onload = function() {
+    var container = document.getElementById("container");
     var imgs = document.getElementById("imgs");
     var pre = document.getElementById("pre");
     var next = document.getElementById("next");
@@ -34,7 +35,6 @@ window.onload = function() {
                 } else if (parseInt(imgs.style.left) == 0) {
                     imgs.style.left = -4000;
                 }
-                picIndex = Math.round(parseInt(imgs.style.left)/(-800));
                 console.log(picIndex);
             }
         }
@@ -47,16 +47,21 @@ window.onload = function() {
         move(offset);
     }
 
-    function chagneBtn(ele){
-        btns[picIndex-1].style.backgroundColor = "#333";
-        ele.style.backgroundColor = "red";
+    function changeBtn(ele){
+        for(var i=0,len=btns.length; i<len; i++){
+            if(btns[i].className == "on") {
+                btns[i].className = "";
+                break;
+            }
+        }
+        ele.className = "on";
     }
 
     function addBtnClick(){
         for(var i=0,len=btns.length; i<len; i++){
             btns[i].onclick = function(){
                 if (this.getAttribute("index") == picIndex) return;
-                chagneBtn(this);
+                changeBtn(this);
                 jump(this);
             };
         }
@@ -64,19 +69,33 @@ window.onload = function() {
 
     function autoMove(intime) {
         var timer = setInterval(next.onclick,intime);
-        imgs.onmouseover = function() {
+        container.onmouseover = function() {
             clearInterval(timer);
         };
-        imgs.onmouseout = function() {
+        container.onmouseout = function() {
             timer = setInterval(next.onclick,intime);
         };
     }
 
     pre.onclick = function() {
+        if (moveOn) return;
+        if (1 == picIndex) {
+            picIndex = 5;
+        } else {
+        picIndex -= 1;
+        }
+        changeBtn(btns[picIndex]);
         move(800);
         return false; //return false to prevent default <a> tag link event
     };
     next.onclick = function() {
+        if (moveOn) return;
+        if (5 == picIndex) {
+            picIndex = 1;
+        } else {
+            picIndex += 1;
+        }
+        changeBtn(btns[picIndex]);
         move(-800);
         return false; //return false to prevent default <a> tag link event
     };

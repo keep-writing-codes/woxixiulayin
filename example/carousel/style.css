@@ -41,6 +41,10 @@
     cursor: pointer;
 }
 
+#btns .on {
+    background-color: red;
+}
+
 #btns span:hover {
     background-color: red;
 }
