@@ -62,20 +62,14 @@ window.onload = function() {
         }
     }
 
-    function autoMove() {
-        var auto = true;
-        var trueMove = function() {
-            if (auto) {
-                move(-800);
-            }
-        }
-        setInterval(trueMove, 3000);
+    function autoMove(intime) {
+        var timer = setInterval(next.onclick,intime);
         imgs.onmouseover = function() {
-            auto = false;
+            clearInterval(timer);
         };
         imgs.onmouseout = function() {
-            auto = true;
-        }
+            timer = setInterval(next.onclick,intime);
+        };
     }
 
     pre.onclick = function() {
@@ -88,5 +82,5 @@ window.onload = function() {
     };
 
     addBtnClic();
-    autoMove();
+    autoMove(3000);
 };
