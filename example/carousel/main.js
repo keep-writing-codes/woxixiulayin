@@ -6,7 +6,7 @@ window.onload = function() {
     var btnsDiv = document.getElementById("btns");
     var btns = btnsDiv.getElementsByTagName("span");
     var width = 800;
-    var moveTime = 600;
+    var moveTime = 500;
     var moveCounts = 10;
     var moveOn = false; //move flag, prevent  move again when moving
     var picIndex = 1;
@@ -35,34 +35,34 @@ window.onload = function() {
                 } else if (parseInt(imgs.style.left) == 0) {
                     imgs.style.left = -4000;
                 }
-                console.log(picIndex);
             }
         }
         go();
     }
 
-    function jump(ele) {
-        var btn = ele;
-        var offset = (btn.getAttribute("index") - picIndex) * (-800);
+    function jump(preindex, targetindex) {
+        var offset = (preindex - targetindex) * (-800);
         move(offset);
     }
 
-    function changeBtn(ele){
+    function changeBtn(){
         for(var i=0,len=btns.length; i<len; i++){
             if(btns[i].className == "on") {
                 btns[i].className = "";
                 break;
             }
         }
-        ele.className = "on";
+        btns[picIndex-1].className = "on";
     }
 
     function addBtnClick(){
         for(var i=0,len=btns.length; i<len; i++){
-            btns[i].onclick = function(){
-                if (this.getAttribute("index") == picIndex) return;
-                changeBtn(this);
-                jump(this);
+            btns[i].onclick = function() {
+                if (this.getAttribute("class") == "on") return;
+                preindex = picIndex;
+                picIndex = this.getAttribute("index");
+                changeBtn();
+                jump(preindex, picIndex);
             };
         }
     }
@@ -84,7 +84,7 @@ window.onload = function() {
         } else {
         picIndex -= 1;
         }
-        changeBtn(btns[picIndex]);
+        changeBtn();
         move(800);
         return false; //return false to prevent default <a> tag link event
     };
@@ -95,11 +95,12 @@ window.onload = function() {
         } else {
             picIndex += 1;
         }
-        changeBtn(btns[picIndex]);
+        changeBtn();
         move(-800);
         return false; //return false to prevent default <a> tag link event
     };
 
     addBtnClick();
     autoMove(3000);
+
 };
