@@ -25,16 +25,16 @@ function createSpan(num) {
     return span;
 }
 
-function getINputNum(){
+function getInputNum(){
     var num = input.value;
     console.log(num);
     input.value = "";
-    return isNaN(num) ? false : num;
+    return isNaN(num)||num==""||num==false ? "bad" : num;
 }
 
 function leftIn(){
-    var num = getINputNum();
-    if (isNaN(num)) return;
+    var num = getInputNum();
+    if(num == "bad") return;
     var span = createSpan(num);
     if(0 == spanArry.length) {
         spanDis.appendChild(span);
