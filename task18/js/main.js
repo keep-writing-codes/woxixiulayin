@@ -25,17 +25,25 @@ function createSpan(num) {
     return span;
 }
 
+function createNumSpan(){
+    var num = getInputNum();
+    return num == "bad"? null : createSpan(num);
+}
+
 function getInputNum(){
     var num = input.value;
     console.log(num);
     input.value = "";
-    return isNaN(num)||num==""||num==false ? "bad" : num;
+    if(isNaN(num)||num==""||num==false) {
+        alert("请输入数字");
+        return "bad";
+    }
+    else return num;
 }
 
 function leftIn(){
-    var num = getInputNum();
-    if(num == "bad") return;
-    var span = createSpan(num);
+    var span = createNumSpan();
+    if(span == null) return;
     if(0 == spanArry.length) {
         spanDis.appendChild(span);
     } else {
@@ -44,8 +52,30 @@ function leftIn(){
     spanArry.unshift(span);
 }
 
+function leftOut(){
+    if(0 == spanArry.length) return;
+    spanDis.removeChild(spanArry[0]);
+    spanArry.shift();
+}
+
+function rightIn(){
+    var span = createNumSpan();
+    if(span == null) return;
+    spanDis.appendChild(span);
+    spanArry.push(span);
+}
+
+function rightOut() {
+    if(0 == spanArry.length) return;
+    spanDis.removeChild(spanArry[spanArry.length-1]);
+    spanArry.pop();
+}
+
 function addListener() {
     btnLeftIn.onclick = leftIn;
+    btnLeftOut.onclick = leftOut;
+    btnRightIn.onclick = rightIn;
+    btnRightOut.onclick = rightOut;
 }
 addListener();
 // addLoadEvent(addListener);
