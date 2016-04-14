@@ -1,0 +1,47 @@
+* {
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+    
+#contrl {
+    height: 30px;
+    width: 370px;
+}
+
+button {
+    width: 50px;
+    height: 10px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    height: 15px;
+    float: left;
+    margin: 8px 15px 8px 5px;
+}
+
+#left-in,#right-in {
+    float: left;
+    margin-right: 5px;
+}
+
+#left-out, #right-out {
+    float: right;
+    margin-left: 5px;
+}
+
+span {
+    height: 30px;
+    margin: 5px 5px;
+    display: inline-block;
+    background-color: red;
+    color: #fff;
+    padding: 3px 5px;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
