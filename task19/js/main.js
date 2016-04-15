@@ -19,7 +19,7 @@ var spanDis = document.getElementById("spans");
 var spanArry = [];
 spanDis.style.height = "200px";
 var spansMaxheight = parseInt(spanDis.style.height);
-var spanWidth = "20";
+var spanWidth = 20;
 
 function createSpan(num) {
     var span = document.createElement("span");
@@ -58,21 +58,21 @@ function leftIn(){
 
 function leftOut(){
     if(0 == spanArry.length) return;
-    spanDis.removeChild(spanArry[0]);
     spanArry.shift();
+    creatSpans();
 }
 
 function rightIn(){
     var span = createNumSpan();
     if(span == null) return;
-    spanDis.appendChild(span);
     spanArry.push(span);
+    creatSpans();
 }
 
 function rightOut() {
     if(0 == spanArry.length) return;
-    spanDis.removeChild(spanArry[spanArry.length-1]);
     spanArry.pop();
+    creatSpans()
 }
 
 function addListener() {
@@ -84,7 +84,8 @@ function addListener() {
 
 function creatSpans() {
     for(var i=0,len=spanArry.length;i<len;i++) {
-        spanArry[i].style.left = i*spanWidth;
+        var left = i*(spanWidth+1);
+        spanArry[i].style.left = left + "px";
         spanDis.appendChild(spanArry[i]);
     }
 }
