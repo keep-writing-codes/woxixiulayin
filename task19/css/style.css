@@ -6,12 +6,12 @@
     
 #contrl {
     height: 30px;
-    width: 400px;
+    width: 450px;
 }
 
 button {
     width: 50px;
-    height: 10px;
+    height: 20px;
     font-weight: bold;
     line-height: 10px;
     margin-top: 10px;
@@ -29,6 +29,11 @@ input {
     margin-right: 5px;
 }
 
+#sort {
+    position: absolute;
+    left: 280px;
+    border-color: #ccc
+}
 #left-out, #right-out {
     float: right;
     margin-left: 5px;
