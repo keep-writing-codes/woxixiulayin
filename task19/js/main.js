@@ -88,7 +88,7 @@ function addListener() {
     btnLeftOut.onclick = leftOut;
     btnRightIn.onclick = rightIn;
     btnRightOut.onclick = rightOut;
-    btnSort.onclick = sort;
+    btnSort.onclick = sortAnimate;
 }
 
 function creatSpans() {
@@ -120,6 +120,41 @@ function sort() {
             }
         }
     }
+}
+
+function sortAnimate() {
+    var i = 1,
+        len = spanArry.length;
+    var tempHight = getHeightN(i);
+    var tempSpan = spanArry[i];
+    var j = i - 1;
+    var tempHight = getHeightN(i);
+    var tempSpan = spanArry[i];
+    var step = function() {
+        if (tempHight > getHeightN(j)) {
+            spanArry[j + 1] = spanArry[j];
+            spanArry[j] = tempSpan;
+            creatSpans();
+            j--;
+            if (-1 == j) {
+                i++;
+                if (i > len - 1) return;
+                tempHight = getHeightN(i);
+                tempSpan = spanArry[i];
+                j = i - 1;
+            }
+            setTimeout(step, 1000);
+        } else {
+            i++;
+            if (i < len) {
+                j = i - 1;
+                tempHight = getHeightN(i);
+                tempSpan = spanArry[i];
+                step();
+            }
+        }
+    }
+    step();
 }
 
 
