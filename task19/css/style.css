@@ -1,0 +1,51 @@
+* {
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+    
+#contrl {
+    height: 30px;
+    width: 400px;
+}
+
+button {
+    width: 50px;
+    height: 10px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    height: 15px;
+    float: left;
+    margin: 8px 15px 8px 5px;
+}
+
+#left-in,#right-in {
+    float: left;
+    margin-right: 5px;
+}
+
+#left-out, #right-out {
+    float: right;
+    margin-left: 5px;
+}
+
+#spans {
+    position: relative;
+    height: 200px;
+    margin: 5px 5px;
+    border: solid 1px red;
+}
+
+span {
+    position: absolute;
+    bottom: 0px;
+    margin: 0px 1px;
+    background-color: red;
+    color: #fff;
+    border: solid 1px #333;
+}
