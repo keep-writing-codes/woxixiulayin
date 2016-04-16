@@ -42,7 +42,7 @@ window.onload = function() {
     }
 
     function jump(preindex, targetindex) {
-        var offset = (preindex - targetindex) * (-800);
+        var offset = (preindex - targetindex) * 800;
         move(offset);
     }
 
@@ -53,7 +53,7 @@ window.onload = function() {
                 break;
             }
         }
-        btns[picIndex-1].className = "on";
+        btns[picIndex-1].setAttribute("class", "on");
     }
 
     function addBtnClick(){
