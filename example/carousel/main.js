@@ -32,9 +32,9 @@ window.onload = function() {
                 imgs.style.left = newleft + "px";
                 moveOn = false;
                 if (parseInt(imgs.style.left) == -4800) {
-                    imgs.style.left = -800;
+                    imgs.style.left = -800 + "px";
                 } else if (parseInt(imgs.style.left) == 0) {
-                    imgs.style.left = -4000;
+                    imgs.style.left = -4000 + "px";
                 }
             }
         }
