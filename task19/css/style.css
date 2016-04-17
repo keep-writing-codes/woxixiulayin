@@ -6,7 +6,7 @@
     
 #contrl {
     height: 30px;
-    width: 450px;
+    width: 500px;
 }
 
 button {
@@ -31,8 +31,9 @@ input {
 
 #sort {
     position: absolute;
+    width: 100px;
     left: 280px;
-    border-color: #ccc
+    border-color: #ccc;
 }
 #left-out, #right-out {
     float: right;
