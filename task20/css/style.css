@@ -6,7 +6,7 @@
     
 #contrl {
     height: 30px;
-    width: 400px;
+    width: 500px;
 }
 
 button {
@@ -18,8 +18,7 @@ button {
     margin-bottom: 10px;
 }
 
-input {
-    height: 15px;
+textarea {
     float: left;
     margin: 8px 15px 8px 5px;
 }
