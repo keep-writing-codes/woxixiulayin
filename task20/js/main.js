@@ -25,13 +25,36 @@ function createSpan(text) {
     return span;
 }
 
+function createSpansByArray(array) {
+    var spans = [];
+    for(var i=0,len=array.length; i<len;i++) {
+        if (array[i] == undefined) {
+            alert("array["+i+"]is not defined" );
+            continue;
+        }
+        var span = createSpan(array[i]);
+        spans.push(span);
+    }
+    return spans;
+}
+
 function createNumSpan(){
     var num = getInputNum();
     return num == "bad"? null : createSpan(num);
 }
 
-function createSpansBy() {
-    var content = input.value;
+
+function createStrSpans() {
+    var strs = [];
+    var value = input.value;
+    console.log("input value = [" + value + "]");
+    strs = value2Strs(value);
+    return strs;
+}
+
+function value2Strs(value) {
+    var strs = [];
+    return strs;
 }
 
 function getInputNum(){
@@ -46,9 +69,9 @@ function getInputNum(){
 }
 
 function leftIn(){
-    var span = createNumSpan();
-    if(span == null) return;
-    spanArry.unshift(span);
+    var spans = createStrSpans();
+    if(spans == undefined || spans.length == 0) return;
+    spanArry = spans.concat(spanArry);
     disSpans();
 }
 
@@ -84,6 +107,18 @@ function addListener() {
     btnRightIn.onclick = rightIn;
     btnRightOut.onclick = rightOut;
 }
+
 addListener();
+
+TEST = true;
+(function tes() {
+   if(!TEST) return;
+   console.log("begin test:");
+   var value="ajsiduf,234,3124，34、 、334、 ,323234\
+dfsfd\
+asdf, 123, ";
+    var strs = value2Strs(value);
+    console.log("value2Strs =[" + strs + "]");
+}());
 // addLoadEvent(addListener);
 
