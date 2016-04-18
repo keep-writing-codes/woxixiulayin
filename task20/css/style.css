@@ -5,8 +5,8 @@
 }
     
 #contrl {
-    height: 30px;
     width: 500px;
+    overflow: auto;
 }
 
 button {
@@ -16,6 +16,7 @@ button {
     line-height: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    box-shadow:3px 2px 1px #ccc;
 }
 
 textarea {
@@ -33,6 +34,12 @@ textarea {
     margin-left: 5px;
 }
 
+#hint {
+    width:500px;
+    border: solid 1px #222;
+    background-color: #ddd;
+    box-shadow: 4px 4px 2px #555;
+}
 #spans {
     height: 40px;
     margin: 5px 5px;
