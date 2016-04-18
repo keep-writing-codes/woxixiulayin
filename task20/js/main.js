@@ -44,31 +44,34 @@ function getInputNum(){
 function leftIn(){
     var span = createNumSpan();
     if(span == null) return;
-    if(0 == spanArry.length) {
-        spanDis.appendChild(span);
-    } else {
-        spanDis.insertBefore(span, spanArry[0]);
-    }
     spanArry.unshift(span);
+    createSpans();
 }
 
 function leftOut(){
     if(0 == spanArry.length) return;
-    spanDis.removeChild(spanArry[0]);
     spanArry.shift();
+    createSpans();
 }
 
 function rightIn(){
     var span = createNumSpan();
     if(span == null) return;
-    spanDis.appendChild(span);
     spanArry.push(span);
+    createSpans();
 }
 
 function rightOut() {
     if(0 == spanArry.length) return;
-    spanDis.removeChild(spanArry[spanArry.length-1]);
     spanArry.pop();
+    createSpan();
+}
+
+function createSpans() {
+    spanDis.innerHTML = "";
+    for (var i = 0, len = spanArry.length; i < len; i++) {
+        spanDis.appendChild(spanArry[i]);
+    }
 }
 
 function addListener() {
