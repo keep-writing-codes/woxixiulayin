@@ -18,9 +18,9 @@ var btnRightOut = document.getElementById("right-out");
 var spanDis = document.getElementById("spans");
 var spanArry = [];
 
-function createSpan(num) {
+function createSpan(text) {
     var span = document.createElement("span");
-    var textnode = document.createTextNode(num);
+    var textnode = document.createTextNode(text);
     span.appendChild(textnode);
     return span;
 }
@@ -28,6 +28,10 @@ function createSpan(num) {
 function createNumSpan(){
     var num = getInputNum();
     return num == "bad"? null : createSpan(num);
+}
+
+function createSpansBy() {
+    var content = input.value;
 }
 
 function getInputNum(){
@@ -45,29 +49,29 @@ function leftIn(){
     var span = createNumSpan();
     if(span == null) return;
     spanArry.unshift(span);
-    createSpans();
+    disSpans();
 }
 
 function leftOut(){
     if(0 == spanArry.length) return;
     spanArry.shift();
-    createSpans();
+    disSpans();
 }
 
 function rightIn(){
     var span = createNumSpan();
     if(span == null) return;
     spanArry.push(span);
-    createSpans();
+    disSpans();
 }
 
 function rightOut() {
     if(0 == spanArry.length) return;
     spanArry.pop();
-    createSpan();
+    disSpans();
 }
 
-function createSpans() {
+function disSpans() {
     spanDis.innerHTML = "";
     for (var i = 0, len = spanArry.length; i < len; i++) {
         spanDis.appendChild(spanArry[i]);
