@@ -17,6 +17,7 @@ var btnLeftOut = document.getElementById("left-out");
 var btnRightOut = document.getElementById("right-out");
 var spanDis = document.getElementById("spans");
 var spanArry = [];
+var splits = [',','，','、','\n',' ','\\', '\/'];
 
 function createSpan(text) {
     var span = document.createElement("span");
@@ -49,11 +50,30 @@ function createStrSpans() {
     var value = input.value;
     console.log("input value = [" + value + "]");
     strs = value2Strs(value);
-    return strs;
+    return createSpansByArray(strs);
+}
+
+function checkSplit(s) {
+    return splits.indexOf(s) != -1 ? true : false;
 }
 
 function value2Strs(value) {
     var strs = [];
+    var str = "";
+    if(typeof value == String || value.length != 0) {
+        for(var i=0,len=value.length;i<len;i++){
+            if(!checkSplit(value[i])) {
+                str += value[i];
+            } else {
+                if(str.length > 0) {
+                    strs.push(str);
+                    str = "";
+                }
+            }
+
+        }
+    }
+    console.log(strs);
     return strs;
 }
 
@@ -110,7 +130,7 @@ function addListener() {
 
 addListener();
 
-TEST = true;
+TEST = false;
 (function tes() {
    if(!TEST) return;
    console.log("begin test:");
@@ -118,7 +138,6 @@ TEST = true;
 dfsfd\
 asdf, 123, ";
     var strs = value2Strs(value);
-    console.log("value2Strs =[" + strs + "]");
 }());
 // addLoadEvent(addListener);
 
