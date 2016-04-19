@@ -22,7 +22,7 @@
         display: block;
         background: #eeeeee;
         height: 50px;
-        width: 220px;
+        width: 350px;
         line-height: 50px;
         font-weight: bold;
         border-radius: 25px;
@@ -59,18 +59,19 @@
         <div class="container">
             <div class="ife">
                 <h3>百度ife前端学院练习</h3>
-                <ul>
-                    <li><a href="/woxixiulayin/task3">任务3</a></li>
-                    <li><a href="/woxixiulayin/task4">任务4</a></li>
-                    <li><a href="/woxixiulayin/task5">任务5</a></li>
-                    <li><a href="/woxixiulayin/task13">任务13</a></li>
-                    <li><a href="/woxixiulayin/task14">任务14</a></li>
-                    <li><a href="/woxixiulayin/task15">任务15</a></li>
-                    <li><a href="/woxixiulayin/task16">任务16</a></li>
-                    <li><a href="/woxixiulayin/task17">任务17</a></li>
-                    <li><a href="/woxixiulayin/task18">任务18</a></li>
-                    <li><a href="/woxixiulayin/task19">任务19</a></li>
-                    <li><a href="/woxixiulayin/task20">任务20</a></li>
+                <ul id="ife-ul">
+                    <!-- <li><a href="/woxixiulayin/task20">js中定义href的地址</a></li> -->
+                    <li><a href="" title="三栏式布局" index="3"></a></li>
+                    <li><a href="" title="定位和居中问题" index="4"></a></li>
+                    <li><a href="" title=“零基础HTML和CSS编码” index="5"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（一）" index="13"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（二）" index="14"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（三）" index="15"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（四）" index="16"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（五）" index="17"></a></li>
+                    <li><a href="" title="基础JavaScrip练习（一）" index="18"></a></li>
+                    <li><a href="" title="基础JavaScript练习（二）" index="19"></a></li>
+                    <li><a href="" title="基础JavaScript练习（三）" index="20"></a></li>                    
                 </ul>
             </div>
             <div class="example">
@@ -80,5 +81,19 @@
                 </ul>
             </div>
         </div>
+        <script type="text/javascript">
+            var prePath = "/woxixiulayin/";
+            (function changeLi(){
+                var lis = document.getElementById("ife-ul").getElementsByTagName("a");
+                console.log(typeof lis);
+                console.log(Array.isArray(lis));
+                Array.prototype.forEach.call(lis, function(ele, index) {
+                    if(!ele.getAttribute("index")) return false;
+                    ele.href = prePath + "task" + ele.getAttribute("index");
+                    if(!ele.title) return false;
+                    ele.innerHTML = ele.title;
+                });
+            }());
+        </script>
     </body>
 </html>
