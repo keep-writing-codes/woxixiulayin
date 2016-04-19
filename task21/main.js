@@ -87,10 +87,53 @@ function inputTextListener (event) {
      // appendElements(tags, eles);
      if(splitskey.indexOf(key) == -1) return;
      var span = createSpan(text);
+     addSpanListener(span);
      inputtext.value = "";
      parent.innerHTML = "";
      tags.appendChild(span);
      return false;  //阻止默认的按键动作即输入字符
+}
+
+function removeEle(ele) {
+    if(!ele || ele.nodeType != 1 ) return false;
+    ele.parentNode.removeChild(ele);
+    return true;
+}
+
+function addPrefix(ele, prefix) {
+    ele.innerHTML = prefix + " " + ele.innerHTML;
+}
+
+function removePrefix(ele, prefix) {
+    ele.innerHTML = ele.innerHTML.slice(5);
+}
+
+
+function mouseOverListener () {
+    var ele = this;
+    if(!ele || ele.nodeType != 1) return false;
+    ele.removeAllow = true;
+    ele.style.background = "green";
+    addPrefix(ele, "点击删除");
+}
+
+function mouseOutListener () {
+    var ele = this;
+    if(!ele || ele.nodeType != 1) return false;
+    ele.removeAllow = false;
+    ele.style.background = "blue";
+    removePrefix(ele, "点击删除");
+}
+
+function onClickListener () {
+    if(typeof this.removeAllow == "undefined" || !this.removeAllow) return;
+    removeEle(this);
+}
+
+function addSpanListener (span) {
+    span.onmouseover = mouseOverListener;
+    span.onmouseout = mouseOutListener;
+    span.onclick = onClickListener;
 }
 
 function addListener(){
