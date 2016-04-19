@@ -195,7 +195,7 @@ function addListener() {
     btnQuery.onclick = queryInput;
 }
 
-addListener();
+// addListener();
 
 TEST = false;
 (function tes() {
@@ -206,5 +206,6 @@ dfsfd\
 asdf, 123, ";
     var strs = value2Strs(value);
 }());
-// addLoadEvent(addListener);
+
+addLoadEvent(addListener);
 
