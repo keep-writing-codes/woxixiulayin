@@ -2,6 +2,7 @@ span {
     background: blue;
     color: white;
     margin: 3px 3px;
+    line-height: 40px;
 }
 
 #container {
