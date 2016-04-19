@@ -89,9 +89,10 @@
                 console.log(Array.isArray(lis));
                 Array.prototype.forEach.call(lis, function(ele, index) {
                     if(!ele.getAttribute("index")) return false;
-                    ele.href = prePath + "task" + ele.getAttribute("index");
+                    var index = ele.getAttribute("index");
+                    ele.href = prePath + "task" + index;
                     if(!ele.title) return false;
-                    ele.innerHTML = ele.title;
+                    ele.innerHTML = "任务" + index + ":" +ele.title;
                 });
             }());
         </script>
