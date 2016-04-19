@@ -75,18 +75,9 @@ function createSpansByArray(array) {
 function inputTextListener (event) {
      var key = event.keyCode || window.event.keyCode;
      var text = inputtext.value;
-     // var lastChar = text[text.length-1];
-     // if(splits.indexOf(lastChar) == -1) return;
-     // var eles = [];
-     // var strs = value2Strs(text);
-     // console.log(strs);
-     // insertIfNoRepeat(tagsArray, strs);
-     // eles = createSpansByArray(strs);
-     // inputtext.value = "";
-     // parent.innerHTML = "";
-     // appendElements(tags, eles);
      if(splitskey.indexOf(key) == -1) return;
      var span = createSpan(text);
+     if(!span) return false;
      addSpanListener(span);
      inputtext.value = "";
      parent.innerHTML = "";
