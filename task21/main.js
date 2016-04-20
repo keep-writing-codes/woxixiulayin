@@ -134,9 +134,17 @@ function hobbitsListener () {
     if(value == "") return false;
     texthobbits.value = "";
     var strs = value2Strs(value);
-    insertIfNoRepeat(hobbitsArray, strs);
+    hobbitsArray = insertIfNoRepeat(hobbitsArray, strs);
+    hobbitsArray = reduceUnderMax(hobbitsArray, 10);
     var hobbitstag = createSpansByArray(hobbitsArray);
     setElechildren(tagshobbits, hobbitstag);
+}
+
+function reduceUnderMax(array, max) {
+    if(!(array instanceof Array)) return [];
+    var len = array.length;
+    if(len <= max) return array;
+    return array.slice(len - max);
 }
 
 function addListener(){
