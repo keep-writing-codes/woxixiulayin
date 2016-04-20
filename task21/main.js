@@ -2,16 +2,18 @@ var inputtext = document.getElementById("input-text");
 var tags = document.getElementById("tags");
 var texthobbits = document.getElementById("text-hobbits");
 var tagshobbits = document.getElementById("tags-hobbits");
+var btnconform = document.getElementById("conform");
 var splits = [',','，','、','\n',' ','\\', '\/'];
 var splitskey = [188, 108, 220, 191, 192, 32, 9, 13];
 var tagsArray = [];
-var bobbitsArray = [];
+var hobbitsArray = [];
 
 function createSpan(text) {
     if(!text || text == "") return false;
     var span = document.createElement("span");
     var textnode = document.createTextNode(text);
     span.appendChild(textnode);
+    addSpanListener(span);
     return span;
 }
 
@@ -51,12 +53,13 @@ function appendElements(parent, eles) {
 
 
 function insertIfNoRepeat(array1, array2) {
-    if(typeof array1 != "array" || typeof array2 != "array") return false;
-    Array.prototype.forEach(array2, function(element, index) {
-        if(array1.indexOf(element) == -1) {
+    if(!(array1 instanceof Array) || !(array2 instanceof Array)) return false;
+    array2.forEach(function(element, index) {
+    if(array1.indexOf(element) == -1) {
             array1.push(element);
         }
     });
+    return array1;
 }
 
 function createSpansByArray(array) {
@@ -78,7 +81,6 @@ function inputTextListener (event) {
      if(splitskey.indexOf(key) == -1) return;
      var span = createSpan(text);
      if(!span) return false;
-     addSpanListener(span);
      inputtext.value = "";
      parent.innerHTML = "";
      tags.appendChild(span);
@@ -127,9 +129,24 @@ function addSpanListener (span) {
     span.onclick = onClickListener;
 }
 
+function hobbitsListener () {
+    var value = texthobbits.value;
+    if(value == "") return false;
+    texthobbits.value = "";
+    var strs = value2Strs(value);
+    insertIfNoRepeat(hobbitsArray, strs);
+    var hobbitstag = createSpansByArray(hobbitsArray);
+    setElechildren(tagshobbits, hobbitstag);
+}
+
 function addListener(){
     inputtext.onkeydown = inputTextListener;
+    btnconform.onclick = hobbitsListener;
+}
+
+function setElechildren(ele, children) {
+    ele.innerHTML = "";
+    appendElements(ele, children);
 }
 
 addListener();
-
