@@ -1,11 +1,102 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-<head>
-    <title>woxixiulayin百度前端技术学院练习</title>
-</head>
-<body>
-<h1>百度前端技术学院练习集: <a href="http://ife.baidu.com/task/all" target="_blank">任务地址</a></h1>
-<div class="container">
-</div>
-</body>
+    <head>
+        <title>woxixiulayin百度前端技术学院练习</title>
+        <style>
+        body {
+        background: #607080;
+        }
+        h1 {
+        text-align: center;
+        }
+        ul {
+            padding: 0px;
+        }
+        li {
+        text-align: center;
+        list-style-type: none;
+        margin: 0px auto;
+        }
+        li a {
+        font-size: 18px;
+        display: block;
+        background: #eeeeee;
+        height: 50px;
+        width: 350px;
+        line-height: 50px;
+        font-weight: bold;
+        border-radius: 25px;
+        margin: 15px auto;
+        text-decoration: none;
+        
+        }
+        a:hover {
+        background: #2E5546;
+        color: #0673E5;
+        }
+        a:after {
+        background: #eeeeee;
+        }
+        .container {
+            width: 800px;
+            margin: 0 auto;
+        }
+        .container h3 {
+            text-align: center;
+        }
+        .ife {
+            width: 400px;
+            float: left;
+        }
+        .example {
+            width: 400px;
+            float: left;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>百度前端技术学院练习集: <a href="http://ife.baidu.com/task/all" target="_blank">任务地址</a></h1>
+        <div class="container">
+            <div class="ife">
+                <h3>百度ife前端学院练习</h3>
+                <ul id="ife-ul">
+                    <!-- <li><a href="/woxixiulayin/task20">js中定义href的地址</a></li> -->
+                    <li><a href="" title="三栏式布局" index="3"></a></li>
+                    <li><a href="" title="定位和居中问题" index="4"></a></li>
+                    <li><a href="" title=“零基础HTML和CSS编码” index="5"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（一）" index="13"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（二）" index="14"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（三）" index="15"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（四）" index="16"></a></li>
+                    <li><a href="" title="零基础JavaScript编码（五）" index="17"></a></li>
+                    <li><a href="" title="基础JavaScrip练习（一）" index="18"></a></li>
+                    <li><a href="" title="基础JavaScript练习（二）" index="19"></a></li>
+                    <li><a href="" title="基础JavaScript练习（三）" index="20"></a></li>
+                    <li><a href="" title="基础JavaScript练习（四）" index="21"></a></li>
+
+                </ul>
+            </div>
+            <div class="example">
+                <h3>练手项目</h3>
+                <ul>
+                    <li><a href="/woxixiulayin/example/carousel/index.html">轮播图</a></li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var prePath = "/woxixiulayin/";
+            (function changeLi(){
+                var lis = document.getElementById("ife-ul").getElementsByTagName("a");
+                console.log(typeof lis);
+                console.log(Array.isArray(lis));
+                Array.prototype.forEach.call(lis, function(ele, index) {
+                    if(!ele.getAttribute("index")) return false;
+                    var index = ele.getAttribute("index");
+                    ele.href = prePath + "task" + index;
+                    if(!ele.title) return false;
+                    ele.innerHTML = "任务" + index + ":" +ele.title;
+                });
+            }());
+        </script>
+    </body>
 </html>

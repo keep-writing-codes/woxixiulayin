@@ -1,0 +1,56 @@
+* {
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+    
+#contrl {
+    width: 500px;
+    overflow: auto;
+}
+
+button {
+    width: 50px;
+    height: 10px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow:3px 2px 1px #ccc;
+}
+
+textarea {
+    float: left;
+    margin: 8px 15px 8px 5px;
+}
+
+#left-in,#right-in {
+    float: left;
+    margin-right: 5px;
+}
+
+#left-out, #right-out {
+    float: right;
+    margin-left: 5px;
+}
+
+#hint {
+    width:500px;
+    border: solid 1px #222;
+    background-color: #ddd;
+    box-shadow: 4px 4px 2px #555;
+}
+#spans {
+    height: 40px;
+    margin: 5px 5px;
+}
+
+span {
+    margin: 0px 5px;
+    background-color: red;
+    color: #fff;
+    padding: 3px 5px;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+}

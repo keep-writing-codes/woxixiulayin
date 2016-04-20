@@ -1,0 +1,41 @@
+span {
+    background: blue;
+    color: white;
+    margin: 3px 3px;
+    line-height: 40px;
+}
+
+#container {
+    padding: 10px;
+}
+
+#tagDiv {
+
+}
+
+#tagDiv label {
+    font-size: 20px;
+    line-height: 20px;
+    padding: 0px 2px;
+}
+
+#tagDiv input {
+    line-height: 20px;
+    width: 200px;
+}
+
+#tags {
+    margin-top: 5px;
+}
+
+
+#hobbitsDiv {
+    margin-top: 20px;
+
+}
+
+#hobbitsDiv button{
+    display: block;
+    margin: 5px;
+    background: #cccccc;
+}

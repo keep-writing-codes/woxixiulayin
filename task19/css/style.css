@@ -1,0 +1,56 @@
+* {
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+    
+#contrl {
+    height: 30px;
+    width: 500px;
+}
+
+button {
+    width: 50px;
+    height: 20px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    height: 15px;
+    float: left;
+    margin: 8px 15px 8px 5px;
+}
+
+#left-in,#right-in {
+    float: left;
+    margin-right: 5px;
+}
+
+#sort {
+    position: absolute;
+    width: 100px;
+    left: 280px;
+    border-color: #ccc;
+}
+#left-out, #right-out {
+    float: right;
+    margin-left: 5px;
+}
+
+#spans {
+    position: relative;
+    height: 200px;
+    margin: 5px 5px;
+    border: solid 1px red;
+}
+
+span {
+    position: absolute;
+    bottom: 0px;
+    background-color: red;
+    color: #fff;
+
+}
