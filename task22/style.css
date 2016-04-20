@@ -8,9 +8,9 @@
 
 #container,#container div {
     float: left;
-    margin: 10px 10px;
-    min-height:25px;
-    min-width: 30px;
+    margin: 6px 8px;
+    min-height: 20px;
+    min-width: 25px;
     border: solid 2px red;
     background-color: white; 
 }
