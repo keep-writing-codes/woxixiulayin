@@ -51,8 +51,18 @@ Tree.prototype = {
 
 var divTree = (function() {
     var tree = new Tree(container);
+    var flashqueue = [];
     return {
-        flashqueue: [],
+        clearflash: function () {
+            flashqueue = [];
+        },
+        flashPush: function (ndoe) {
+            if(!node) return false;
+            flashqueue.push(node);
+        },
+        flashShift: function() {
+            return flashqueue.shift();
+        }
         showFlash: function () {
             if(!flashqueue.length) return false;
             //依次显示第一个元素，然后剔除
