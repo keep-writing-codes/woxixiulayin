@@ -1,0 +1,24 @@
+* {
+    margin: 0px;
+}
+
+#control {
+    margin: 20px 5px 5px;
+}
+
+#container,#container div {
+    float: left;
+    margin: 4px 3px;
+    min-height: 20px;
+    min-width: 25px;
+    border: solid 2px red;
+    background-color: white; 
+}
+
+#container {
+    display: none;
+}
+
+div.on {
+    background-color: blue !important;
+}
