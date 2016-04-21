@@ -46,6 +46,24 @@ Tree.prototype = {
             //下一个节点
             currentNode = q.shift();
         }
+    },
+    contains: function (callback, traversal) {
+        traversal.call(this, callback);
+    },
+    add: function (pdata, cdata, traversal) {
+        var parsentNode = null;
+        var checkPdata = function (node) {
+            if(node.data == pdata) {
+                parentNode = node;
+            }
+        };
+
+        contains.call(this, checkPdata, traversal);
+
+        if (parsentNode && cdata) {
+            var childNode = new Node(cdata); 
+            parsentNode.children.add(childNode);
+        }
     }
 };
 
@@ -60,9 +78,6 @@ var divTree = (function() {
             if(!node) return false;
             flashqueue.push(node);
         },
-        flashShift: function() {
-            return flashqueue.shift();
-        }
         showFlash: function () {
             if(!flashqueue.length) return false;
             //依次显示第一个元素，然后剔除
@@ -108,6 +123,13 @@ function createEle (label) {
      return ele;
 }
 
+function createRandomDiv() {
+    var div = createEle("div");
+    div.width = Math.random(10) + 25 + "px";
+    div.height = Math.random(10) + 20 + "px";
+    div.innerHTML = "" + Math.random(100);
+    return div;
+}
 
 //根据深度创建二叉树
 function createNodeTree(root, depth) {
