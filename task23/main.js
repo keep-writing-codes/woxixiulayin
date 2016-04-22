@@ -165,9 +165,9 @@ var btncreate = document.getElementById("btnCreate");
 var btntraversalDF = document.getElementById("btntraversalDF");
 var btntraversalBF = document.getElementById("btntraversalBF");
 
-var traversal = {
-    traverseBF: Tree.prototype.traverseBF,
-    traverseDF: Tree.prototype.traverseDF
+var TRAVERSAL = {
+    traversalBF: 1,
+    traversalDF: 2
 }
 
 var mydivTree = new divTree(container);
@@ -191,7 +191,16 @@ mydivTree.flash = function (mytraversal) {
     var treeFlash = new FalshQeue(1500);
     //遍历divTree，插入动画队列
     treeFlash.insertFrames = function () {
-        mytraversal.call(treeFlash, insetAction); 
+        switch (mytraversal) {
+            case 1:
+                Tree.traversalDF.call(treeFlash, insetAction); 
+                break;
+            case 2:
+                Tree.traversalBF.call(treeFlash, insetAction); 
+                break;
+            default:
+                console.log("wrong traversal");
+        }
     };
     treeFlash.movie = function () {
         FalshQeue.prototype.movie.call(treeFlash, flashAction);
@@ -217,7 +226,7 @@ mydivTree.flash = function (mytraversal) {
     };
 
     btntraversalDF.onclick = function () {
-        var flash = mydivTree.flash(traversal.traverseDF);
+        var flash = mydivTree.flash(TRAVERSAL.traversalDF);
         flash.insertFrames();
         flash.movie();
     }
