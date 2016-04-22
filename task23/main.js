@@ -137,8 +137,9 @@ function removeClassName(ele, name) {
     if(!hasClassName(ele, name)) return;
     var names = ele.className.split(' ');
     names.forEach( function(element, index) {
-        if (name == element) names.silce(index, 1);
+        if (name == element) names.pop(name);
     });
+    ele.className = names.join(" ");
 }
 
 function hasClassName(ele, name) {
@@ -190,7 +191,7 @@ mydivTree.flash = function (mytraversal) {
     var treeFlash = new FalshQeue(1500);
     //遍历divTree，插入动画队列
     treeFlash.insertFrames = function () {
-        mydivTree.traverseBF(insetAction); 
+        mytraversal.call(treeFlash, insetAction); 
     };
     treeFlash.movie = function () {
         FalshQeue.prototype.movie.call(treeFlash, flashAction);
