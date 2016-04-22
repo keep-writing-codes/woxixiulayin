@@ -19,7 +19,7 @@ function Tree(data) {
 
 Tree.prototype = {
     constructor: Tree,
-    traverseDF: function (callback) {
+    traversalDF: function (callback) {
         //内部放入一个立即执行函数，当地调用traverseDF时，直接执行下面的函数。
         (function recurse(currentNode) {
             if (!currentNode) return false;
@@ -31,7 +31,7 @@ Tree.prototype = {
             callback(currentNode);
         }(this.root));
     },
-    traverseBF: function (callback) {
+    traversalBF: function (callback) {
         //数组存储遍历的数据
         var q = [];
         q.push(this.root);
@@ -166,8 +166,8 @@ var btntraversalDF = document.getElementById("btntraversalDF");
 var btntraversalBF = document.getElementById("btntraversalBF");
 
 var TRAVERSAL = {
-    traversalBF: 1,
-    traversalDF: 2
+    traversalDF: 1,
+    traversalBF: 2
 }
 
 var mydivTree = new divTree(container);
@@ -193,10 +193,10 @@ mydivTree.flash = function (mytraversal) {
     treeFlash.insertFrames = function () {
         switch (mytraversal) {
             case 1:
-                Tree.traversalDF.call(treeFlash, insetAction); 
+                mydivTree.traversalDF(insetAction); 
                 break;
             case 2:
-                Tree.traversalBF.call(treeFlash, insetAction); 
+                mydivTree.traversalBF(insetAction); 
                 break;
             default:
                 console.log("wrong traversal");
@@ -227,6 +227,12 @@ mydivTree.flash = function (mytraversal) {
 
     btntraversalDF.onclick = function () {
         var flash = mydivTree.flash(TRAVERSAL.traversalDF);
+        flash.insertFrames();
+        flash.movie();
+    };
+
+    btntraversalBF.onclick = function () {
+        var flash = mydivTree.flash(TRAVERSAL.traversalBF);
         flash.insertFrames();
         flash.movie();
     }
