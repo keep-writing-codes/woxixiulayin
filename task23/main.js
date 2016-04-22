@@ -74,25 +74,6 @@ function divTree(data) {
 
 divTree.prototype = new Tree(container);
 divTree.prototype.constructor = divTree;
-divTree.prototype.clearflash = function () {
-            this.flashqueue = [];
-        };
-divTree.prototype.flashPush = function (ndoe) {
-            if(!node) return false;
-            this.flashqueue.push(node);
-        };
-divTree.prototype.showFlash = function () {
-            if(!flashqueue.length) return false;
-            //依次显示第一个元素，然后剔除
-            //如果第一个元素已经显示了，就设为不显示，剔除队列
-            if(flashqueue[0].data.className.indexOf("on") != -1) {
-                flashqueue[0].data.className = "";
-                flashqueue.shift();
-            }
-            //显示第一个元素
-            addClassName(flashqueue[0].data, "on");
-            setTimeout(function(){flashqueue.showFlash()}, 1500);
-            };
 divTree.prototype.add = function (pdiv, cdiv, traversal) {
             Tree.prototype.add.call(this, pdiv, cdiv, traversal);
             pdiv.appendChild(cdiv);
@@ -123,17 +104,19 @@ function FalshQeue (timeout) {
     this._queue = [];
     this.timeout = timeout;
 }
-FalshQeue.prototype.movie = function (callback) {
-    var len = this._queue.length;
-    var recurseFlash = function (index) {
-        if (len == idnex) return;   //播放到最后就结束
-        callback(this._queue[index]);
-        setTimeout(function(){recurseFlash(index + 1)}, this.timeout);
-    }
-    recurseFlash(0);
-}
 FalshQeue.prototype.insertFrame = function (frame) {
     this._queue.push(frame);
+}
+
+FalshQeue.prototype.movie = function (callback) {
+    var len = this._queue.length;
+    var that = this;
+    var recurseFlash = function (index) {
+        if (len == index) return;   //播放到最后就结束
+        callback(index);
+        setTimeout(function(){recurseFlash(index + 1)}, that.timeout);
+    }
+    recurseFlash(0);
 }
 FalshQeue.prototype.clear = function() {
     this._queue = [];
@@ -149,10 +132,14 @@ function addClassName(ele, name) {
     }
 }
 
-// function removeClassName(ele, name) {
-//     if(!ele.className) return;
-//     var names = ele.className.split(' ');
-// }
+function removeClassName(ele, name) {
+    if(!ele.className) return;
+    if(!hasClassName(ele, name)) return;
+    var names = ele.className.split(' ');
+    names.forEach( function(element, index) {
+        if (name == element) names.silce(index, 1);
+    });
+}
 
 function hasClassName(ele, name) {
     if(!ele.className) return false;
@@ -174,8 +161,8 @@ function createRandomDiv() {
 var container = document.getElementById("container");
 var inputdep = document.getElementById("inputDep");
 var btncreate = document.getElementById("btnCreate");
-var btntraverseDF = document.getElementById("btntraverseDF");
-var btntraverseBF = document.getElementById("btntraverseBF");
+var btntraversalDF = document.getElementById("btntraversalDF");
+var btntraversalBF = document.getElementById("btntraversalBF");
 
 var traversal = {
     traverseBF: Tree.prototype.traverseBF,
@@ -183,19 +170,33 @@ var traversal = {
 }
 
 var mydivTree = new divTree(container);
-mydivTree.falsh = function (mytraversal) {
-    var treeFlash = new FalshQeue(1500);
+
+//定义mydivTree的动画
+mydivTree.flash = function (mytraversal) {
+    //插入动画队列每点的元素
     var insetAction = function (currentNode) {
         treeFlash.insertFrame(currentNode.data);
     };
-    mytraversal.call(this, flashAction);
+    //基于每个队列元素，生成美帧的动作
     var flashAction = function (index) {
-        if (treeFlash.length == idnex) return;
-        var currentDiv = treeFlash._queue[index].data;
-        // if(currentDiv.)
+        if (treeFlash.length == index) return;
+        if (index != 0) {
+            var preDiv = treeFlash._queue[index-1];
+            removeClassName(preDiv, "on");
+        }
+        var currentDiv = treeFlash._queue[index];
+        addClassName(currentDiv, "on");
+    };
+    var treeFlash = new FalshQeue(1500);
+    //遍历divTree，插入动画队列
+    treeFlash.insertFrames = function () {
+        mydivTree.traverseBF(insetAction); 
+    };
+    treeFlash.movie = function () {
+        FalshQeue.prototype.movie.call(treeFlash, flashAction);
     }
-    // treeFlash.movie = function
-}
+    return treeFlash;
+};
 
 
 //添加监听事件
@@ -214,10 +215,11 @@ mydivTree.falsh = function (mytraversal) {
 
     };
 
-    // btntraverseDF.onclick = function () {
-    //     preOrder(root);
-    //     nodeQuenue.showCircle();
-    // }
+    btntraversalDF.onclick = function () {
+        var flash = mydivTree.flash(traversal.traverseDF);
+        flash.insertFrames();
+        flash.movie();
+    }
  };
 
 function main() {
