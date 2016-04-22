@@ -19,6 +19,10 @@
     display: none;
 }
 
+#show {
+    display: block;
+}
+
 div.on {
     background-color: blue !important;
 }
