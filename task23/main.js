@@ -144,14 +144,19 @@ function addClassName(ele, name) {
         ele.className = name;
     } else {
         oldClassNamme = ele.className;
-        if(oldClassNamme.indexOf(name) != -1) return;
+        if(hasClassName(ele, name)) return;
         ele.className = oldClassNamme + " " + name;
     }
 }
 
-function removeClassName(ele, name) {
-    if(!ele.className) return;
-    var names = ele.className.split(' ');
+// function removeClassName(ele, name) {
+//     if(!ele.className) return;
+//     var names = ele.className.split(' ');
+// }
+
+function hasClassName(ele, name) {
+    if(!ele.className) return false;
+    return (ele.className.indexOf(name) != -1);
 }
 
 function createEle (label) {
@@ -166,15 +171,32 @@ function createRandomDiv() {
     return div;
 }
 
-
 var container = document.getElementById("container");
 var inputdep = document.getElementById("inputDep");
 var btncreate = document.getElementById("btnCreate");
 var btntraverseDF = document.getElementById("btntraverseDF");
 var btntraverseBF = document.getElementById("btntraverseBF");
 
+var traversal = {
+    traverseBF: Tree.prototype.traverseBF,
+    traverseDF: Tree.prototype.traverseDF
+}
+
 var mydivTree = new divTree(container);
-var treeFlash = new FalshQeue(1500);
+mydivTree.falsh = function (mytraversal) {
+    var treeFlash = new FalshQeue(1500);
+    var insetAction = function (currentNode) {
+        treeFlash.insertFrame(currentNode.data);
+    };
+    mytraversal.call(this, flashAction);
+    var flashAction = function (index) {
+        if (treeFlash.length == idnex) return;
+        var currentDiv = treeFlash._queue[index].data;
+        // if(currentDiv.)
+    }
+    // treeFlash.movie = function
+}
+
 
 //添加监听事件
  function addlistener() {
