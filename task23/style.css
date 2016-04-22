@@ -12,14 +12,13 @@
     min-height: 20px;
     min-width: 25px;
     border: solid 2px red;
-    background-color: white; 
+    background-color: white;
 }
 
-#container {
+.hide {
     display: none;
 }
-
-#show {
+.show {
     display: block;
 }
 

@@ -1,14 +1,13 @@
-var container = document.getElementById("container");
-var inputdep = document.getElementById("inputDep");
-var btncreate = document.getElementById("btnCreate");
-var btntraverseDF = document.getElementById("btntraverseDF");
-var btntraverseBF = document.getElementById("btntraverseBF");
-
-var mydivTree = new divTree(container);
 //二叉树节点构造函数
 function Node (data) {
     this.data = data;
     this.children = [];
+}
+
+//获得0~n的随机整数
+function getRandomInt(n) {
+
+    return Math.round(Math.random() * parseInt(n));
 }
 
 //二叉树构造函数
@@ -17,10 +16,6 @@ function Tree(data) {
     this.root = node;
 }
 
-function getRandomInt(n) {
-
-    return Math.Math.round(Math.random() * parseInt(n));
-}
 
 Tree.prototype = {
     constructor: Tree,
@@ -75,19 +70,19 @@ Tree.prototype = {
 
 function divTree(data) {
     Tree.call(this, data);
-    var flashqueue = [];
+    this.flashqueue = [];
 }
 
-divTree.prototype = {
-    constructor: divTree,
-    clearflash: function () {
-            flashqueue = [];
-        },
-    flashPush: function (ndoe) {
+divTree.prototype = new Tree(container);
+divTree.prototype.constructor = divTree;
+divTree.prototype.clearflash = function () {
+            this.flashqueue = [];
+        };
+divTree.prototype.flashPush = function (ndoe) {
             if(!node) return false;
-            flashqueue.push(node);
-        },
-    showFlash: function () {
+            this.flashqueue.push(node);
+        };
+divTree.prototype.showFlash = function () {
             if(!flashqueue.length) return false;
             //依次显示第一个元素，然后剔除
             //如果第一个元素已经显示了，就设为不显示，剔除队列
@@ -98,12 +93,12 @@ divTree.prototype = {
             //显示第一个元素
             addClassName(flashqueue[0].data, "on");
             setTimeout(function(){flashqueue.showFlash()}, 1500);
-            },
-    add: function (pdiv, cdiv, traversal) {
+            };
+divTree.prototype.add = function (pdiv, cdiv, traversal) {
             Tree.prototype.add.call(this, pdiv, cdiv, traversal);
             pdiv.appendChild(cdiv);
-        },
-    create: function(depth) {
+        };
+divTree.prototype.create = function (depth) {
             var recurseCreate = function (root, depth) {
                 if (0 == depth) return null;
                 if (1 == depth) return root;
@@ -115,12 +110,10 @@ divTree.prototype = {
                     root.children.push(childNode);
                     root.data.appendChild(newDiv);
                     recurseCreate(root.children[i], depth - 1);
-                }
-            return recurseCreate(this.root, depth);
+                };
             }
-        }
-};
-
+            recurseCreate(this.root, depth);
+        };
 
 function addClassName(ele, name) {
     if(!ele.className) {
@@ -185,6 +178,16 @@ function tree2Dom (root) {
     preOrder(root.rightnode);
  }
 
+
+var container = document.getElementById("container");
+var inputdep = document.getElementById("inputDep");
+var btncreate = document.getElementById("btnCreate");
+var btntraverseDF = document.getElementById("btntraverseDF");
+var btntraverseBF = document.getElementById("btntraverseBF");
+
+var mydivTree = new divTree(container);
+
+
 //添加监听事件
  function addlistener() {
     //生成二叉树的按键事件
@@ -197,9 +200,7 @@ function tree2Dom (root) {
         }
         console.log("depth = " + depth);
         mydivTree.create(depth);
-        console.log(mydivTree);
         addClassName(container, "show");
-        console.log(divTree);
 
     };
 
