@@ -99,19 +99,22 @@ divTree.prototype.add = function (pdiv, cdiv, traversal) {
             pdiv.appendChild(cdiv);
         };
 divTree.prototype.create = function (depth) {
-            var recurseCreate = function (root, depth) {
+            var recurseCreate = function (currentNode, depth) {
                 if (0 == depth) return null;
-                if (1 == depth) return root;
+                if (1 == depth) return currentNode;
                 var childNode = null;
                 var newDiv = null;
-                for(var i=0,len=getRandomInt(4);i<len;i++) {
+                currentNode.children = [];
+                for(var i=0,len=getRandomInt(3)+1;i<len;i++) {
+                    console.log("depth= " + depth + ",i = " + i);
                     newDiv = createRandomDiv();
                     childNode = new Node(newDiv);
-                    root.children.push(childNode);
-                    root.data.appendChild(newDiv);
-                    recurseCreate(root.children[i], depth - 1);
+                    currentNode.children.push(childNode);
+                    currentNode.data.appendChild(newDiv);
+                    recurseCreate(currentNode.children[i], depth - 1);
                 };
             }
+            this.root.data.innerHTML = "";
             recurseCreate(this.root, depth);
         };
 
@@ -120,6 +123,7 @@ function addClassName(ele, name) {
         ele.className = name;
     } else {
         oldClassNamme = ele.className;
+        if(oldClassNamme.indexOf(name) != -1) return;
         ele.className = oldClassNamme + " " + name;
     }
 }
@@ -137,8 +141,6 @@ function createEle (label) {
 
 function createRandomDiv() {
     var div = createEle("div");
-    div.width = getRandomInt(10) + 25 + "px";
-    div.height = getRandomInt(10) + 20 + "px";
     div.innerHTML = "" + getRandomInt(100);
     return div;
 }
@@ -194,8 +196,8 @@ var mydivTree = new divTree(container);
     btncreate.onclick = function () {
         var depth = inputdep.value;
         //检查深度输入的有效性
-        if(isNaN(depth)) {
-            alert("输入数字");
+        if(isNaN(depth) && depth > 10) {
+            alert("输入小于10的数字");
             return;
         }
         console.log("depth = " + depth);
