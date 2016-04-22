@@ -70,7 +70,6 @@ Tree.prototype = {
 
 function divTree(data) {
     Tree.call(this, data);
-    this.flashqueue = [];
 }
 
 divTree.prototype = new Tree(container);
@@ -118,6 +117,28 @@ divTree.prototype.create = function (depth) {
             recurseCreate(this.root, depth);
         };
 
+//flash动画队列，一次存入需要播放的动作元素
+//存入后不需要pop，依次遍历播放就可以
+function FalshQeue (timeout) {
+    this._queue = [];
+    this.timeout = timeout;
+}
+FalshQeue.prototype.movie = function (callback) {
+    var len = this._queue.length;
+    var recurseFlash = function (index) {
+        if (len == idnex) return;   //播放到最后就结束
+        callback(this._queue[index]);
+        setTimeout(function(){recurseFlash(index + 1)}, this.timeout);
+    }
+    recurseFlash(0);
+}
+FalshQeue.prototype.insertFrame = function (frame) {
+    this._queue.push(frame);
+}
+FalshQeue.prototype.clear = function() {
+    this._queue = [];
+}
+
 function addClassName(ele, name) {
     if(!ele.className) {
         ele.className = name;
@@ -145,41 +166,6 @@ function createRandomDiv() {
     return div;
 }
 
-//根据深度创建二叉树
-function createNodeTree(root, depth) {
-    if(depth == 0) return null;
-    if(depth == 1) return root;
-    root.leftnode = new Node(createEle("div"));
-    root.rightnode = new Node(createEle("div"));
-    createNodeTree(root.leftnode, depth - 1);
-    createNodeTree(root.rightnode, depth - 1);
-}
-
-//二叉树转成具有父子关系的DOM元素
-function tree2Dom (root) {
-    if(null == root) return false;
-    var rootdiv = root.value;
-    if(root.leftnode != null) {
-        var leftdiv = root.leftnode.value;
-        rootdiv.appendChild(leftdiv);
-        tree2Dom(root.leftnode);
-    }
-    if(root.rightnode != null) {
-        var rightdiv = root.rightnode.value;
-        rootdiv.appendChild(rightdiv);
-        tree2Dom(root.rightnode);
-    }
-
- }
-
-//前序遍历
- function preOrder(root) {
-    if(null == root) return false;
-    nodeQuenue.push(root);
-    preOrder(root.leftnode);
-    preOrder(root.rightnode);
- }
-
 
 var container = document.getElementById("container");
 var inputdep = document.getElementById("inputDep");
@@ -188,7 +174,7 @@ var btntraverseDF = document.getElementById("btntraverseDF");
 var btntraverseBF = document.getElementById("btntraverseBF");
 
 var mydivTree = new divTree(container);
-
+var treeFlash = new FalshQeue(1500);
 
 //添加监听事件
  function addlistener() {
