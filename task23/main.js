@@ -120,7 +120,7 @@ FalshQeue.prototype.movie = function (callback, index) {
     this.isanimating = true;
     var recurseFlash = function () {
         callback();             //index==len也会处理，用于处理所有动画结束的收尾
-        if (len == this.frameIndex) 
+        if (len == that.frameIndex) 
         {   
             that.isanimating = false;  //这里用this会指向window,用that传入flashqueue
             return;   //播放到最后就结束
