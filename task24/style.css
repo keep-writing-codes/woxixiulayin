@@ -1,0 +1,33 @@
+* {
+    margin: 0px;
+}
+
+#control {
+    margin: 20px 5px 5px;
+    font-size: 12px;
+}
+
+button, input {
+    margin-left: 5px;
+}
+#container,#container div {
+    float: left;
+    margin: 4px 3px;
+    min-height: 20px;
+    min-width: 25px;
+    border: solid 3px red;
+    background-color: white;
+    overflow: auto;
+}
+
+div.hide {
+    display: none;
+}
+div.show {
+    display: block;
+}
+
+div.on {
+    border: solid 3px blue !important;
+}
+
