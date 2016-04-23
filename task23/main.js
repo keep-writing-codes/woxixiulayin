@@ -100,41 +100,55 @@ divTree.prototype.create = function (depth) {
 
 //flash动画队列，一次存入需要播放的动作元素
 //存入后不需要pop，依次遍历播放就可以
-function FalshQeue (timeout) {
+function FlashQueue (timeout) {
     this._queue = [];
     this.timeout = timeout;
     this.isanimating = false;  //是否处于动画播放中,禁止播放到一半又开始播放
     this.frameIndex = 0;  //当前帧所在的位置
+    this.isstop = false; //暂停
+    this.timer = null;
 }
 
 //插入播放的元素
-FalshQeue.prototype.insertFrame = function (frame) {
+FlashQueue.prototype.insertFrame = function (frame) {
     this.frameIndex++;
     this._queue.push(frame);
 }
 
-FalshQeue.prototype.movie = function (callback, index) {
+FlashQueue.prototype.movie = function (callback, index) {
     var len = this._queue.length;
-    var that = this;
     this.frameIndex = arguments[1] ? arguments[1] : 0;//默认从0帧开始播放
     this.isanimating = true;
+    var that = this;//下面的函数里面用this会指向window,用that传入flashqueue
     var recurseFlash = function () {
+        if (that.isstop) return;
         callback();             //index==len也会处理，用于处理所有动画结束的收尾
-        if (len == that.frameIndex) 
+        if (that.frameIndex >= len) 
         {   
-            that.isanimating = false;  //这里用this会指向window,用that传入flashqueue
+            that.isanimating = false;
             return;   //播放到最后就结束
         }
         that.frameIndex++;
-        setTimeout(function(){recurseFlash()}, that.timeout);
+        that.timer = setTimeout(recurseFlash, that.timeout);
     }
+    this.isstop = false;
     recurseFlash(0);
-}
-FalshQeue.prototype.clear = function() {
+};
+FlashQueue.prototype.clear = function() {
     this._queue = [];
+    this.reset();
+};
+FlashQueue.prototype.stop = function () {
+    this.isstop = true;
+    this.isanimating = false;
+    clearTimeout(this.timer);
+};
+FlashQueue.prototype.reset = function () {
+    this.frameIndex = 0;
+    this.stop();
 }
-
 function addClassName(ele, name) {
+    if(!ele) return;
     if(!ele.className) {
         ele.className = name;
     } else {
@@ -145,7 +159,7 @@ function addClassName(ele, name) {
 }
 
 function removeClassName(ele, name) {
-    if(!ele.className) return;
+    if(!ele || !ele.className) return;
     if(!hasClassName(ele, name)) return;
     var names = ele.className.split(' ');
     names.forEach( function(element, index) {
@@ -186,18 +200,20 @@ var mydivTree = new divTree(container);
 //定义mydivTree的动画
 mydivTree.flash = (function () {
     //插入动画队列每点的元素
-    var treeFlash = new FalshQeue(700);
+    var treeFlash = new FlashQueue(700);
     var insetAction = function (currentNode) {
         treeFlash.insertFrame(currentNode.data);
     };
     //基于每个队列元素，生成每帧的动作
     var flashAction = function () {
+        console.log("flashAction frameIndex = " + treeFlash.frameIndex );
+        if (treeFlash.isstop) return;
         var index = treeFlash.frameIndex;
         if (index != 0) {
             var preDiv = treeFlash._queue[index-1];
             removeClassName(preDiv, "on");
             if(!treeFlash._queue[index]) return;  //当前元素为空就终止
-            if (index == treeFlash._queue.length) return;
+            if (index >= treeFlash._queue.length) return;
         }
         var currentDiv = treeFlash._queue[index];
         addClassName(currentDiv, "on");
@@ -216,7 +232,7 @@ mydivTree.flash = (function () {
         }
     };
     treeFlash.movie = function () {
-        FalshQeue.prototype.movie.call(treeFlash, flashAction);
+        FlashQueue.prototype.movie.call(treeFlash, flashAction);
     }
     return treeFlash;
 }());
@@ -236,6 +252,7 @@ mydivTree.flash = (function () {
         }
         console.log("depth = " + depth);
         mydivTree.flash.clear();
+        mydivTree.flash.reset();
         mydivTree.create(depth);
         addClassName(container, "show");
 
@@ -243,16 +260,16 @@ mydivTree.flash = (function () {
 
     btntraversalDF.onclick = function () {
         var flash = mydivTree.flash;
-        if (flash.isanimating) return;
-        flash.isanimating = true;
+        flash.reset();
+        flash.clear();
         flash.insertFrames(TRAVERSAL.traversalDF);
         flash.movie();
     };
 
     btntraversalBF.onclick = function () {
         var flash = mydivTree.flash;
-        if (flash.isanimating) return;
-        flash.isanimating = true;
+        flash.reset();
+        flash.clear();
         flash.insertFrames(TRAVERSAL.traversalBF);
         flash.movie();
     }
