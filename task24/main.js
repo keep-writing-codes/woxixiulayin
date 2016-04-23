@@ -55,16 +55,15 @@ Tree.prototype = {
         var parsentNode = null;
         var checkPdata = function (node) {
             if(node.data == pdata) {
-                parentNode = node;
+                if (!cdata) return;
+                parsentNode = node;
+                var childNode = new Node(cdata);
+                parsentNode.children.push(childNode);
             }
         };
 
-        contains.call(this, checkPdata, traversal);
+        this.contains(checkPdata, traversal);
 
-        if (parsentNode && cdata) {
-            var childNode = new Node(cdata);
-            parsentNode.children.push(childNode);
-        }
     }
 };
 
@@ -78,7 +77,19 @@ divTree.prototype.add = function (pdiv, cdiv, traversal) {
             Tree.prototype.add.call(this, pdiv, cdiv, traversal);
             pdiv.appendChild(cdiv);
         };
+divTree.prototype.findDivsByName = function (name) {
+    var destNodes = [];
+    var getNodes = function (currentNode) {
+        currentDiv = currentNode.data;
+        if (hasClassName(currentDiv, name)) {
+            destNodes.push(currentNode.data);
+        }
+    };
+    Tree.prototype.traversalBF.call(this, getNodes);
+    return destNodes;
+}
 divTree.prototype.create = function (depth) {
+            this.root.children = [];
             var recurseCreate = function (currentNode, depth) {
                 if (0 == depth) return null;
                 if (1 == depth) return currentNode;
@@ -87,7 +98,7 @@ divTree.prototype.create = function (depth) {
                 currentNode.children = [];
                 for(var i=0,len=getRandomInt(3)+1;i<len;i++) {
                     console.log("depth= " + depth + ",i = " + i);
-                    newDiv = createRandomDiv();
+                    newDiv = createDiv();
                     childNode = new Node(newDiv);
                     currentNode.children.push(childNode);
                     currentNode.data.appendChild(newDiv);
@@ -180,15 +191,19 @@ function createEle (label) {
 }
 
 function divListener (event) {
-    if (event.target.tagName != "DIV") return;
+    if (event.target.tagName != "DIV") return;       //tagname返回的是大写标签
+    if (event.currentTarget != event.target) return; //防止事件传递事，多次触发下面的动作，导致div被重新设回去
+    var div = event.target;
     // console.log(this);  //事件处理函数中，this始终指向currentTarget，事件的捕获和冒泡机制
-    addClassName(event.target, "on");  //target指向发生事件的元素
+    hasClassName(div, "on")?removeClassName(div, "on"):addClassName(div, "on"); //target指向发生事件的元素
 }
 
-function createRandomDiv() {
+function createDiv(text) {
+    var text = arguments[0] ? arguments[0] : "";
     var div = createEle("div");
-    // addEventListener("click", divListener, true);
-    div.onclick = divListener;
+    div.innerHTML = text;
+    div.addEventListener("click", divListener);
+    // div.onclick = divListener; //捕获和冒泡都会触发
     return div;
 }
 
@@ -197,6 +212,9 @@ var inputdep = document.getElementById("inputDep");
 var btncreate = document.getElementById("btnCreate");
 var btntraversalDF = document.getElementById("btntraversalDF");
 var btntraversalBF = document.getElementById("btntraversalBF");
+var btnDelete = document.getElementById("btnDelete");
+var btnAdd = document.getElementById("btnAdd");
+var inputContent = document.getElementById("inputContent");
 
 var TRAVERSAL = {
     traversalDF: 1,
@@ -255,6 +273,7 @@ mydivTree.flash = (function () {
 
 //添加监听事件
  function addlistener() {
+    container.addEventListener("click", divListener);
     //生成二叉树的按键事件
     btncreate.onclick = function () {
         var depth = inputdep.value;
@@ -287,8 +306,21 @@ mydivTree.flash = (function () {
         flash.clear();
         flash.insertFrames(TRAVERSAL.traversalBF);
         flash.movie();
-    }
- };
+    };
+
+    btnAdd.onclick = function () {
+        var text = inputContent.value;
+        divsOn = mydivTree.findDivsByName("on");
+        if(0 == divsOn.length) {
+            alert("请选择节点");
+        } else {
+            divsOn.forEach(function(ele, i) {
+                var childDiv = createDiv(text);
+                mydivTree.add(ele, childDiv, Tree.prototype.traversalBF);
+            })
+        }
+    };
+ }
 
 function main() {
     addlistener();
