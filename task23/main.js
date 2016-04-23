@@ -103,7 +103,10 @@ divTree.prototype.create = function (depth) {
 function FalshQeue (timeout) {
     this._queue = [];
     this.timeout = timeout;
+    this.isanimating = false;  //是否处于动画播放中,禁止播放到一半又开始播放
 }
+
+//插入播放的元素
 FalshQeue.prototype.insertFrame = function (frame) {
     this._queue.push(frame);
 }
@@ -111,9 +114,14 @@ FalshQeue.prototype.insertFrame = function (frame) {
 FalshQeue.prototype.movie = function (callback) {
     var len = this._queue.length;
     var that = this;
+    this.isanimating = true;
     var recurseFlash = function (index) {
         callback(index);             //index==len也会处理，用于处理所有动画结束的收尾
-        if (len == index) return;   //播放到最后就结束
+        if (len == index) 
+        {   
+            that.isanimating = false;  //这里用this会指向window
+            return;   //播放到最后就结束
+        }
         setTimeout(function(){recurseFlash(index + 1)}, that.timeout);
     }
     recurseFlash(0);
@@ -172,7 +180,7 @@ var TRAVERSAL = {
 var mydivTree = new divTree(container);
 
 //定义mydivTree的动画
-mydivTree.flash = function (mytraversal) {
+mydivTree.flash = (function () {
     //插入动画队列每点的元素
     var insetAction = function (currentNode) {
         treeFlash.insertFrame(currentNode.data);
@@ -189,7 +197,7 @@ mydivTree.flash = function (mytraversal) {
     };
     var treeFlash = new FalshQeue(700);
     //遍历divTree，插入动画队列
-    treeFlash.insertFrames = function () {
+    treeFlash.insertFrames = function (mytraversal) {
         switch (mytraversal) {
             case 1:
                 mydivTree.traversalDF(insetAction); 
@@ -205,7 +213,9 @@ mydivTree.flash = function (mytraversal) {
         FalshQeue.prototype.movie.call(treeFlash, flashAction);
     }
     return treeFlash;
-};
+}());
+
+
 
 
 //添加监听事件
@@ -225,14 +235,18 @@ mydivTree.flash = function (mytraversal) {
     };
 
     btntraversalDF.onclick = function () {
-        var flash = mydivTree.flash(TRAVERSAL.traversalDF);
-        flash.insertFrames();
+        var flash = mydivTree.flash;
+        if (flash.isanimating) return;
+        flash.isanimating = true;
+        flash.insertFrames(TRAVERSAL.traversalDF);
         flash.movie();
     };
 
     btntraversalBF.onclick = function () {
-        var flash = mydivTree.flash(TRAVERSAL.traversalBF);
-        flash.insertFrames();
+        var flash = mydivTree.flash;
+        if (flash.isanimating) return;
+        flash.isanimating = true;
+        flash.insertFrames(TRAVERSAL.traversalBF);
         flash.movie();
     }
  };
