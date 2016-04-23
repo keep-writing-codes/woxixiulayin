@@ -23,12 +23,12 @@ Tree.prototype = {
         //内部放入一个立即执行函数，当地调用traverseDF时，直接执行下面的函数。
         (function recurse(currentNode) {
             if (!currentNode) return false;
+            callback(currentNode);
             //深度优先遍历，先遍历下层节点
             for(var i=0,len=currentNode.children.length;i<len;i++) {
                 recurse(currentNode.children[i]);
             }
             //然后处理本层节点
-            callback(currentNode);
         }(this.root));
     },
     traversalBF: function (callback) {
@@ -112,8 +112,8 @@ FalshQeue.prototype.movie = function (callback) {
     var len = this._queue.length;
     var that = this;
     var recurseFlash = function (index) {
+        callback(index);             //index==len也会处理，用于处理所有动画结束的收尾
         if (len == index) return;   //播放到最后就结束
-        callback(index);
         setTimeout(function(){recurseFlash(index + 1)}, that.timeout);
     }
     recurseFlash(0);
@@ -178,17 +178,17 @@ mydivTree.flash = function (mytraversal) {
     var insetAction = function (currentNode) {
         treeFlash.insertFrame(currentNode.data);
     };
-    //基于每个队列元素，生成美帧的动作
+    //基于每个队列元素，生成每帧的动作
     var flashAction = function (index) {
-        if (treeFlash.length == index) return;
         if (index != 0) {
             var preDiv = treeFlash._queue[index-1];
             removeClassName(preDiv, "on");
+            if (index == treeFlash._queue.length) return;
         }
         var currentDiv = treeFlash._queue[index];
         addClassName(currentDiv, "on");
     };
-    var treeFlash = new FalshQeue(1500);
+    var treeFlash = new FalshQeue(700);
     //遍历divTree，插入动画队列
     treeFlash.insertFrames = function () {
         switch (mytraversal) {
