@@ -104,25 +104,29 @@ function FalshQeue (timeout) {
     this._queue = [];
     this.timeout = timeout;
     this.isanimating = false;  //是否处于动画播放中,禁止播放到一半又开始播放
+    this.frameIndex = 0;  //当前帧所在的位置
 }
 
 //插入播放的元素
 FalshQeue.prototype.insertFrame = function (frame) {
+    this.frameIndex++;
     this._queue.push(frame);
 }
 
-FalshQeue.prototype.movie = function (callback) {
+FalshQeue.prototype.movie = function (callback, index) {
     var len = this._queue.length;
     var that = this;
+    this.frameIndex = arguments[1] ? arguments[1] : 0;//默认从0帧开始播放
     this.isanimating = true;
-    var recurseFlash = function (index) {
-        callback(index);             //index==len也会处理，用于处理所有动画结束的收尾
-        if (len == index) 
+    var recurseFlash = function () {
+        callback();             //index==len也会处理，用于处理所有动画结束的收尾
+        if (len == this.frameIndex) 
         {   
-            that.isanimating = false;  //这里用this会指向window
+            that.isanimating = false;  //这里用this会指向window,用that传入flashqueue
             return;   //播放到最后就结束
         }
-        setTimeout(function(){recurseFlash(index + 1)}, that.timeout);
+        that.frameIndex++;
+        setTimeout(function(){recurseFlash()}, that.timeout);
     }
     recurseFlash(0);
 }
@@ -182,20 +186,22 @@ var mydivTree = new divTree(container);
 //定义mydivTree的动画
 mydivTree.flash = (function () {
     //插入动画队列每点的元素
+    var treeFlash = new FalshQeue(700);
     var insetAction = function (currentNode) {
         treeFlash.insertFrame(currentNode.data);
     };
     //基于每个队列元素，生成每帧的动作
-    var flashAction = function (index) {
+    var flashAction = function () {
+        var index = treeFlash.frameIndex;
         if (index != 0) {
             var preDiv = treeFlash._queue[index-1];
             removeClassName(preDiv, "on");
+            if(!treeFlash._queue[index]) return;  //当前元素为空就终止
             if (index == treeFlash._queue.length) return;
         }
         var currentDiv = treeFlash._queue[index];
         addClassName(currentDiv, "on");
     };
-    var treeFlash = new FalshQeue(700);
     //遍历divTree，插入动画队列
     treeFlash.insertFrames = function (mytraversal) {
         switch (mytraversal) {
@@ -229,6 +235,7 @@ mydivTree.flash = (function () {
             return;
         }
         console.log("depth = " + depth);
+        mydivTree.flash.clear();
         mydivTree.create(depth);
         addClassName(container, "show");
 
