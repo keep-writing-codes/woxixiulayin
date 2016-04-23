@@ -196,7 +196,12 @@ var TRAVERSAL = {
 }
 
 var mydivTree = new divTree(container);
-
+mydivTree.reset = function () {
+    mydivTree.traversalDF(function (currentNode) {
+        if (!currentNode.data) return;
+        removeClassName(currentNode.data, "on");
+    })
+}
 //定义mydivTree的动画
 mydivTree.flash = (function () {
     //插入动画队列每点的元素
@@ -260,6 +265,7 @@ mydivTree.flash = (function () {
 
     btntraversalDF.onclick = function () {
         var flash = mydivTree.flash;
+        mydivTree.reset();
         flash.reset();
         flash.clear();
         flash.insertFrames(TRAVERSAL.traversalDF);
@@ -268,6 +274,7 @@ mydivTree.flash = (function () {
 
     btntraversalBF.onclick = function () {
         var flash = mydivTree.flash;
+        mydivTree.reset();
         flash.reset();
         flash.clear();
         flash.insertFrames(TRAVERSAL.traversalBF);
