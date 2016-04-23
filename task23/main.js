@@ -155,7 +155,6 @@ function createEle (label) {
 
 function createRandomDiv() {
     var div = createEle("div");
-    div.innerHTML = "" + getRandomInt(100);
     return div;
 }
 
