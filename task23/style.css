@@ -11,7 +11,7 @@
     margin: 4px 3px;
     min-height: 20px;
     min-width: 25px;
-    border: solid 2px red;
+    border: solid 3px red;
     background-color: white;
     overflow: auto;
 }
@@ -24,5 +24,6 @@
 }
 
 div.on {
-    background-color: blue !important;
+    border: solid 3px blue !important;
 }
+
