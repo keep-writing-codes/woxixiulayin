@@ -64,6 +64,18 @@ Tree.prototype = {
 
         this.contains(checkPdata, traversal);
 
+    },
+    remove: function (pdata, traversal) {
+        var removeIfpdata = function (currentNode) {//先找到其父节点
+            var children = currentNode.children;
+            children.forEach(function (ele, i) {
+                if (ele.data == pdata) {
+                    ele.data.children = []; //将children置空，取消引用，删除子节点
+                    children.splice(i, 1);   //删除当前项
+                }
+            })
+        };
+        this.contains(removeIfpdata, traversal);
     }
 };
 
@@ -74,14 +86,26 @@ function divTree(data) {
 divTree.prototype = new Tree(container);
 divTree.prototype.constructor = divTree;
 divTree.prototype.add = function (pdiv, cdiv, traversal) {
-            Tree.prototype.add.call(this, pdiv, cdiv, traversal);
-            pdiv.appendChild(cdiv);
-        };
+    Tree.prototype.add.call(this, pdiv, cdiv, traversal);
+    pdiv.appendChild(cdiv);
+};
+divTree.prototype.remove = function (div, traversal) {
+    if (!div || div.tagName != "DIV") {
+        console.log('查找的元素不是div');
+        return;
+    }
+    
+    Tree.prototype.remove.call(this, div, traversal);   //删除节点
+    div.innerHTML = "";
+    div.parentNode.removeChild(div);
+}
 divTree.prototype.findDivsByName = function (name) {
     var destNodes = [];
     var getNodes = function (currentNode) {
         currentDiv = currentNode.data;
         if (hasClassName(currentDiv, name)) {
+            console.log(currentDiv);
+            console.log(currentDiv.parentNode);
             destNodes.push(currentNode.data);
         }
     };
@@ -134,8 +158,8 @@ FlashQueue.prototype.movie = function (callback, index) {
     var recurseFlash = function () {
         if (that.isstop) return;
         callback();             //index==len也会处理，用于处理所有动画结束的收尾
-        if (that.frameIndex >= len) 
-        {   
+        if (that.frameIndex >= len)
+        {
             that.isanimating = false;
             return;   //播放到最后就结束
         }
@@ -173,8 +197,9 @@ function removeClassName(ele, name) {
     if(!ele || !ele.className) return;
     if(!hasClassName(ele, name)) return;
     var names = ele.className.split(' ');
-    names.forEach( function(element, index) {
-        if (name == element) names.pop(name);
+    console.log(names);
+    names.forEach(function(element, index) {
+        if (name == element)   names.splice(index, 1);
     });
     ele.className = names.join(" ");
 }
@@ -203,7 +228,7 @@ function createDiv(text) {
     var div = createEle("div");
     div.innerHTML = text;
     div.addEventListener("click", divListener);
-    // div.onclick = divListener; //捕获和冒泡都会触发
+    // div.onclick = divListener;  //尽量用上面的，屏蔽浏览器差异
     return div;
 }
 
@@ -253,10 +278,10 @@ mydivTree.flash = (function () {
     treeFlash.insertFrames = function (mytraversal) {
         switch (mytraversal) {
             case 1:
-                mydivTree.traversalDF(insetAction); 
+                mydivTree.traversalDF(insetAction);
                 break;
             case 2:
-                mydivTree.traversalBF(insetAction); 
+                mydivTree.traversalBF(insetAction);
                 break;
             default:
                 console.log("wrong traversal");
@@ -320,6 +345,17 @@ mydivTree.flash = (function () {
             })
         }
     };
+
+    btnDelete.onclick = function () {
+        var divsOn = mydivTree.findDivsByName("on");
+        if(0 == divsOn.length) {
+            alert("请选择节点");
+        } else {
+            divsOn.forEach(function(ele, i) {
+                mydivTree.remove(ele, Tree.prototype.traversalBF);
+            })
+        }
+    }
  }
 
 function main() {
