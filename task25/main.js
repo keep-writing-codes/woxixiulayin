@@ -80,10 +80,12 @@ Tree.prototype = {
 };
 
 function divTree(depth) {
-    var data = createDiv("根节点");
-    Tree.call(this, data);
+    var rootDiv = createDiv("根节点");
+    removeClassName(rootDiv, "hide");
+    addClassName(rootDiv, "show");
+    Tree.call(this, rootDiv);
     container.innerHTML = "";
-    container.appendChild(data);
+    container.appendChild(rootDiv);
     this.create(depth);
 }
 
@@ -292,6 +294,7 @@ function createDiv(text) {
     div.appendChild(textnode);
     div.addEventListener("click", divListener);
     // div.onclick = divListener;  //尽量用上面的，屏蔽浏览器差异
+    addClassName(div, "hide");
     return div;
 }
 
