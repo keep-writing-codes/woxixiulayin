@@ -1,0 +1,41 @@
+* {
+    margin: 0px;
+}
+
+#control {
+    margin: 20px 5px 5px;
+    font-size: 12px;
+}
+
+button, input {
+    margin-left: 5px;
+}
+#container,#container div {
+    margin: 4px 15px;
+    min-height: 20px;
+    min-width: 25px;
+    background-color: white;
+    line-height: 20px;
+    overflow: auto;
+}
+
+div.hide {
+    display: none;
+}
+div.show {
+    display: block;
+}
+
+div.on {
+    border: solid 3px blue !important;
+}
+
+div label {
+    width: 15px;
+    display: inline-block;
+    border: solid 2px white;
+}
+
+div label.father {
+    border: solid 2px black;
+}
