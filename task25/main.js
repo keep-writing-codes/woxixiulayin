@@ -116,6 +116,20 @@ divTree.prototype.findDivsByName = function (name) {
     };
     Tree.prototype.traversalBF.call(this, getNodes);
     return destNodes;
+};
+divTree.prototype.findNodes = function (callback) {
+    var destNodes = [];
+    var getNodes = callback(currentNode);
+    Tree.prototype.traversalBF.call(this, getNodes);
+    return destNodes;
+};
+divTree.prototype.findNodeByDiv = function (div) {
+    var destNode = null;
+    var getNode = function (currentNode) {
+        if (currentNode.data == div) destNode = currentNode;
+    }
+    this.findNodes(getNode);
+    return destNode;
 }
 divTree.prototype.create = function (depth) {
             this.root.children = [];
@@ -263,19 +277,35 @@ function hasClassName(ele, name) {
     return (ele.className.indexOf(name) != -1);
 }
 
+function replaceClassName(ele, prename, aftname) {
+    if(!ele.className) return false;
+    removeClassName(ele, prename);
+    addClassName(ele, aftname);
+}
+
+function reverseName (ele, name1, name2) {
+    if(!ele.className) return false;
+    if (hasClassName(ele, name1)) {
+        replaceClassName(ele, name1, name2);
+    } else if (hasClassName(ele, name2)) {
+        replaceClassName(ele, name2, name1);
+    } else {
+        return false;
+    }
+}
 function createEle (label) {
      var ele = document.createElement(label);
      if(!ele ) return null;
      return ele;
 }
 
-function divListener (event) {
-    if (event.target.tagName != "DIV") return;       //tagname返回的是大写标签
-    if (event.currentTarget != event.target) return; //防止事件传递事，多次触发下面的动作，导致div被重新设回去
-    var div = event.target;
-    // console.log(this);  //事件处理函数中，this始终指向currentTarget，事件的捕获和冒泡机制
-    hasClassName(div, "on")?removeClassName(div, "on"):addClassName(div, "on"); //target指向发生事件的元素
-}
+// function divListener (event) {
+//     if (event.target.tagName != "DIV") return;       //tagname返回的是大写标签
+//     if (event.currentTarget != event.target) return; //防止事件传递事，多次触发下面的动作，导致div被重新设回去
+//     var div = event.target;
+//     // console.log(this);  //事件处理函数中，this始终指向currentTarget，事件的捕获和冒泡机制
+//     hasClassName(div, "on")?removeClassName(div, "on"):addClassName(div, "on"); //target指向发生事件的元素
+// }
 
 function createDiv(text) {
     var text = arguments[0] ? arguments[0] : getRandomInt(100);
@@ -290,9 +320,21 @@ function createDiv(text) {
         label.innerHTML = "-";
         addClassName(label, "close");
     };
+    label.onclick = function () {
+        if (this != event.target) return;
+        var div =this.parentNode;
+        children = div.childNodes;
+        var flag = div.firstChild.innerHTML;
+        div.firstChild.innerHTML = flag == "+" ? "-": "+";
+        for(var i=0,len=children.length; i<len;i++) {
+            var ele = children[i];
+            if(ele.tagName == "DIV") {
+                reverseName(ele, "show", "hide");
+            }
+        }
+    }
     div.appendChild(label);
     div.appendChild(textnode);
-    div.addEventListener("click", divListener);
     // div.onclick = divListener;  //尽量用上面的，屏蔽浏览器差异
     addClassName(div, "hide");
     return div;
