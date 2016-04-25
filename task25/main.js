@@ -124,6 +124,7 @@ divTree.prototype.create = function (depth) {
                 var currentDiv = currentNode.data;
                 var newDiv = null;
                 currentNode.children = [];
+                currentDiv.firstChild.change2open();
                 for(var i=0,len=getRandomInt(3)+1;i<len;i++) {
                     console.log("depth= " + depth + ",i = " + i);
                     newDiv = createDiv();
@@ -279,6 +280,14 @@ function createDiv(text) {
     var div = createEle("div");
     var textnode = document.createTextNode(text);
     var label = createEle("label");
+    label.change2open = function () {
+        label.innerHTML = "+";
+        addClassName(label, "open");
+    };
+    label.change2close = function () {
+        label.innerHTML = "-";
+        addClassName(label, "close");
+    };
     div.appendChild(label);
     div.appendChild(textnode);
     div.addEventListener("click", divListener);

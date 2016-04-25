@@ -10,12 +10,11 @@
 button, input {
     margin-left: 5px;
 }
-#container,#container div {
-    margin: 4px 15px;
+#container div {
+    margin: 2px 15px;
     min-height: 20px;
     min-width: 25px;
     background-color: white;
-    line-height: 20px;
     overflow: auto;
 }
 
@@ -31,11 +30,11 @@ div.on {
 }
 
 div label {
-    width: 15px;
+    margin-right: 5px;
     display: inline-block;
     border: solid 2px white;
 }
 
-div label.father {
+div label.open {
     border: solid 2px black;
 }
