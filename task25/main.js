@@ -81,14 +81,15 @@ Tree.prototype = {
 
 function divTree(depth) {
     var rootDiv = createDiv("根节点");
+    Tree.call(this, rootDiv);
     removeClassName(rootDiv, "hide");
     addClassName(rootDiv, "show");
-    Tree.call(this, rootDiv);
     container.innerHTML = "";
     container.appendChild(rootDiv);
     this.create(depth);
 }
 
+divTree.prototype = new Tree(container);
 divTree.prototype.constructor = divTree;
 divTree.prototype.add = function (pdiv, cdiv, traversal) {
     Tree.prototype.add.call(this, pdiv, cdiv, traversal);
@@ -117,18 +118,13 @@ divTree.prototype.findDivsByName = function (name) {
     Tree.prototype.traversalBF.call(this, getNodes);
     return destNodes;
 };
-divTree.prototype.findNodes = function (callback) {
-    var destNodes = [];
-    var getNodes = callback(currentNode);
-    Tree.prototype.traversalBF.call(this, getNodes);
-    return destNodes;
-};
+
 divTree.prototype.findNodeByDiv = function (div) {
-    var destNode = null;
+    var destNode = [];
     var getNode = function (currentNode) {
         if (currentNode.data == div) destNode = currentNode;
     }
-    this.findNodes(getNode);
+    Tree.prototype.traversalBF.call(this, getNode);
     return destNode;
 }
 divTree.prototype.create = function (depth) {
@@ -368,9 +364,9 @@ var TRAVERSAL = {
         }
         console.log("depth = " + depth);
         mydivTree = new divTree(depth);
-        mydivTree.flash.clear();
-        mydivTree.flash.reset();
-        mydivTree.create(depth);
+        var flash = mydivTree.flash();
+        flash.clear();
+        flash.reset();
 
     };
 
@@ -392,11 +388,18 @@ var TRAVERSAL = {
 
     btnAdd.onclick = function () {
         var text = inputContent.value;
-        divsOn = divTree.prototype.findDivsByName("on");
-        if(0 == divsOn.length) {
+        // divsOn = divTree.prototype.findDivsByName("on");
+        var divChecked = [];
+        var getCheckedDiv = function (currentNode) {
+            var currentDiv = currentNode.data;
+            if (currentDiv.getElementsByTagName("input")[0].checked)
+                divChecked.push(currentDiv);
+        };
+        mydivTree.traversalBF(getCheckedDiv);
+        if(0 == divChecked.length) {
             alert("请选择节点");
         } else {
-            divsOn.forEach(function(ele, i) {
+            divChecked.forEach(function(ele, i) {
                 var childDiv = createDiv(text);
                 divTree.prototype.add(ele, childDiv, Tree.prototype.traversalBF);
             })
