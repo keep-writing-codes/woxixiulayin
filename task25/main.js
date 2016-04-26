@@ -152,6 +152,12 @@ divTree.prototype.create = function (depth) {
             }
             recurseCreate(this.root, depth);
         };
+divTree.prototype.reset = function () {
+    Tree.prototype.traversalDF.call(this, function (currentNode) {
+        if (!currentNode.data) return;
+        removeClassName(currentNode.data, "on");
+    })
+};
 
 //flash动画队列，一次存入需要播放的动作元素
 //存入后不需要pop，依次遍历播放就可以
@@ -203,12 +209,6 @@ FlashQueue.prototype.reset = function () {
     this.stop();
 };
 
-divTree.prototype.reset = function () {
-    divTree.prototype.traversalDF(function (currentNode) {
-        if (!currentNode.data) return;
-        removeClassName(currentNode.data, "on");
-    })
-}
 //定义divTree的动画
 divTree.prototype.flash = (function () {
     //插入动画队列每点的元素
@@ -234,10 +234,10 @@ divTree.prototype.flash = (function () {
     treeFlash.insertFrames = function (mytraversal) {
         switch (mytraversal) {
             case 1:
-                divTree.prototype.traversalDF(insetAction);
+                Tree.prototype.traversalDF.call(this, insetAction);
                 break;
             case 2:
-                divTree.prototype.traversalBF(insetAction);
+                Tree.prototype.traversalBF.call(this, insetAction);
                 break;
             default:
                 console.log("wrong traversal");
@@ -333,7 +333,10 @@ function createDiv(text) {
             }
         }
     }
+    var checkbox = createEle("input");
+    checkbox.type = "checkbox";
     div.appendChild(label);
+    div.appendChild(checkbox);
     div.appendChild(textnode);
     // div.onclick = divListener;  //尽量用上面的，屏蔽浏览器差异
     addClassName(div, "hide");

@@ -37,6 +37,11 @@ div label {
     border: solid 2px white;
 }
 
+div input {
+    margin-right: 4px; 
+}
+
+
 div label.open {
     border: solid 2px black;
 }
