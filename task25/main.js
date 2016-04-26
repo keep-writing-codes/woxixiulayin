@@ -93,6 +93,7 @@ divTree.prototype = new Tree(container);
 divTree.prototype.constructor = divTree;
 divTree.prototype.add = function (pdiv, cdiv, traversal) {
     Tree.prototype.add.call(this, pdiv, cdiv, traversal);
+    pdiv.getElementsByTagName("label")[0].change2open();
     pdiv.appendChild(cdiv);
 };
 divTree.prototype.remove = function (div, traversal) {
@@ -401,6 +402,7 @@ var TRAVERSAL = {
         } else {
             divChecked.forEach(function(ele, i) {
                 var childDiv = createDiv(text);
+                replaceClassName(childDiv, "hide", "show");
                 divTree.prototype.add(ele, childDiv, Tree.prototype.traversalBF);
             })
         }
