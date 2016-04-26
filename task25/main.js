@@ -103,7 +103,12 @@ divTree.prototype.remove = function (div, traversal) {
     }
     
     Tree.prototype.remove.call(this, div, traversal);   //删除节点
-    div.innerHTML = "";
+    if (!div.parsentNode) {
+        this.root = null;
+        container.innerHTML = "";
+        return;
+    }
+    div.innerHTML = ""; //删除内部dom元素
     div.parentNode.removeChild(div);
 }
 divTree.prototype.findDivsByName = function (name) {
@@ -409,11 +414,18 @@ var TRAVERSAL = {
     };
 
     btnDelete.onclick = function () {
-        var divsOn = divTree.prototype.findDivsByName("on");
-        if(0 == divsOn.length) {
+        // var divsOn = divTree.prototype.findDivsByName("on");
+        var divChecked = [];
+        var getCheckedDiv = function (currentNode) {
+            var currentDiv = currentNode.data;
+            if (currentDiv.getElementsByTagName("input")[0].checked)
+                divChecked.push(currentDiv);
+        };
+        mydivTree.traversalBF(getCheckedDiv);
+        if(0 == divChecked.length) {
             alert("请选择节点");
         } else {
-            divsOn.forEach(function(ele, i) {
+            divChecked.forEach(function(ele, i) {
                 divTree.prototype.remove(ele, Tree.prototype.traversalBF);
             })
         }
