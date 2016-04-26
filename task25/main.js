@@ -407,7 +407,7 @@ var TRAVERSAL = {
             divChecked.forEach(function(ele, i) {
                 var childDiv = createDiv(text);
                 replaceClassName(childDiv, "hide", "show");
-                divTree.prototype.add(ele, childDiv, Tree.prototype.traversalBF);
+                mydivTree.add(ele, childDiv, Tree.prototype.traversalBF);
             })
         }
     };
