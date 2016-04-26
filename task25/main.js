@@ -340,14 +340,18 @@ function createDiv(text) {
     return div;
 }
 
-var container = document.getElementById("container");
-var inputdep = document.getElementById("inputDep");
-var btncreate = document.getElementById("btnCreate");
-var btntraversalDF = document.getElementById("btntraversalDF");
-var btntraversalBF = document.getElementById("btntraversalBF");
-var btnDelete = document.getElementById("btnDelete");
-var btnAdd = document.getElementById("btnAdd");
-var inputContent = document.getElementById("inputContent");
+function $(id) {
+    return document.getElementById(id);
+}
+
+var container = $("container");
+var inputdep = $("inputDep");
+var btncreate = $("btnCreate");
+var btntraversalDF = $("btntraversalDF");
+var btntraversalBF = $("btntraversalBF");
+var btnDelete = $("btnDelete");
+var btnAdd = $("btnAdd");
+var inputContent = $("inputContent");
 var mydivTree = null;
 var TRAVERSAL = {
     traversalDF: 1,
