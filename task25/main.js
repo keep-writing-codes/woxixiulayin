@@ -66,6 +66,10 @@ Tree.prototype = {
 
     },
     remove: function (pdata, traversal) {
+        if (pdata == this.root.data) {
+            this.root = null;
+            return;
+        }
         var removeIfpdata = function (currentNode) {//先找到其父节点
             var children = currentNode.children;
             children.forEach(function (ele, i) {
@@ -103,11 +107,6 @@ divTree.prototype.remove = function (div, traversal) {
     }
     
     Tree.prototype.remove.call(this, div, traversal);   //删除节点
-    if (!div.parsentNode) {
-        this.root = null;
-        container.innerHTML = "";
-        return;
-    }
     div.innerHTML = ""; //删除内部dom元素
     div.parentNode.removeChild(div);
 }
@@ -426,7 +425,7 @@ var TRAVERSAL = {
             alert("请选择节点");
         } else {
             divChecked.forEach(function(ele, i) {
-                divTree.prototype.remove(ele, Tree.prototype.traversalBF);
+                mydivTree.remove(ele, Tree.prototype.traversalBF);
             })
         }
     }
