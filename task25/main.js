@@ -166,7 +166,6 @@ function FlashQueue (timeout) {
     this.timeout = timeout;
     this.isanimating = false;  //是否处于动画播放中,禁止播放到一半又开始播放
     this.frameIndex = 0;  //当前帧所在的位置
-    this.isstop = false; //暂停
     this.timer = null;
 }
 
@@ -182,7 +181,6 @@ FlashQueue.prototype.movie = function (callback, index) {
     this.isanimating = true;
     var that = this;//下面的函数里面用this会指向window,用that传入flashqueue
     var recurseFlash = function () {
-        if (that.isstop) return;
         callback();             //index==len也会处理，用于处理所有动画结束的收尾
         if (that.frameIndex >= len)
         {
@@ -192,7 +190,6 @@ FlashQueue.prototype.movie = function (callback, index) {
         that.frameIndex++;
         that.timer = setTimeout(recurseFlash, that.timeout);
     }
-    this.isstop = false;
     recurseFlash(0);
 };
 FlashQueue.prototype.clear = function() {
@@ -200,7 +197,6 @@ FlashQueue.prototype.clear = function() {
     this.reset();
 };
 FlashQueue.prototype.stop = function () {
-    this.isstop = true;
     this.isanimating = false;
     clearTimeout(this.timer);
 };
@@ -210,7 +206,7 @@ FlashQueue.prototype.reset = function () {
 };
 
 //定义divTree的动画
-divTree.prototype.flash = (function () {
+divTree.prototype.flash = function () {
     //插入动画队列每点的元素
     var treeFlash = new FlashQueue(700);
     var insetAction = function (currentNode) {
@@ -218,8 +214,6 @@ divTree.prototype.flash = (function () {
     };
     //基于每个队列元素，生成每帧的动作
     var flashAction = function () {
-        console.log("flashAction frameIndex = " + treeFlash.frameIndex );
-        if (treeFlash.isstop) return;
         var index = treeFlash.frameIndex;
         if (index != 0) {
             var preDiv = treeFlash._queue[index-1];
@@ -231,13 +225,14 @@ divTree.prototype.flash = (function () {
         addClassName(currentDiv, "on");
     };
     //遍历divTree，插入动画队列
+    var divtree = this;
     treeFlash.insertFrames = function (mytraversal) {
         switch (mytraversal) {
             case 1:
-                Tree.prototype.traversalDF.call(this, insetAction);
+                Tree.prototype.traversalDF.call(divtree, insetAction);
                 break;
             case 2:
-                Tree.prototype.traversalBF.call(this, insetAction);
+                Tree.prototype.traversalBF.call(divtree, insetAction);
                 break;
             default:
                 console.log("wrong traversal");
@@ -247,7 +242,7 @@ divTree.prototype.flash = (function () {
         FlashQueue.prototype.movie.call(treeFlash, flashAction);
     }
     return treeFlash;
-}());
+};
 
 function addClassName(ele, name) {
     if(!ele) return;
@@ -380,18 +375,16 @@ var TRAVERSAL = {
     };
 
     btntraversalDF.onclick = function () {
-        var flash = mydivTree.flash;
+        var flash = mydivTree.flash();
         mydivTree.reset();
-        flash.reset();
         flash.clear();
         flash.insertFrames(TRAVERSAL.traversalDF);
         flash.movie();
     };
 
     btntraversalBF.onclick = function () {
-        var flash = mydivTree.flash;
+        var flash = mydivTree.flash();
         mydivTree.reset();
-        flash.reset();
         flash.clear();
         flash.insertFrames(TRAVERSAL.traversalBF);
         flash.movie();
