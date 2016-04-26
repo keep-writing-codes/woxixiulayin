@@ -97,7 +97,7 @@ divTree.prototype = new Tree(container);
 divTree.prototype.constructor = divTree;
 divTree.prototype.add = function (pdiv, cdiv, traversal) {
     Tree.prototype.add.call(this, pdiv, cdiv, traversal);
-    pdiv.getElementsByTagName("label")[0].change2open();
+    pdiv.getElementsByTagName("label")[0].change2close();
     pdiv.appendChild(cdiv);
 };
 divTree.prototype.remove = function (div, traversal) {
@@ -314,7 +314,7 @@ function createDiv(text) {
     };
     label.change2close = function () {
         label.innerHTML = "-";
-        addClassName(label, "close");
+        addClassName(label, "open");
     };
     label.onclick = function () {
         if (this != event.target) return;
