@@ -1,0 +1,24 @@
+* {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+#container {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#monitor {
+    border: solid 2px #000;
+}
+
+#control {
+    width: 450px;
+    height: 200px;
+    border: solid 2px #000;
+}
+
+#control h3 {
+    margin:5px 0;
+    text-align: center;
+}
