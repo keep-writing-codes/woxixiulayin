@@ -9,16 +9,17 @@ function Convas(canvasEle) {
     this.c = canvasEle.getContext("2d");
 }
 
-Convas.prototype.fillStyle = function (rgba) {
-     this.c.fillStyle = rgba;
+Convas.prototype.setBackground = function (rgba) {
+    this.c.fillStyle = rgba;
+    this.c.fillRect(0, 0, this.width, this.height);
 }
 
-Convas.prototype.fillRect = function (x, y, width, height) {
-     this.c.fillRect(x, y, width, height);
-}
-Convas.prototype.setBackground = function(rgba) {
-    this.fillStyle = rgba;
-    this.fillRect(0, 0, this.width, this.height);
+Convas.prototype.drawCircle = function (x, y, radius, rgba) {
+    this.c.beginPath();
+    this.c.fillStyle = rgba;
+    this.c.arc(x, y, radius, 0, 2 * Math.PI, false);
+    this.c.closePath();
+    this.c.fill();
 }
 
 function main() {
@@ -27,6 +28,8 @@ function main() {
     var control = $("control");
     var myConvas = new Convas(monitor);
     
-    myConvas.setBackground("black"); 
+    myConvas.setBackground("black");
+    myConvas.drawCircle(myConvas.width/2, myConvas.height/2, myConvas.width/4, "blue");
+
 }
 main();
