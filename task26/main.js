@@ -22,6 +22,20 @@ Convas.prototype.drawCircle = function (x, y, radius, rgba) {
     this.c.fill();
 }
 
+function Entity(world) {
+    this._count++;
+    this.id = this._count;
+    this.world = world;
+}
+
+Entity.prototype.count = 0;
+
+function World (canvas) {
+    this.canvas = canvas;
+    this.entites = [];
+}
+
+
 function main() {
     var container = $("container");
     var monitor = $("monitor");
