@@ -1,5 +1,9 @@
-var $ = function (id) {
+function $ (id) {
     return document.getElementById(id);
+}
+
+function log (str) {
+    console.log(str);
 }
 
 function Canvas(canvasEle) {
@@ -57,7 +61,7 @@ function Ship(position, angle) {
 
 Ship.prototype = Object.create(Entity.prototype);
 Ship.prototype.constructor = Ship;
-Ship.prototype.draw = function () {
+Ship.prototype.show = function () {
 
 }
 
