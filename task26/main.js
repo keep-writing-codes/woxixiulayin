@@ -18,6 +18,15 @@ Canvas.prototype.setBackground = function (rgba) {
     this.c.fillRect(0, 0, this.width, this.height);
 }
 
+Canvas.prototype.drawLine = function (x1, y1, x2, y2, width, rgba, linecap) {
+    this.c.moveTo(x1, y1);
+    this.c.lineTo(x2, y2);
+    this.c.closePath();
+    this.c.strokeStyle = rgba;
+    this.c.lineWidth = width;
+    this.c.lineCap = linecap;  //butt,round, square
+}
+
 Canvas.prototype.drawCircle = function (x, y, radius, rgba) {
     this.c.beginPath();
     this.c.fillStyle = rgba;
@@ -40,6 +49,7 @@ function Entity(x, y) {
 Entity.count = 0;
 Entity.prototype.addTo = function (world) {
     this.world = world;
+    this.canvas = world.canvas;
 }
 
 function Star(x, y, radius, color) {
@@ -51,18 +61,33 @@ Star.prototype = Object.create(Entity.prototype);
 Star.prototype.constructor = Star;
 Star.prototype.show = function () {
     if (!this.world) return false;
-    this.world.canvas.drawCircle(this.x, this.y, this.radius, this.color);
+    this.canvas.drawCircle(this.x, this.y, this.radius, this.color);
 }
 
-function Ship(position, angle) {
-    Entity.call(world, position);
+function Ship(x, y, angle) {
+    Entity.call(this, x, y);
     this.angle = angle;
+    this.shape = {
+        width: 20,
+        length: 40
+    }
 }
 
 Ship.prototype = Object.create(Entity.prototype);
 Ship.prototype.constructor = Ship;
+Ship.prototype.rotate = function (angle) {
+    this.canvas.c.save();
+    this.canvas.c.translate(this.x, this.y);
+    this.canvas.c.rotate(angle);
+    this.canvas.c.restore();
+};
 Ship.prototype.show = function () {
-
+    var headx = this.x - this.shape.width/2;
+    var heady = this.y;
+    var endx = this.x + this.shape.width/2;
+    var endy = this.y;
+    this.canvas.drawLine(headx, heady, endx, endy, "#333", "round");
+    this.rotate(this.angle);
 }
 
 function World (canvas) {
@@ -83,9 +108,12 @@ function main() {
     var world = new World(monitor);
 
     var star = new Star(200,200,100,"blue");
+    var ship1 = new Ship(100, 200, Math.PI/2);
     world.canvas.setBackground("black");
     world.add(star);
-    world.entites[0].show();
+    world.add(ship1);
+    star.show();
+    ship1.show();
 }
 
 //console.log(navigator.userAgent);  
