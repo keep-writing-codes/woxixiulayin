@@ -23,6 +23,7 @@ Canvas.prototype.drawLine = function (x1, y1, x2, y2, width, rgba, linecap) {
     this.c.lineCap = linecap;  //butt,round, square
     this.c.lineWidth = width;
     this.c.strokeStyle = rgba;
+    this.c.beginPath();
     this.c.moveTo(x1, y1);
     this.c.lineTo(x2, y2);
     this.c.closePath();
