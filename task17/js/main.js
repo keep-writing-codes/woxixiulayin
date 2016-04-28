@@ -50,9 +50,13 @@ var pageState = {
   nowGraTime: "day"
 }
 
+if (!isTestMode()) {
 var can = document.getElementById("aqi-canvas");
 var cxt = can.getContext("2d");
-
+} else {
+  var can = document.createElement("canvas");
+  var cxt = can.getContext("2d");
+}
 function draw_rect(col) {
   var width = col.width;
   var height = col.height;
@@ -253,14 +257,16 @@ function init() {
   initAqiChartData(getDatabyCity(pageState.nowSelectCity),pageState.nowGraTime);
 }
 
-var test = false;
-console.log("************test mode on?:" + test);
-if (!test) {
+//console.log(navigator.userAgent);  
+//如果在jest中会显示”Node.js (darwin; U; rv:v5.3.0)“
+function isTestMode() {
+    return (navigator.userAgent.indexOf("Node") != -1) ;
+}
+
+if (!isTestMode()) {
   init();
 } else {
-  var main = {
+  module.exports = {
     initAqiChartData: initAqiChartData
-
   }
-  module.exports = main;
 }
