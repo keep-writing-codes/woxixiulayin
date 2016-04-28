@@ -14,6 +14,14 @@ function Canvas(canvasEle) {
     console.log(this)
 }
 
+Canvas.prototype.rotate = function (x, y, angle, callback) {
+    this.c.save();
+    this.c.translate(x, y);
+    this.c.rotate(angle);
+    callback();
+    this.c.translate(0, 0);
+    this.c.restore();
+}
 Canvas.prototype.setBackground = function (rgba) {
     this.c.fillStyle = rgba;
     this.c.fillRect(0, 0, this.width, this.height);
@@ -85,11 +93,15 @@ Ship.prototype.rotate = function (angle) {
     this.canvas.c.restore();
 };
 Ship.prototype.show = function () {
-    var headx = this.x - this.shape.length/2;
-    var heady = this.y;
-    var endx = this.x + this.shape.length/2;
-    var endy = this.y;
-    this.canvas.drawLine(headx, heady, endx, endy, this.shape.width, "#333", "butt");
+    var headx = -this.shape.length/2;
+    var heady = 0;
+    var endx = this.shape.length/2;
+    var endy = 0;
+    var that = this;
+    var drawLine = function() {
+        that.canvas.drawLine(headx, heady, endx, endy, that.shape.width, "#333", "butt");
+    }
+    this.canvas.rotate(this.x, this.y, this.angle, drawLine);
     // this.rotate(this.angle);
 }
 
@@ -111,11 +123,14 @@ function main() {
     var world = new World(monitor);
 
     var star = new Star(200,200,100,"blue");
-    var ship1 = new Ship(100, 200, Math.PI/2);
+    var star2 = new Star(300, 300, 30, "yellow");
+    var ship1 = new Ship(100, 200, 0.40);
     world.canvas.setBackground("black");
     world.add(star);
     world.add(ship1);
+    world.add(star2);
     star.show();
+    star2.show();
     ship1.show();
 }
 
