@@ -11,6 +11,7 @@ function Canvas(canvasEle) {
     this.width = canvasEle.width;
     this.height = canvasEle.height;
     this.c = canvasEle.getContext("2d");
+    console.log(this)
 }
 
 Canvas.prototype.setBackground = function (rgba) {
@@ -19,12 +20,13 @@ Canvas.prototype.setBackground = function (rgba) {
 }
 
 Canvas.prototype.drawLine = function (x1, y1, x2, y2, width, rgba, linecap) {
+    this.c.lineCap = linecap;  //butt,round, square
+    this.c.lineWidth = width;
+    this.c.strokeStyle = rgba;
     this.c.moveTo(x1, y1);
     this.c.lineTo(x2, y2);
     this.c.closePath();
-    this.c.strokeStyle = rgba;
-    this.c.lineWidth = width;
-    this.c.lineCap = linecap;  //butt,round, square
+    this.c.stroke();
 }
 
 Canvas.prototype.drawCircle = function (x, y, radius, rgba) {
@@ -68,8 +70,8 @@ function Ship(x, y, angle) {
     Entity.call(this, x, y);
     this.angle = angle;
     this.shape = {
-        width: 20,
-        length: 40
+        width: 40,
+        length: 100
     }
 }
 
@@ -82,12 +84,12 @@ Ship.prototype.rotate = function (angle) {
     this.canvas.c.restore();
 };
 Ship.prototype.show = function () {
-    var headx = this.x - this.shape.width/2;
+    var headx = this.x - this.shape.length/2;
     var heady = this.y;
-    var endx = this.x + this.shape.width/2;
+    var endx = this.x + this.shape.length/2;
     var endy = this.y;
-    this.canvas.drawLine(headx, heady, endx, endy, "#333", "round");
-    this.rotate(this.angle);
+    this.canvas.drawLine(headx, heady, endx, endy, this.shape.width, "#333", "butt");
+    // this.rotate(this.angle);
 }
 
 function World (canvas) {

@@ -1,6 +1,6 @@
 function checkProperty(object) {
     for(var p in object){
-        expect(p).toBeDefined();
+        expect(object[p]).toBeDefined();
     }
 }
 
@@ -18,14 +18,14 @@ describe('Entity object', function() {
         entity = new Entity(100, 100);
     });
 
-    it("check basic constructor funciton", function () {
+    it("Check Entity factory", function () {
         expect(entity.x).toBe(100);
         expect(entity.y).toBe(100);
         checkProperty(entity);
     })
 });
 
-describe("check World Object", () => {
+describe("Check World Object", () => {
     var world;
     var World = main.World;
     beforeEach(() => {
@@ -43,6 +43,7 @@ describe('Check Ship Object', () => {
     beforeEach(() => {
         world = new World(document.createElement("canvas"));
         ship = new Ship(200, 200, Math.PI/2);
+        world.add(ship);
     });
 
     it("Check Ship factory", () => {
@@ -50,4 +51,8 @@ describe('Check Ship Object', () => {
         expect(ship.y).toBe(200);
         checkProperty(ship);
     });
+
+    // it("Check Ship show function", () => {
+    //     expect(ship.show()).toBeUndefined();
+    // });
 });
