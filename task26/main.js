@@ -54,12 +54,19 @@ function Entity(x, y) {
     this.x = x;
     this.y = y;
     Entity.count++;
-    this.id = Entity.count;
 }
 Entity.count = 0;
+
 Entity.prototype.addTo = function (world) {
     this.world = world;
     this.canvas = world.canvas;
+    world.entites.push(this);
+}
+
+Entity.prototype.destroy = function () {
+    var index = this.world.entites.indexOf(this);
+    if (index == -1) return;
+    this.world.entites.splice(index, 1);
 }
 
 function Star(x, y, radius, color) {
@@ -112,7 +119,6 @@ function World (canvas) {
 
 World.prototype.add = function (entity) {
     entity.addTo(this);
-    this.entites.push(entity);
 }
 
 function main() {
