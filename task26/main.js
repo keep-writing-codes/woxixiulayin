@@ -57,6 +57,11 @@ function Entity(x, y) {
 }
 
 function Vector(x, y) {
+    if (x == 0 && y == 0) {
+        this.x = 0;
+        this.y = 0;
+        return;
+    }
     var len = Math.sqrt(Math.pow(x) + Math.pow(y));
     this.x = x/len;
     this.y = y/len;
@@ -87,40 +92,40 @@ Star.prototype.show = function () {
 
 function Ship(x, y, angle) {
     Entity.call(this, x, y);
-    this.angle = angle;
+    this.angle = angle;  //围绕star的角度
     this.shape = {
         width: 40,
         length: 100
     };
-    //定义运动相关的属性
-    this.moveMent = {
-
-    }
+    this.speed = 0;
     this.isstop = true;
 }
 
 Ship.prototype = Object.create(Entity.prototype);
 Ship.prototype.constructor = Ship;
-//旋转字需要更改自身的角度
+//旋转需要更改自身的角度
 Ship.prototype.rotate = function (angle) {
     this.angle = this.angle + angle;
 };
 //每一隔一段时间调用该step函数进行移动
 //内部规定如何移动
 Ship.prototype.step = function () {
-
+    this.angle += this.speed;
 };
 Ship.prototype.show = function () {
     var headx = -this.shape.length/2;
-    var heady = 0;
+    var heady = -this.star.radius - 50;
     var endx = this.shape.length/2;
-    var endy = 0;
+    var endy = -this.star.radius - 50;
     var that = this;
     var drawLine = function() {
         that.canvas.drawLine(headx, heady, endx, endy, that.shape.width, "#333", "butt");
     }
-    this.canvas.rotate(this.x, this.y, this.angle, drawLine);
-    // this.rotate(this.angle);
+    this.canvas.rotate(this.star.x, this.star.y, this.angle, drawLine);
+
+}
+Ship.prototype.attach2Star = function (star) {
+    this.star = star;
 }
 
 function World (canvas) {
@@ -153,6 +158,7 @@ function main() {
     world.add(star);
     world.add(ship1);
     world.add(star2);
+    ship1.attach2Star(star);
     star.show();
     star2.show();
     ship1.show();
