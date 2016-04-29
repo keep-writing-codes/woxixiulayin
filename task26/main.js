@@ -11,7 +11,6 @@ function Canvas(canvasEle) {
     this.width = canvasEle.width;
     this.height = canvasEle.height;
     this.c = canvasEle.getContext("2d");
-    console.log(this)
 }
 
 Canvas.prototype.rotate = function (x, y, angle, callback) {
@@ -55,7 +54,7 @@ function Entity(x, y) {
     this.x = x;
     this.y = y;
     Entity.count++;
-    this.id = this._count;
+    this.id = Entity.count;
 }
 Entity.count = 0;
 Entity.prototype.addTo = function (world) {

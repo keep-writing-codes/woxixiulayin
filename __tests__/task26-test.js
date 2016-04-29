@@ -1,3 +1,4 @@
+
 function checkProperty(object) {
     for(var p in object){
         expect(object[p]).toBeDefined();
@@ -45,14 +46,12 @@ describe('Check Ship Object', () => {
         ship = new Ship(200, 200, Math.PI/2);
         world.add(ship);
     });
-
     it("Check Ship factory", () => {
+        console.log(ship.id);
+        checkProperty(ship);
+        ship.show();
         expect(ship.x).toBe(200);
         expect(ship.y).toBe(200);
-        checkProperty(ship);
     });
 
-    // it("Check Ship show function", () => {
-    //     expect(ship.show()).toBeUndefined();
-    // });
 });
