@@ -60,7 +60,6 @@ Entity.count = 0;
 Entity.prototype.addTo = function (world) {
     this.world = world;
     this.canvas = world.canvas;
-    world.entites.push(this);
 }
 
 Entity.prototype.destroy = function () {
@@ -119,6 +118,13 @@ function World (canvas) {
 
 World.prototype.add = function (entity) {
     entity.addTo(this);
+    this.entites.push(entity);  //加入world.entities数组
+    var entityType = entity.constructor.name;
+    if (!this[entityType]) {
+        this[entityType] = [];
+    }
+    this[entityType].push(entity); //push到特定类型的数组
+    entity.id = this[entityType].length;
 }
 
 function main() {

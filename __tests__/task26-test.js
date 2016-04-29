@@ -32,6 +32,7 @@ describe('Entity object', function() {
         entity.destroy();
         expect(world.entites.length).toBe(0);
     });
+
 });
 
 describe("Check World Object", () => {
@@ -39,10 +40,18 @@ describe("Check World Object", () => {
     var World = main.World;
     beforeEach(() => {
         world = new World(document.createElement("canvas"));
+        ship = new Ship(200, 200, Math.PI/2);
     });
 
     it("check world fatory", () => {
         checkProperty(world);
+    });
+
+    it("Check world add", () => {
+        expect(world.entites.length).toBe(0);
+        world.add(ship);
+        expect(world.entites.length).toBe(1);
+        expect(world.Ship.length).toBe(1);
     });
 });
 
@@ -54,6 +63,7 @@ describe('Check Ship Object', () => {
         ship = new Ship(200, 200, Math.PI/2);
         world.add(ship);
     });
+
     it("Check Ship factory", () => {
         checkProperty(ship);
         expect(ship.x).toBe(200);
