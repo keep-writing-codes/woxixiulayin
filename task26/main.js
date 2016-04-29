@@ -13,6 +13,7 @@ function Canvas(canvasEle) {
     this.c = canvasEle.getContext("2d");
 }
 
+//以xy为原点，调用callback进行绘制，然后顺时针旋转角度angle
 Canvas.prototype.rotate = function (x, y, angle, callback) {
     this.c.save();
     this.c.translate(x, y);
@@ -53,9 +54,13 @@ function Position (x, y) {
 function Entity(x, y) {
     this.x = x;
     this.y = y;
-    Entity.count++;
 }
-Entity.count = 0;
+
+function Vector(x, y) {
+    var len = Math.sqrt(Math.pow(x) + Math.pow(y));
+    this.x = x/len;
+    this.y = y/len;
+}
 
 Entity.prototype.addTo = function (world) {
     this.world = world;
@@ -86,16 +91,24 @@ function Ship(x, y, angle) {
     this.shape = {
         width: 40,
         length: 100
+    };
+    //定义运动相关的属性
+    this.moveMent = {
+
     }
+    this.isstop = true;
 }
 
 Ship.prototype = Object.create(Entity.prototype);
 Ship.prototype.constructor = Ship;
+//旋转字需要更改自身的角度
 Ship.prototype.rotate = function (angle) {
-    this.canvas.c.save();
-    this.canvas.c.translate(this.x, this.y);
-    this.canvas.c.rotate(angle);
-    this.canvas.c.restore();
+    this.angle = this.angle + angle;
+};
+//每一隔一段时间调用该step函数进行移动
+//内部规定如何移动
+Ship.prototype.step = function () {
+
 };
 Ship.prototype.show = function () {
     var headx = -this.shape.length/2;
