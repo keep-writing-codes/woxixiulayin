@@ -56,17 +56,6 @@ function Entity(x, y) {
     this.y = y || 0;
 }
 
-function Vector(x, y) {
-    if (x == 0 && y == 0) {
-        this.x = 0;
-        this.y = 0;
-        return;
-    }
-    var len = Math.sqrt(Math.pow(x) + Math.pow(y));
-    this.x = x/len;
-    this.y = y/len;
-}
-
 Entity.prototype.addTo = function (world) {
     this.world = world;
     this.canvas = world.canvas;
@@ -77,6 +66,7 @@ Entity.prototype.destroy = function () {
     if (index == -1) return;
     this.world.entites.splice(index, 1);
 }
+
 
 function Star(x, y, radius, color) {
     Entity.call(this, x, y);
@@ -90,15 +80,17 @@ Star.prototype.show = function () {
     this.canvas.drawCircle(this.x, this.y, this.radius, this.color);
 }
 
-function Ship(x, y, angle) {
+function Ship(x, y, angle, energy) {
     Entity.call(this, x, y);
-    this.angle = angle;  //围绕star的角度
+    this.angle = angle || 0;  //围绕star的角度
+    this.energy = energy || 100; //默认100%
     this.shape = {
         width: 30,
         length: 70
     };
-    this.speed = 0;
+    this.speed = 0; //初始速度为0，单位为每度每秒
     this.isstop = true;
+    this.powerrate = 1; //每0.1度耗费1%
 }
 
 Ship.prototype = Object.create(Entity.prototype);
@@ -110,7 +102,11 @@ Ship.prototype.rotate = function (angle) {
 //每一隔一段时间调用该step函数进行移动
 //内部规定如何移动
 Ship.prototype.step = function () {
-    this.angle += this.speed;
+    if (this.isstop) return;    //如果停止，则不运动
+    var moveDegree = this.speed * this.world.click;
+    this.angle += moveDegree;
+    var consume = this.powerrate * moveDegree;
+    this.energy -= consume;
 };
 Ship.prototype.show = function () {
     var halflen = this.shape.length/2;
@@ -130,11 +126,16 @@ Ship.prototype.show = function () {
 Ship.prototype.attach2Star = function (star) {
     this.star = star;
 }
+Ship.prototype.enable = function (start) {
+    start ? this.isstop = false : this.isstop = true;
+}
 
 function World (canvas) {
     this.canvas = new Canvas(canvas);
     this.c = this.canvas.c;
     this.entites = [];
+    this.click = 0.02; //world内部实体运动的最小间隔时间
+    this.showtiming = 0.02  //world显示美帧的间隔
 }
 
 World.prototype.add = function (entity) {
@@ -155,15 +156,12 @@ function main() {
     var world = new World(monitor);
 
     var star = new Star(200,200,100,"blue");
-    var star2 = new Star(300, 300, 30, "yellow");
     var ship1 = new Ship(200, 200, 1.8);
     world.canvas.setBackground("black");
     world.add(star);
     world.add(ship1);
-    world.add(star2);
     ship1.attach2Star(star);
     star.show();
-    star2.show();
     ship1.show();
 }
 

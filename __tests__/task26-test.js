@@ -11,7 +11,7 @@ var main = require('../task26/main.js')
 var Ship = main.Ship;
 var World = main.World;
 var Entity = main.Entity;
-
+var Star = main.Star;
 
 describe('Entity object', function() {
     var entity;
@@ -61,7 +61,9 @@ describe('Check Ship Object', () => {
     beforeEach(() => {
         world = new World(document.createElement("canvas"));
         ship = new Ship(200, 200, Math.PI/2);
+        star = new Star(200,200,100,"blue");
         world.add(ship);
+        ship.attach2Star(star);
     });
 
     it("Check Ship factory", () => {
@@ -74,6 +76,14 @@ describe('Check Ship Object', () => {
         expect(world.entites.length).toBe(1);
         ship.destroy();
         expect(world.entites.length).toBe(0);
-    });
+    }); 
 
+    it ("Check Ship step", () => {
+        ship.speed = 0.2;
+        ship.enable(true);
+        ship.step();
+        expect(ship.isstop).toBe(false);
+        expect(ship.angle).toBeCloseTo(1.5747, 0.001);
+        expect(ship.energy).toBeLessThan(100);
+    });
 });
