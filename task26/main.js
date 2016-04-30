@@ -133,13 +133,32 @@ Ship.prototype.attach2Star = function (star) {
 Ship.prototype.enable = function (start) {
     start ? this.isstop = false : this.isstop = true;
 }
-
+Ship.prototype.handleCommand = function (data) {
+    console.log("ship [" + this.id+"] get data = " + data);
+}
 function World (canvas) {
     this.canvas = new Canvas(canvas);
     this.c = this.canvas.c;
     this.entites = [];
     this.steptiming = 0.01; //world内部实体运动的最小间隔时间/秒
     this.showtiming = 0.01;  //world显示美帧的间隔,/秒
+}
+
+function Commander (x, y) {
+    Entity.call(this, x, y);
+    this.ships = [];
+}
+
+Commander.prototype.createShip = function () {
+    var ship = new Ship(this.world.x, this.world.y ,0);
+    ship.addTo(this.world);
+    this.ships.push(ship);
+}
+
+Commander.prototype.sendCommand = function (data) {
+    this.ships.forEach( function(element, index) {
+        element.handleCommand(data);
+    });
 }
 
 World.prototype.add = function (entity) {
