@@ -52,8 +52,8 @@ function Position (x, y) {
 }
 
 function Entity(x, y) {
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
 }
 
 function Vector(x, y) {
@@ -113,15 +113,18 @@ Ship.prototype.step = function () {
     this.angle += this.speed;
 };
 Ship.prototype.show = function () {
-    var headx = -this.shape.length/2;
+    var halflen = this.shape.length/2;
+    var width = this.shape.width;
+    var headx = -halflen;
     var heady = -this.star.radius - 50;
-    var endx = this.shape.length/2;
+    var endx = halflen;
     var endy = -this.star.radius - 50;
     var that = this;
-    var drawLine = function() {
-        that.canvas.drawLine(headx, heady, endx, endy, that.shape.width, "#333", "butt");
+    var drawShip = function() {
+        that.canvas.drawCircle(endx,endy,width/2, "blue");
+        that.canvas.drawLine(headx, heady, endx, endy, width, "#555", "round");
     }
-    this.canvas.rotate(this.star.x, this.star.y, this.angle, drawLine);
+    this.canvas.rotate(this.star.x, this.star.y, this.angle, drawShip);
 
 }
 Ship.prototype.attach2Star = function (star) {
@@ -153,7 +156,7 @@ function main() {
 
     var star = new Star(200,200,100,"blue");
     var star2 = new Star(300, 300, 30, "yellow");
-    var ship1 = new Ship(200, 200, 1.5);
+    var ship1 = new Ship(200, 200, 1.8);
     world.canvas.setBackground("black");
     world.add(star);
     world.add(ship1);
