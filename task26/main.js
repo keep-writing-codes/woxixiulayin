@@ -152,14 +152,11 @@ function Commander (x, y) {
 Commander.prototype.createShip = function () {
     var ship = new Ship(this.world.x, this.world.y ,0);
     ship.addTo(this.world);
-    this.ships.push(ship);
 }
 
 Commander.prototype.sendCommand = function (data) {
-    this.ships.forEach( function(element, index) {
-        if (this.world.entites.indexOf(element) == -1) {//删除已经被摧毁的
-            this.ships.splice(index, 1);
-        }
+    if (!this.world.ships) return;
+    this.world.ships.forEach( function(element, index) {
         element.handleCommand(data);
     });
 }
