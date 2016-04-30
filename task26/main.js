@@ -94,8 +94,8 @@ function Ship(x, y, angle) {
     Entity.call(this, x, y);
     this.angle = angle;  //围绕star的角度
     this.shape = {
-        width: 40,
-        length: 100
+        width: 30,
+        length: 70
     };
     this.speed = 0;
     this.isstop = true;
@@ -153,7 +153,7 @@ function main() {
 
     var star = new Star(200,200,100,"blue");
     var star2 = new Star(300, 300, 30, "yellow");
-    var ship1 = new Ship(100, 200, 0.40);
+    var ship1 = new Ship(200, 200, 1.5);
     world.canvas.setBackground("black");
     world.add(star);
     world.add(ship1);
