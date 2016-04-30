@@ -88,7 +88,7 @@ function Ship(x, y, angle, energy) {
         width: 30,
         length: 70
     };
-    this.speed = 0; //初始速度为0，单位为每度每秒
+    this.speed = 0.1; //初始速度为0，单位为每度每秒
     this.isstop = true;
     this.powerrate = 1; //每0.1度耗费1%
 }
@@ -103,7 +103,7 @@ Ship.prototype.rotate = function (angle) {
 //内部规定如何移动
 Ship.prototype.step = function () {
     if (this.isstop) return;    //如果停止，则不运动
-    var moveDegree = this.speed * this.world.click;
+    var moveDegree = this.speed * this.world.steptiming;
     this.angle += moveDegree;
     var consume = this.powerrate * moveDegree;
     this.energy -= consume;
@@ -138,8 +138,8 @@ function World (canvas) {
     this.canvas = new Canvas(canvas);
     this.c = this.canvas.c;
     this.entites = [];
-    this.click = 0.02; //world内部实体运动的最小间隔时间
-    this.showtiming = 0.02  //world显示美帧的间隔
+    this.steptiming = 0.02; //world内部实体运动的最小间隔时间/秒
+    this.showtiming = 0.02  //world显示美帧的间隔,/秒
 }
 
 World.prototype.add = function (entity) {
@@ -151,6 +151,37 @@ World.prototype.add = function (entity) {
     }
     this[entityType].push(entity); //push到特定类型的数组
     entity.id = this[entityType].length;
+}
+
+World.prototype.runStep = function () {
+    //对每个有step的物体进行移动
+    var ents = this.entites;
+        for(var i=0, len=ents.length;i<len;i++) {
+            var ent = ents[i];
+            if(ent.step) {
+                ent.step();
+            }
+        }
+} 
+
+World.prototype.show = function () {
+     var ents = this.entites;
+        for(var i=0, len=ents.length;i<len;i++) {
+            var ent = ents[i];
+            if(ent.show) {
+                ent.show();
+            }
+        }
+}
+
+World.prototype.enableRun = function (enable) {
+    if (enable) {
+        var steptimer = setInterval(this.runStep.bind(this), this.steptiming*1000);
+        var showtimer = setInterval(this.show.bind(this), this.showtiming*1000); 
+    } else {
+        clearInterval(steptimer);
+        clearInterval(showtimer);
+    }
 }
 
 function main() {
@@ -167,6 +198,7 @@ function main() {
     ship1.attach2Star(star);
     star.show();
     ship1.show();
+    world.enableRun(true);
 }
 
 //console.log(navigator.userAgent);  
