@@ -107,6 +107,10 @@ Ship.prototype.step = function () {
     this.angle += moveDegree;
     var consume = this.powerrate * moveDegree;
     this.energy -= consume;
+    if ( this.energy <= 0) {
+        this.energy = 0;
+        this.enable(false);
+    }
 };
 Ship.prototype.show = function () {
     var halflen = this.shape.length/2;
