@@ -157,6 +157,9 @@ Commander.prototype.createShip = function () {
 
 Commander.prototype.sendCommand = function (data) {
     this.ships.forEach( function(element, index) {
+        if (this.world.entites.indexOf(element) == -1) {//删除已经被摧毁的
+            this.ships.splice(index, 1);
+        }
         element.handleCommand(data);
     });
 }
