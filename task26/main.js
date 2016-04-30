@@ -88,7 +88,7 @@ function Ship(x, y, angle, energy) {
         width: 30,
         length: 70
     };
-    this.speed = 0.1; //初始速度为0，单位为每度每秒
+    this.speed = 0.3; //初始速度为0，单位为每度每秒
     this.isstop = true;
     this.powerrate = 1; //每0.1度耗费1%
 }
@@ -138,8 +138,8 @@ function World (canvas) {
     this.canvas = new Canvas(canvas);
     this.c = this.canvas.c;
     this.entites = [];
-    this.steptiming = 0.02; //world内部实体运动的最小间隔时间/秒
-    this.showtiming = 0.02  //world显示美帧的间隔,/秒
+    this.steptiming = 0.01; //world内部实体运动的最小间隔时间/秒
+    this.showtiming = 0.01;  //world显示美帧的间隔,/秒
 }
 
 World.prototype.add = function (entity) {
@@ -165,7 +165,9 @@ World.prototype.runStep = function () {
 } 
 
 World.prototype.show = function () {
+    this.canvas.setBackground("black");//先显示背景
      var ents = this.entites;
+     //依次显示world内的实体
         for(var i=0, len=ents.length;i<len;i++) {
             var ent = ents[i];
             if(ent.show) {
@@ -196,8 +198,7 @@ function main() {
     world.add(star);
     world.add(ship1);
     ship1.attach2Star(star);
-    star.show();
-    ship1.show();
+    ship1.enable(true);
     world.enableRun(true);
 }
 
