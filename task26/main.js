@@ -46,6 +46,13 @@ Canvas.prototype.drawCircle = function (x, y, radius, rgba) {
     this.c.fill();
 }
 
+Canvas.prototype.drawText = function (str, x, y) {
+    this.c.font = "bold 24px Arial #fff";
+    this.c.textAlign = "center";
+    this.c.textBaseline = "middle";
+    this.c.fillText(str, x, y);
+}
+
 function Position (x, y) {
     this.x = x;
     this.y = y;
@@ -119,9 +126,11 @@ Ship.prototype.show = function () {
     var endx = halflen;
     var endy = -this.star.radius - 50;
     var that = this;
+    var statstr = this.id + "号-" + parseInt(this.energy) + "%";
     var drawShip = function() {
         that.canvas.drawCircle(endx,endy,width/2, "blue");
         that.canvas.drawLine(headx, heady, endx, endy, width, "#555", "round");
+        that.canvas.drawText(0, endy, statstr);
     }
     this.canvas.rotate(this.star.x, this.star.y, this.angle, drawShip);
 
@@ -212,6 +221,7 @@ World.prototype.runStep = function () {
 
 World.prototype.show = function () {
     this.canvas.setBackground("black");//先显示背景
+    this.canvas.drawText("sdfg", 0,0);
      var ents = this.entites;
      //依次显示world内的实体
         for(var i=0, len=ents.length;i<len;i++) {
@@ -237,7 +247,6 @@ function main() {
     var monitor = $("monitor");
     var control = $("control");
     var world = new World(monitor);
-
     var star = new Star(200,200,100,"blue");
     var commonder = new Commonder(0, 0);
     commonder.addTo(world);
