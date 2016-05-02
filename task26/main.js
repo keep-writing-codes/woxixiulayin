@@ -132,7 +132,7 @@ Ship.prototype.attach2Star = function (star) {
 Ship.prototype.enable = function (start) {
     start ? this.isstop = false : this.isstop = true;
 }
-Ship.prototype.handleCommand = function (data) {
+Ship.prototype.handleCommond = function (data) {
     console.log("ship [" + this.id+"] get data = " + data);
 }
 function World (canvas) {
@@ -143,23 +143,28 @@ function World (canvas) {
     this.showtiming = 0.01;  //world显示美帧的间隔,/秒
 }
 
-function Commander (x, y) {
+function Commonder (x, y) {
     Entity.call(this, x, y);
-    this.ships = [];
+    this.shipUntrustCount = 0;
 }
-Commander.prototype = Object.create(Entity.prototype);
-Commander.prototype.constructor = Commander;
-Commander.prototype.createShip = function (star, angle) {
+Commonder.prototype = Object.create(Entity.prototype);
+Commonder.prototype.constructor = Commonder;
+Commonder.prototype.createShip = function (star, angle) {
+    if (this.shipUntrustCount >= 4) return;
     var ship = new Ship(this.world.x, this.world.y , angle);
     ship.addTo(this.world);
     ship.attach2Star(star);
-    this.ships.push(ship);
+    this.shipUntrustCount++;
+    ship.id = this.shipUntrustCount;
+
 }
 
-Commander.prototype.sendCommand = function (data) {
+Commonder.prototype.sendCommond = function (data) {
     if (!this.world.ships) return;
+    var ctlid = data.id;
+    var ctlCommond = data.commond;
     this.world.ships.forEach( function(element, index) {
-        element.handleCommand(data);
+        element.handleCommond(data);
     });
 }
 
@@ -172,7 +177,6 @@ World.prototype.add = function (entity) {
         this[entityType] = [];
     }
     this[entityType].push(entity); //push到特定类型的数组
-    entity.id = this[entityType].length;
 }
 
 World.prototype.runStep = function () {
@@ -215,10 +219,10 @@ function main() {
     var world = new World(monitor);
 
     var star = new Star(200,200,100,"blue");
-    var commander = new Commander(0, 0);
-    commander.addTo(world);
+    var commonder = new Commonder(0, 0);
+    commonder.addTo(world);
     star.addTo(world);
-    commander.createShip(star, 1);
+    commonder.createShip(star, 1);
     // world.add(star);
     // world.add(ship1);
     // ship1.attach2Star(star);
@@ -239,7 +243,7 @@ if (isTestMode()) {
         Star: Star,
         Ship: Ship,
         World: World,
-        Commander: Commander
+        Commonder: Commonder
     }    
 } else {
     main();
