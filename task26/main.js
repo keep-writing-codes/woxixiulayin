@@ -95,9 +95,10 @@ function Ship(x, y, angle, energy) {
         width: 30,
         length: 70
     };
-    this.speed = 0.3; //初始速度为0，单位为每度每秒
+    this.speed = 5; //速度是每秒多少度(一圈360度)
     this.isstop = true;
-    this.powerrate = 1; //每0.1度耗费1%
+    this.powerrate = 1; //每1度耗费百分之多少
+    this.chargerate = 3; //每秒充电百分之多
 }
 
 Ship.prototype = Object.create(Entity.prototype);
@@ -109,10 +110,16 @@ Ship.prototype.rotate = function (angle) {
 //每一隔一段时间调用该step函数进行移动
 //内部规定如何移动
 Ship.prototype.step = function () {
+    if (this.energy < 100) {
+        this.energy += this.chargerate * this.world.steptiming;
+        if (this.energy > 100) {
+            this.energy = 100;
+        }
+    }
     if (this.isstop) return;    //如果停止，则不运动
-    var moveDegree = this.speed * this.world.steptiming;
-    this.angle += moveDegree;
-    var consume = this.powerrate * moveDegree;
+    var moveAngle = this.speed * this.world.steptiming / 180 * Math.PI;
+    this.angle += moveAngle;
+    var consume = this.powerrate * this.speed * this.world.steptiming;
     this.energy -= consume;
     if ( this.energy <= 0) {
         this.energy = 0;
@@ -195,8 +202,8 @@ function World (canvas) {
     this.canvas = new Canvas(canvas);
     this.c = this.canvas.c;
     this.entites = [];
-    this.steptiming = 0.01; //world内部实体运动的最小间隔时间/秒
-    this.showtiming = 0.01;  //world显示美帧的间隔,/秒
+    this.steptiming = 0.02; //world内部实体运动的最小间隔时间/秒
+    this.showtiming = 0.02;  //world显示美帧的间隔,/秒
 }
 World.prototype.add = function (entity) {
     entity.world = this;
