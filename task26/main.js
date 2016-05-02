@@ -149,9 +149,10 @@ function Commander (x, y) {
 }
 Commander.prototype = Object.create(Entity.prototype);
 Commander.prototype.constructor = Commander;
-Commander.prototype.createShip = function () {
-    var ship = new Ship(this.world.x, this.world.y ,0);
+Commander.prototype.createShip = function (star, angle) {
+    var ship = new Ship(this.world.x, this.world.y , angle);
     ship.addTo(this.world);
+    ship.attach2Star(star);
     this.ships.push(ship);
 }
 
@@ -217,7 +218,7 @@ function main() {
     var commander = new Commander(0, 0);
     commander.addTo(world);
     star.addTo(world);
-    world.canvas.setBackground("black");
+    commander.createShip(star, 1);
     // world.add(star);
     // world.add(ship1);
     // ship1.attach2Star(star);
