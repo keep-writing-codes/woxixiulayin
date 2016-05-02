@@ -192,6 +192,10 @@ Commonder.prototype.sendCommond = function (data) {
     var spreadCmd = function () {
         that.world.Ship.forEach( function(element, index) {
         if (!element.handleCommond) return;
+        //模拟丢包率，有30%几率接收不到信息
+        if (Math.random() < 0.3) {
+            return;
+        }
         element.handleCommond(data);
         });
     };
