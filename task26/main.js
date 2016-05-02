@@ -135,13 +135,8 @@ Ship.prototype.enable = function (start) {
 Ship.prototype.handleCommond = function (data) {
     console.log("ship [" + this.id+"] get data = " + data);
 }
-function World (canvas) {
-    this.canvas = new Canvas(canvas);
-    this.c = this.canvas.c;
-    this.entites = [];
-    this.steptiming = 0.01; //world内部实体运动的最小间隔时间/秒
-    this.showtiming = 0.01;  //world显示美帧的间隔,/秒
-}
+
+
 
 function Commonder (x, y) {
     Entity.call(this, x, y);
@@ -161,13 +156,18 @@ Commonder.prototype.createShip = function (star, angle) {
 
 Commonder.prototype.sendCommond = function (data) {
     if (!this.world.ships) return;
-    var ctlid = data.id;
-    var ctlCommond = data.commond;
     this.world.ships.forEach( function(element, index) {
         element.handleCommond(data);
     });
 }
 
+function World (canvas) {
+    this.canvas = new Canvas(canvas);
+    this.c = this.canvas.c;
+    this.entites = [];
+    this.steptiming = 0.01; //world内部实体运动的最小间隔时间/秒
+    this.showtiming = 0.01;  //world显示美帧的间隔,/秒
+}
 World.prototype.add = function (entity) {
     entity.world = this;
     entity.canvas = this.canvas;
