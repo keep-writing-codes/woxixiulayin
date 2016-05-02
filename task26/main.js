@@ -134,14 +134,28 @@ Ship.prototype.enable = function (start) {
 }
 Ship.prototype.handleCommond = function (data) {
     console.log("ship [" + this.id+"] get data = " + data);
+    if (this.id != data.id) return;
+    var commmond = data.commond;
+    switch (commmond) {
+        case "stop":
+            this.enable(false);
+            break;
+        case "destory":
+            this.destory();
+            break;
+        case "start":
+            this.enable(true);
+        default:
+            // statements_def
+            break;
+    }
 }
-
-
 
 function Commonder (x, y) {
     Entity.call(this, x, y);
     this.shipUntrustCount = 0;
 }
+
 Commonder.prototype = Object.create(Entity.prototype);
 Commonder.prototype.constructor = Commonder;
 Commonder.prototype.createShip = function (star, angle) {
@@ -155,10 +169,16 @@ Commonder.prototype.createShip = function (star, angle) {
 }
 
 Commonder.prototype.sendCommond = function (data) {
-    if (!this.world.ships) return;
-    this.world.ships.forEach( function(element, index) {
+    if (!this.world.Ship) return;
+    var that = this;
+
+    var spreadCmd = function () {
+        that.world.Ship.forEach( function(element, index) {
+        if (!element.handleCommond) return;
         element.handleCommond(data);
-    });
+        });
+    };
+    setTimeout(spreadCmd, 1000); //传播信号需要1s
 }
 
 function World (canvas) {
@@ -228,6 +248,11 @@ function main() {
     // ship1.attach2Star(star);
     // ship1.enable(true);
     world.enableRun(true);
+    var commmond = {
+        id: 1,
+        commond: "start"
+    };
+    commonder.sendCommond(commmond);
 }
 
 //console.log(navigator.userAgent);  
