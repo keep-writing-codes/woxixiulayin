@@ -18,7 +18,6 @@ describe('Entity object', function() {
     beforeEach(function(){
         entity = new Entity(100, 100);
         world = new World(document.createElement("canvas"));
-        world.add(entity);
     });
 
     it("Check Entity factory", function () {
@@ -27,7 +26,14 @@ describe('Entity object', function() {
         checkProperty(entity);
     });
 
+    it("Check Entity addTo", function () {
+        expect(world.entites.length).toBe(0);
+        entity.addTo(world);
+        expect(world.entites.length).toBe(1);
+    });
+
     it("Check Entity Destroy", () => {
+        entity.addTo(world);
         expect(world.entites.length).toBe(1);
         entity.destroy();
         expect(world.entites.length).toBe(0);

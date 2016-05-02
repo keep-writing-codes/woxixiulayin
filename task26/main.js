@@ -57,8 +57,7 @@ function Entity(x, y) {
 }
 
 Entity.prototype.addTo = function (world) {
-    this.world = world;
-    this.canvas = world.canvas;
+    world.add(this);
 }
 
 Entity.prototype.destroy = function () {
@@ -148,10 +147,12 @@ function Commander (x, y) {
     Entity.call(this, x, y);
     this.ships = [];
 }
-
+Commander.prototype = Object.create(Entity.prototype);
+Commander.prototype.constructor = Commander;
 Commander.prototype.createShip = function () {
     var ship = new Ship(this.world.x, this.world.y ,0);
     ship.addTo(this.world);
+    this.ships.push(ship);
 }
 
 Commander.prototype.sendCommand = function (data) {
@@ -162,7 +163,8 @@ Commander.prototype.sendCommand = function (data) {
 }
 
 World.prototype.add = function (entity) {
-    entity.addTo(this);
+    entity.world = this;
+    entity.canvas = this.canvas;
     this.entites.push(entity);  //加入world.entities数组
     var entityType = entity.constructor.name;
     if (!this[entityType]) {
@@ -212,12 +214,14 @@ function main() {
     var world = new World(monitor);
 
     var star = new Star(200,200,100,"blue");
-    var ship1 = new Ship(200, 200, 1.8);
+    var commander = new Commander(0, 0);
+    commander.addTo(world);
+    star.addTo(world);
     world.canvas.setBackground("black");
-    world.add(star);
-    world.add(ship1);
-    ship1.attach2Star(star);
-    ship1.enable(true);
+    // world.add(star);
+    // world.add(ship1);
+    // ship1.attach2Star(star);
+    // ship1.enable(true);
     world.enableRun(true);
 }
 
