@@ -12,6 +12,7 @@ var Ship = main.Ship;
 var World = main.World;
 var Entity = main.Entity;
 var Star = main.Star;
+var Commander = main.Commander;
 
 describe('Entity object', function() {
     var entity;
@@ -82,7 +83,7 @@ describe('Check Ship Object', () => {
         expect(world.entites.length).toBe(1);
         ship.destroy();
         expect(world.entites.length).toBe(0);
-    }); 
+    });
 
     it ("Check Ship step", () => {
         ship.speed = 0.2;
@@ -92,4 +93,14 @@ describe('Check Ship Object', () => {
         expect(ship.angle).toBeCloseTo(1.5747, 0.001);
         expect(ship.energy).toBeLessThan(100);
     });
+});
+
+describe('Commander object', function() {
+    var commander,star,world;
+    beforeEach(function(){
+        commander = new Commander(0, 0);
+        world = new World(document.createElement("canvas"));
+        star = new Star(200,200,100,"blue");
+    });
+    
 });

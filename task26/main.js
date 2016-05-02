@@ -238,7 +238,8 @@ if (isTestMode()) {
         Entity: Entity,
         Star: Star,
         Ship: Ship,
-        World: World
+        World: World,
+        Commander: Commander
     }    
 } else {
     main();
