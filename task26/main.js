@@ -283,7 +283,6 @@ function main() {
     var container = $("container");
     var monitor = $("monitor");
     var control = $("control");
-    var divships = $("ships");
     var btncreate = $("btncreate");
     var divships = $("ships");
     var world = new World(monitor);
@@ -302,10 +301,10 @@ function main() {
 
     //事件委托，在ships div中处理ship的按钮事件
     divships.onclick = function (event) {
-        var target = event.target;
-        if (target != this) return;
-        var index = target.getAttribute("index");
-        commonder.sendCommond(index, target.name);
+        var shipdiv = event.target.parentNode;
+        var index = shipdiv.getAttribute("index");
+        var order = event.target.name;
+        commonder.sendCommond(index, order);
     }
 
 }
