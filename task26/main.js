@@ -68,10 +68,9 @@ Entity.prototype.addTo = function (world) {
     world.add(this);
 }
 
-Entity.prototype.destroy = function () {
-    var index = this.world.entites.indexOf(this);
-    if (index == -1) return;
-    this.world.entites.splice(index, 1);
+Entity.prototype.destory = function () {
+    if (!this.world) return;
+    this.world.destory(this);
 }
 
 
@@ -223,7 +222,14 @@ World.prototype.add = function (entity) {
     }
     this[entityType].push(entity); //push到特定类型的数组
 }
-
+World.prototype.destory = function (entity) {
+    var index = this.entites.indexOf(entity);
+    if (index == -1) return;
+    this.entites.splice(index, 1);
+    var entityTypeArry = this[entity.constructor.name]
+    index = entityTypeArry.indexOf(entity);
+    entityTypeArry.splice(index, 1);
+}
 World.prototype.runStep = function () {
     //对每个有step的物体进行移动
     var ents = this.entites;
@@ -305,6 +311,12 @@ function main() {
         var index = shipdiv.getAttribute("index");
         var order = event.target.name;
         commonder.sendCommond(index, order);
+        switch (order) {
+            case "destory": shipdiv.parentNode.removeChild(shipdiv);
+                break;
+            default:
+                break;
+        }
     }
 
 }
