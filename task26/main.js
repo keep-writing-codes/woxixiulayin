@@ -264,14 +264,14 @@ function Shipctldiv (id) {
     var label = document.createElement("label");
     label.innerHTML = id + "号飞船";
     var btnstart = document.createElement("button");
-    btnstart.name = "btnstart";
+    btnstart.name = "start";
     btnstart.innerHTML = "启动";
     var btnstop = document.createElement("button");
-    btnstop.name = "btnstop";
+    btnstop.name = "stop";
     btnstop.innerHTML = "停止";
     var btndestory = document.createElement("button");
     btndestory.innerHTML = "摧毁";
-    btndestory.name = "btndestory";
+    btndestory.name = "destory";
     div.appendChild(label);
     div.appendChild(btnstart);
     div.appendChild(btnstop);
@@ -291,16 +291,7 @@ function main() {
     var commonder = new Commonder(0, 0);
     commonder.addTo(world);
     star.addTo(world);
-    commonder.createShip(star, 1);
     world.enableRun(true);
-    commonder.sendCommond(1, "start");
-
-    // function btnListener (event) {
-    // var target = event.target;
-    // var index = target.getAttribute("index");
-    // switch (target.getAttribute("name")) {
-    //     "btnstart": 
-    // };
 
     btncreate.onclick = function (event) {
         var ship = commonder.createShip(star, 0);
@@ -310,14 +301,12 @@ function main() {
     }
 
     //事件委托，在ships div中处理ship的按钮事件
-    // divships.onclick = function (event) {
-    //     var target = event.target;
-    //     if (target != this) return;
-    //     var index = target.getAttribute("index");
-    //     switch (target.name) {
-    //         "btnstart": commonder.send
-    //     }
-    // }
+    divships.onclick = function (event) {
+        var target = event.target;
+        if (target != this) return;
+        var index = target.getAttribute("index");
+        commonder.sendCommond(index, target.name);
+    }
 
 }
 
