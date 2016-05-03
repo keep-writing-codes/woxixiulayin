@@ -253,18 +253,21 @@ World.prototype.enableRun = function (enable) {
     }
 }
 
-function ShipCtldiv (id) {
+function Shipctldiv (id) {
     var div = document.createElement("div");
     div.className = "ship";
     div.setAttribute("index", id);
     var label = document.createElement("label");
     label.innerHTML = id + "号飞船";
     var btnstart = document.createElement("button");
+    btnstart.name = "btnstart";
     btnstart.innerHTML = "启动";
     var btnstop = document.createElement("button");
+    btnstop.name = "btnstop";
     btnstop.innerHTML = "停止";
     var btndestory = document.createElement("button");
     btndestory.innerHTML = "摧毁";
+    btndestory.name = "btndestory";
     div.appendChild(label);
     div.appendChild(btnstart);
     div.appendChild(btnstop);
@@ -278,35 +281,44 @@ function main() {
     var control = $("control");
     var divships = $("ships");
     var btncreate = $("btncreate");
+    var divships = $("ships");
     var world = new World(monitor);
     var star = new Star(200,200,100,"blue");
     var commonder = new Commonder(0, 0);
     commonder.addTo(world);
     star.addTo(world);
     commonder.createShip(star, 1);
-    // world.add(star);
-    // world.add(ship1);
-    // ship1.attach2Star(star);
-    // ship1.enable(true);
     world.enableRun(true);
-    var commmond = {
-        id: 1,
-        commond: "start"
-    };
-    commonder.sendCommond(commmond);
+    // var commmond = {
+    //     id: 1,
+    //     commond: "start"
+    // };
+    // commonder.sendCommond(commmond);
 
-    //事件委托
-    control.onclick = function (event) {
-        var target = event.target;
-        if(target.id == "btncreate") {
-            var ship = commonder.createShip(star, 0);
-            var shipctldiv = ShipCtldiv(ship.id);
-            ships.appendChild(shipctldiv);
-        } else if (target.name == "btnstart") {
-            var id = target.parent.getAttribute("index");
-            
-        }
+    // function btnListener (event) {
+    // var target = event.target;
+    // var index = target.getAttribute("index");
+    // switch (target.getAttribute("name")) {
+    //     "btnstart": 
+    // };
+
+    btncreate.onclick = function (event) {
+        var ship = commonder.createShip(star, 0);
+        if (!ship) return;
+        var shipctldiv = Shipctldiv(ship.id);
+        ships.appendChild(shipctldiv);
     }
+
+    //事件委托，在ships div中处理ship的按钮事件
+    // divships.onclick = function (event) {
+    //     var target = event.target;
+    //     if (target != this) return;
+    //     var index = target.getAttribute("index");
+    //     switch (target.name) {
+    //         "btnstart": commonder.send
+    //     }
+    // }
+
 }
 
 //console.log(navigator.userAgent);  
