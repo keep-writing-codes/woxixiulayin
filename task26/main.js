@@ -149,11 +149,11 @@ Ship.prototype.attach2Star = function (star) {
 Ship.prototype.enable = function (start) {
     start ? this.isstop = false : this.isstop = true;
 }
-Ship.prototype.handleCommond = function (data) {
-    console.log("ship [" + this.id+"] get data = " + data);
-    if (this.id != data.id) return;
-    var commmond = data.commond;
-    switch (commmond) {
+Ship.prototype.handleCommond = function (commmond) {
+    console.log("ship [" + this.id+"] get commmond = " + commmond);
+    if (this.id != commmond.id) return;
+    var order = commmond.order;
+    switch (order) {
         case "stop":
             this.enable(false);
             break;
@@ -185,10 +185,14 @@ Commonder.prototype.createShip = function (star, angle) {
     return ship;
 }
 
-Commonder.prototype.sendCommond = function (data) {
+Commonder.prototype.sendCommond = function (index, order) {
     if (!this.world.Ship) return;
+    if (index > 4 || !order) return;
     var that = this;
-
+    var commmond = {
+        id: index,
+        order: order
+    };
     var spreadCmd = function () {
         that.world.Ship.forEach( function(element, index) {
         if (!element.handleCommond) return;
@@ -196,7 +200,7 @@ Commonder.prototype.sendCommond = function (data) {
         if (Math.random() < 0.3) {
             return;
         }
-        element.handleCommond(data);
+        element.handleCommond(commmond);
         });
     };
     setTimeout(spreadCmd, 1000); //传播信号需要1s
@@ -289,11 +293,7 @@ function main() {
     star.addTo(world);
     commonder.createShip(star, 1);
     world.enableRun(true);
-    // var commmond = {
-    //     id: 1,
-    //     commond: "start"
-    // };
-    // commonder.sendCommond(commmond);
+    commonder.sendCommond(1, "start");
 
     // function btnListener (event) {
     // var target = event.target;
