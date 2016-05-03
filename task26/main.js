@@ -169,21 +169,40 @@ Ship.prototype.handleCommond = function (commmond) {
 
 function Commonder (x, y) {
     Entity.call(this, x, y);
-    this.shipUntrustCount = 0;
+    this.ships = [];
 }
 
 Commonder.prototype = Object.create(Entity.prototype);
 Commonder.prototype.constructor = Commonder;
 Commonder.prototype.createShip = function (star, angle) {
-    if (this.shipUntrustCount >= 4) return false;
+    if (this.ships.length >= 4) return false;
     var ship = new Ship(this.world.x, this.world.y , angle);
+    var indexs = [1,2,3,4];
+    var that = this;
+    console.log(this.ships.length);
+    for(var i=0,len=this.ships.length;i<len;i++){
+        indexs.forEach(function(ele,index) {
+            if (that.ships[i].id == ele) {
+                console.log("that.ships[i].id " + that.ships[i].id);
+                console.log(indexs);
+                indexs.splice(index, 1);
+            }
+        })
+    }
+    ship.id = indexs[0];
     ship.addTo(this.world);
     ship.attach2Star(star);
-    this.shipUntrustCount++;
-    ship.id = this.shipUntrustCount;
+    this.ships.push(ship);
     return ship;
 }
-
+Commonder.prototype.destoryShip = function (index) {
+    var that = this;
+    this.ships.forEach(function(ele,i) {
+        if (ele.id == index) {
+            that.ships.splice(i, 1);
+        }
+    })
+}
 Commonder.prototype.sendCommond = function (index, order) {
     if (!this.world.Ship) return;
     if (index > 4 || !order) return;
@@ -313,6 +332,7 @@ function main() {
         commonder.sendCommond(index, order);
         switch (order) {
             case "destory": shipdiv.parentNode.removeChild(shipdiv);
+            commonder.destoryShip(index);
                 break;
             default:
                 break;
