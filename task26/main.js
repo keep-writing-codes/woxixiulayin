@@ -176,13 +176,13 @@ function Commonder (x, y) {
 Commonder.prototype = Object.create(Entity.prototype);
 Commonder.prototype.constructor = Commonder;
 Commonder.prototype.createShip = function (star, angle) {
-    if (this.shipUntrustCount >= 4) return;
+    if (this.shipUntrustCount >= 4) return false;
     var ship = new Ship(this.world.x, this.world.y , angle);
     ship.addTo(this.world);
     ship.attach2Star(star);
     this.shipUntrustCount++;
     ship.id = this.shipUntrustCount;
-
+    return ship;
 }
 
 Commonder.prototype.sendCommond = function (data) {
@@ -253,10 +253,31 @@ World.prototype.enableRun = function (enable) {
     }
 }
 
+function ShipCtldiv (id) {
+    var div = document.createElement("div");
+    div.className = "ship";
+    div.setAttribute("index", id);
+    var label = document.createElement("label");
+    label.innerHTML = id + "号飞船";
+    var btnstart = document.createElement("button");
+    btnstart.innerHTML = "启动";
+    var btnstop = document.createElement("button");
+    btnstop.innerHTML = "停止";
+    var btndestory = document.createElement("button");
+    btndestory.innerHTML = "摧毁";
+    div.appendChild(label);
+    div.appendChild(btnstart);
+    div.appendChild(btnstop);
+    div.appendChild(btndestory);
+    return div;
+}
+
 function main() {
     var container = $("container");
     var monitor = $("monitor");
     var control = $("control");
+    var divships = $("ships");
+    var btncreate = $("btncreate");
     var world = new World(monitor);
     var star = new Star(200,200,100,"blue");
     var commonder = new Commonder(0, 0);
@@ -273,6 +294,19 @@ function main() {
         commond: "start"
     };
     commonder.sendCommond(commmond);
+
+    //事件委托
+    control.onclick = function (event) {
+        var target = event.target;
+        if(target.id == "btncreate") {
+            var ship = commonder.createShip(star, 0);
+            var shipctldiv = ShipCtldiv(ship.id);
+            ships.appendChild(shipctldiv);
+        } else if (target.name == "btnstart") {
+            var id = target.parent.getAttribute("index");
+            
+        }
+    }
 }
 
 //console.log(navigator.userAgent);  
