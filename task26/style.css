@@ -13,12 +13,37 @@
 }
 
 #control {
+    position: relative;
     width: 450px;
     height: 200px;
     border: solid 2px #000;
+    text-align: center;
 }
 
 #control h3 {
     margin:5px 0;
-    text-align: center;
+}
+
+button#create {
+    margin: 5px auto 5px;
+}
+
+div.ship {
+    position: relative;
+    border: solid 2px #333;
+    width: 60%;
+    height: 30px;
+    line-height: 30px; 
+    margin: 0 auto;
+}
+div.ship label {
+    float: left;
+    margin-left: 15px; 
+    margin-right: 20px;
+}
+div.ship button {
+    width: 20%;
+    height: 25px;
+    background: #678;
+    border-radius: 4px;
 }
