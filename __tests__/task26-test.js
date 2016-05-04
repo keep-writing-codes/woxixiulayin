@@ -33,10 +33,10 @@ describe('Entity object', function() {
         expect(world.entites.length).toBe(1);
     });
 
-    it("Check Entity Destroy", () => {
+    it("Check Entity Destory", () => {
         entity.addTo(world);
         expect(world.entites.length).toBe(1);
-        entity.destroy();
+        entity.destory();
         expect(world.entites.length).toBe(0);
     });
 
@@ -81,7 +81,7 @@ describe('Check Ship Object', () => {
 
     it("Check Ship Destroy", () => {
         expect(world.entites.length).toBe(1);
-        ship.destroy();
+        ship.destory();
         expect(world.entites.length).toBe(0);
     });
 

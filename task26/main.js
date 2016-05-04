@@ -86,7 +86,7 @@ Star.prototype.show = function () {
     this.canvas.drawCircle(this.x, this.y, this.radius, this.color);
 }
 
-function Ship(x, y, angle, energy) {
+function Ship(x, y, angle, energy, speed, chargerate) {
     Entity.call(this, x, y);
     this.angle = angle || 0;  //围绕star的角度
     this.energy = energy || 100; //默认100%
@@ -94,10 +94,22 @@ function Ship(x, y, angle, energy) {
         width: 30,
         length: 70
     };
-    this.speed = 5; //速度是每秒多少度(一圈360度)
+    this.speed = speed || 5; //速度是每秒多少度(一圈360度)
     this.isstop = true;
     this.powerrate = 1; //每1度耗费百分之多少
-    this.chargerate = 3; //每秒充电百分之多
+    this.chargerate = chargerate || 3; //每秒充电百分之多
+}
+Ship.args = {
+    speed: {
+        march: 5,
+        rush: 7,
+        beyond: 9
+    },
+    chargerate: {
+        normal: 3,
+        light: 4,
+        everlasting: 5
+    }
 }
 
 Ship.prototype = Object.create(Entity.prototype);
@@ -332,7 +344,7 @@ function main() {
         commonder.sendCommond(index, order);
         switch (order) {
             case "destory": shipdiv.parentNode.removeChild(shipdiv);
-            commonder.destoryShip(index);
+                commonder.destoryShip(index);
                 break;
             default:
                 break;
