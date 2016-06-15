@@ -33,7 +33,7 @@ input {
 
 input[type=text] {
     width:250px;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 #input_check {
     margin-left: 10px;
