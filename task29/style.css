@@ -14,8 +14,8 @@
 
 form {
     width: 600px;
-    margin: 10px auto;
-    padding: 20px 20px;
+    margin: 30px auto;
+    padding: 30px 20px;
     border: solid 1px #999;
     border-radius: 10px;
     font-size: 23px;
@@ -31,7 +31,8 @@ input {
     margin-right: 20px;
 }
 
-#input_name {
+input[type=text] {
+    width:250px;
     padding-left: 20px;
 }
 #input_check {
@@ -44,4 +45,12 @@ input {
 
 #input_check:hover {
     background: #1E45EA;
+}
+
+form span {
+    display: block;
+    font-size: 15px;
+    color: #999;
+    text-align:left;
+    padding-left: 153px;
 }
