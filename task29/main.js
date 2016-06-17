@@ -42,5 +42,5 @@ function isChineseChar(char) {
     var reg = /[\u4e00-\u9fa5]/;
     return reg.test(char);
 }
-
+console.log($("#content").childNodes)
 input_check.onclick = checkInputName;
