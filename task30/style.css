@@ -3,3 +3,37 @@
     padding: 0;
 }
 
+#content {
+    width: 800px auto;
+    margin: 50px;
+}
+
+table td {
+    padding: 5px;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+}
+
+.hint {
+    display: none;
+    font-size: 13px;
+}
+
+label {
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+button {
+    width: 3.5em;
+    height: 1.8em;
+    float: right;
+    font-size: 18px;
+    background: blue;
+    color: white;
+    border-radius: .5em;
+}
