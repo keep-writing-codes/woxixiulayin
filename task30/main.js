@@ -3,8 +3,7 @@ function $(selector){
 }
 
 var input_name = $("#input_name");
-var input_check = $("#input_check");
-var name_hint = $("#name_hint")
+
 
 showHint(name_hint, "必填，长度为4~16个字符");
 function checkInputName() {
