@@ -2,20 +2,53 @@
 <html>
 <head>
 <title>表单<一>单个表单的校验</title>    
-<link rel="stylesheet" href="/woxixiulayin/task29/style.css"/>
+<link rel="stylesheet" href="/woxixiulayin/task30/style.css"/>
 </head>
 <body>
     <div id="content">
     <form>
-    <div id="name">
-    <label for="input_name">名称</label>
-    <input type="text" id="input_name" name="user_name"/>
-    <input type="button" id="input_check" name="check" value="验证"/>
-    <span id="name_hint">  </span>
-    </div>
-
+    <table>
+        <tr>
+            <td><label for="name">名称</label></td>
+            <td><input type="text" id="name"></input></td>
+        </tr>
+        <tr>
+            <td class="hint" id="h1"></td>
+        </tr>
+        <tr>
+            <td><label for="password">密码</label></td>
+            <td><input type="text" id="password"></input></td>
+        </tr>
+        <tr>
+            <td class="hint" id="h2"></td>
+        </tr>
+        <tr>
+            <td><label for="passwordconfirm">密码确认</label></td>
+            <td><input type="text" id="passwordconfirm"></input></td>
+        </tr>
+        <tr>
+            <td class="hint" id="h3"></td>
+        </tr>
+        <tr>
+            <td><label for="email">邮箱</label></td>
+            <td><input type="text" id="email"></input></td>
+        </tr>
+        <tr>
+            <td class="hint" id="h4"></td>
+        </tr>
+        <tr>
+            <td><label for="mobil">手机</label></td>
+            <td><input type="text" id="mobil"></input></td>
+        </tr>
+        <tr>
+            <td class="hint" id="h5"></td>
+        </tr>
+        <tr>
+            <td><button id="submit">提交</button></td>
+        </tr>
+    </table>
     </form>
     </div>
-    <script type="text/javascript" src="/woxixiulayin/task29/main.js"></script>
+    <script type="text/javascript" src="/woxixiulayin/task30/main.js"></script>
 </body>
 </html>
