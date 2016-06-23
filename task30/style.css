@@ -32,6 +32,14 @@ input {
     font-size: 13px;
 }
 
+.right {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}
+
 label {
     display: block;
     width: 100%;
