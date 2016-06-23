@@ -33,11 +33,11 @@ input {
 }
 
 .right {
-    color: green;
+    border-color: green;
 }
 
 .wrong {
-    color: red;
+    border-color: red;
 }
 
 label {

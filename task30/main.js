@@ -24,25 +24,39 @@ function $ (id) {
 function $$ (id) {
     return doc.querySelectorAll(id);
 }
-function validateInput (input) {
-    var input = document.getElementsByTagName("input")[id],
-        hint = document.getElementsByClassName("hint")[id],
+
+function validateInput (id) {
+    var hint = $("#h" + id);
+        input = $("#i" + id);
         str = input.value,
         flag = false;
-    switch (id) {
+    switch (parseInt(id)) {
         case 1:
+            flag = /^[a-zA-Z0-9_]{4,16}$/.test(str.replace(/[\u4e00-\u9fa5]/, 'aa'));
+            console.log(flag);
             // statements_1
             break;
         default:
             // statements_def
             break;
     }
+    return flag ? "right" : "wrong";
+}
 
-    if (flag) {
-        hint.className = "right";
-    } else {
-        hint.className = "wrong";
-    }
+function showHint (id, flag) {
+    var hint = $("#h" + id);
+    var input = $("#i" + id);
+    hint.style.display = "table-row";
+    hint.textContent = hintText[parseInt(id) - 1][flag];
+    if (flag === "hint") {
+        hint.style.color = "black";
+    } else if (flag === "right") {
+        hint.style.color = "green";
+        input["className"] = "right";
+    } else if (flag === "wrong") {
+        hint.style.color = "red";
+        input["className"] = "wrong";
+    } 
 }
 
 
@@ -52,12 +66,16 @@ function validateInput (input) {
 });
 
 //添加获得焦点和失去焦点事件
-//因为焦点事件无法冒泡，使用事件委托在捕获阶段不方便，所以给单个input添加事件
+//因为焦点事件无法冒泡，使用事件委托在捕获阶段不方便，所以给每个input单独添加事件
 [].forEach.call($$("input"), function (input, index) {
     var id = input["id"][1],
         hint = $("#h" + id);
     addEvent(input, "focus", function (e) {
-        hint.style.display = "table-row";
+        showHint(id, "hint");
+    });
+    addEvent(input, "blur", function (e) {
+        var flag = validateInput(id);
+        showHint(id, flag);
     });
 });
 
