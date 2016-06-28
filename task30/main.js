@@ -49,6 +49,13 @@ function validateInput (id) {
         default:
             break;
     }
+
+    if (flag) {
+        hintText[id-1].ispassed = true;
+    } else {
+        hintText[id-1].ispassed = false;
+    }
+
     return flag ? "right" : "wrong";
 }
 
@@ -88,4 +95,14 @@ function showHint (id, flag) {
     });
 });
 
+addEvent($("#submit"), "click", function () {
+    var result = [0,1,2,3,4].every(function(id) {
+        return hintText[id]["ispassed"];
+    });
+    if (result) {
+        alert(result+ "提交成功");
+    } else {
+        alert("提交失败");
+    }
+});
 }) ();
