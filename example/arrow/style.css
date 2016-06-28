@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+#container {
+    width: 800px;
+    height: 800px;
+    margin: 50px auto;
+    border: solid 1px #ffff;
+}

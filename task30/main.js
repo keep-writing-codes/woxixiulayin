@@ -32,12 +32,21 @@ function validateInput (id) {
         flag = false;
     switch (parseInt(id)) {
         case 1:
-            flag = /^[a-zA-Z0-9_]{4,16}$/.test(str.replace(/[\u4e00-\u9fa5]/, 'aa'));
-            console.log(flag);
-            // statements_1
+            flag = /^\w{4,16}$/.test(str.replace(/[\u4e00-\u9fa5]/, 'aa'));
+            break;
+        case 2:
+            flag = /^\S{4,16}$/.test(str);
+            break;
+        case 3:
+            flag = str && str == $("#i2").value;
+            break;
+        case 4:
+            flag = /^([a-zA-Z\d])+([-_.][a-zA-Z\d]+)*@([a-zA-Z\d]+\.)+[a-zA-Z\d]{2,5}$/.test(str);
+            break;
+        case 5:
+            flag = /^[1]\d{10}$/.test(str);
             break;
         default:
-            // statements_def
             break;
     }
     return flag ? "right" : "wrong";
@@ -52,10 +61,10 @@ function showHint (id, flag) {
         hint.style.color = "black";
     } else if (flag === "right") {
         hint.style.color = "green";
-        input["className"] = "right";
+        input.style.border = "solid 1px green";
     } else if (flag === "wrong") {
         hint.style.color = "red";
-        input["className"] = "wrong";
+        input.style.border = "solid 1px red";
     } 
 }
 
@@ -78,23 +87,5 @@ function showHint (id, flag) {
         showHint(id, flag);
     });
 });
-
-function getStrLenth(str){
-    var num = 0;
-    var arr = str.split("");
-    arr.forEach( function(element, index) {
-        if(isChineseChar(element)) {
-            num += 2;
-        } else {
-            num++;
-        }
-    });
-    return num;
-}
-
-function isChineseChar(char) {
-    var reg = /[\u4e00-\u9fa5]/;
-    return reg.test(char);
-}
 
 }) ();
