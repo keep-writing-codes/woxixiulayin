@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>表单（三）联动</title>
+    <link rel="stylesheet" href="style.css"/> 
+</head>
+<body>
+    <form id="wrap">
+        <div id="career">
+        <input type="radio" name="career" value="student"/>在校生
+        <input type="radio" name="career" value="none-student"/>非在校生
+        </div>
+        <div id="description">
+        <div id="university">
+        <span>学校</span>
+        <select name="city">
+        </select>
+        <select name="university">
+        </select>
+        </div>
+        <div id="company">
+        <span>就业单位</span>
+        <input type="text"/>
+        </div>
+        </div>
+    </form>
+    <script src="main.js"></script>
+</body>
+
+</html>
