@@ -1,5 +1,4 @@
 (function main() {
-
     var addEvent = function (ele, type, func) {
         if (ele.addEventListener) {
             ele.addEventListener(type, func);

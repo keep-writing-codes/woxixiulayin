@@ -100,7 +100,7 @@ addEvent($("#submit"), "click", function () {
         return hintText[id]["ispassed"];
     });
     if (result) {
-        alert(result+ "提交成功");
+        alert("提交成功");
     } else {
         alert("提交失败");
     }
