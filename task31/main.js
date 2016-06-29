@@ -1,7 +1,6 @@
 (function main() {
 
     var addEvent = function (ele, type, func) {
-        console.log(type);
         if (ele.addEventListener) {
             ele.addEventListener(type, func);
         } else if (ele.attachEvent) {
@@ -21,10 +20,41 @@
         "南京":["南京大学","东南大学","南京航空航天大学"]
     };
 
-    addEvent($("#career"), "click", function(e) {
-        console.log(e.target);
-        if (e.target === $("input[value='student']")) {
-            alert("yes");
+    var selectcity = $("select[name='city']");
+    var universities = $("select[name='university']");
+    for (city in universityInfo) {
+        var option = new Option(city, city)
+        selectcity.add(option, undefined);
         }
-    });
+    selectcity.onchange = function () {
+        for(var i=0, len = universities.options.length;i < len; i++) {
+            universities.remove(0);
+        }
+        universityInfo[selectcity.options[selectcity.selectedIndex].value].forEach( function(university, index) {
+            var option = new Option(university, university)
+            universities.add(option, undefined);
+        });
+    }
+
+    var init = function (){
+     $("input[value='student']").checked = true;
+     selectcity.selectedIndex = 0;
+     universityInfo[selectcity.options[selectcity.selectedIndex].value].forEach( function(university, index) {
+            var option = new Option(university, university)
+            universities.add(option, undefined);
+        });
+    }
+    
+
+    addEvent($("#career"), "click", function(e) {
+        if (e.target === $("input[value='student']")) {
+              $("#university").style.display = "block";  
+              $("#company").style.display = "none";
+            } else if (e.target === $("input[value='none-student']")) {
+                $("#university").style.display = "none";  
+                $("#company").style.display = "block";
+            }
+        });
+
+    init();
 })();

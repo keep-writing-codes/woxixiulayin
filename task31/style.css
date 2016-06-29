@@ -36,5 +36,9 @@ input[type="text"] {
 }
 
 #description {
-    margin: 10px auto;
+    margin: 50px auto;
+}
+
+#company {
+    display: none;
 }
