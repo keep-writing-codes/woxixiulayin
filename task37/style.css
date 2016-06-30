@@ -3,23 +3,49 @@
     padding: 0;
 }
 
-html,body {
-    height: 100%;
-    background: #891;
-}
-
-#wrap h1 {
-    font-size: 40px;
-    margin: 100px auto;
+header {
+    background: #1B966D;
     text-align: center;
+    border: 1px solid #333;
 }
 
 #wrap>button {
     display: block;
-    margin: 30px auto;
+    margin: 50px auto;
     font-size:25px;
-    background:  #333;
-    border-radius: 8px;
+    background:  #19B1E0;
     padding: 5px;
-    color: #ccc;
+    color: white;
+    border: solid 1px black; 
+    width: 5em;
+    height: 1.8em;
 }
+
+#floatdiv  {
+    width: 300px;
+    height: 200px;
+    background: white;
+    border: 1px solid black;
+}
+
+#floatdiv h4{
+    color: white;
+    height: 35px;
+    line-height: 35px;
+    font-size: 20px;
+    text-align: center;
+    background: #2EAAE7;
+}
+
+#floatdiv button {
+    width: 4em;
+    height: 1.7em;
+    bord-radius: 4px;
+    background: #35EC80;
+    border: 1px solid #aaa;
+    color: black;
+    float: right;
+    margin-right: 10px; 
+    margin-top: 35%; 
+}
+
