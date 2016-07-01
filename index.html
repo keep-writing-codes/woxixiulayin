@@ -95,7 +95,7 @@
             <div class="col">
                 <h3>jQuery联系</h3>
                 <ul>
-                    <li><a href="/woxixiulayin/jQuerpractice/linkAndImg/index.html">链接和图片提示效果</a></li>
+                    <li><a href="/woxixiulayin/jQuerypractice/linkAndImg/index.html">链接和图片提示效果</a></li>
                 </ul>
             </div>
         </div>
@@ -108,7 +108,7 @@
                 Array.prototype.forEach.call(lis, function(ele, index) {
                     if(!ele.getAttribute("index")) return false;
                     var index = ele.getAttribute("index");
-                    ele.href = prePath + "task" + index;
+                    ele.href = prePath + "task" + index + "/index.html";
                     if(!ele.title) return false;
                     ele.innerHTML = "任务" + index + ":" +ele.title;
                 });
