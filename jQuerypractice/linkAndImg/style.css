@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    width: 75%;
+    margin: 10px auto;
+    padding: 20px;
+    background: #ccc;
+}
+
+.container {
+    margin:40px auto;
+    position: relative;
+    border: 1px solid black;
+    text-align: center;
+    background: #999;
+}
