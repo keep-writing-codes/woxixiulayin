@@ -25,5 +25,46 @@ $(function () {
                 "top": e.pageY + y + "px",
             })
     });
-})
+});
+
+$(function () {
+    var $hilghtlight_tips = $(".highlight_tip span");
+    var $btn_prev = $("button.prev");
+    var $btn_next = $("button.next");
+    var $img_ul = $("div.p_content > ul");
+    //总页数
+    var page_count = Math.ceil($("div.p_content > ul li").length / 3);
+    //当前页码
+    var current_page = 1;
+
+    $btn_next.click(function () {
+        if($img_ul.is(":animated")) return false;
+        //如果已到达最后页面
+        if (current_page == page_count) {
+            current_page = 1;
+        } else {
+            current_page += 1;
+        }
+        var left = -(current_page - 1) * 504;
+        $img_ul.animate({"left":left}, 300);
+        //改变指示灯状态
+        $hilghtlight_tips.removeClass("current").eq(current_page-1).addClass("current");
+
+    });
+
+    $btn_prev.click(function () {
+        if($img_ul.is(":animated")) return false;
+        //如果到达已最开始页面
+        if (current_page == 1) {
+            current_page = page_count;
+        } else {
+            current_page -= 1;
+        }
+        var left = -(current_page - 1) * 504;
+        $img_ul.animate({"left":left}, 300);
+        //改变指示灯状态
+        $hilghtlight_tips.removeClass("current").eq(current_page-1).addClass("current");
+
+    });
+});
 
