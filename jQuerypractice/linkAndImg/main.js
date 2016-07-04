@@ -35,7 +35,7 @@ $(function () {
     //总页数
     var page_count = Math.ceil($("div.p_content > ul li").length / 3);
     //当前页码
-    var current_page = 1;
+    var current_page = 1 ;
 
     $btn_next.click(function () {
         if($img_ul.is(":animated")) return false;
@@ -45,11 +45,7 @@ $(function () {
         } else {
             current_page += 1;
         }
-        var left = -(current_page - 1) * 504;
-        $img_ul.animate({"left":left}, 300);
-        //改变指示灯状态
-        $hilghtlight_tips.removeClass("current").eq(current_page-1).addClass("current");
-
+        movePicandTip(current_page);
     });
 
     $btn_prev.click(function () {
@@ -60,11 +56,25 @@ $(function () {
         } else {
             current_page -= 1;
         }
-        var left = -(current_page - 1) * 504;
-        $img_ul.animate({"left":left}, 300);
-        //改变指示灯状态
-        $hilghtlight_tips.removeClass("current").eq(current_page-1).addClass("current");
-
+        movePicandTip(current_page);
     });
+
+    $hilghtlight_tips.click(function () {
+        current_page = $hilghtlight_tips.index(this) + 1;
+        console.log(current_page);
+        movePicandTip(current_page);
+    });
+
+    var movePicandTip = (function () {
+        //闭包，存储page
+        var current_page = 1;
+        return function (page){
+            current_page = page;
+            var left = -(current_page - 1) * 504;
+            $img_ul.animate({"left":left}, 300);
+            //改变指示灯状态
+            $hilghtlight_tips.removeClass("current").eq(current_page-1).addClass("current"); 
+        }
+    })();
 });
 
