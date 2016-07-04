@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    list-style: none;
 }
 
 #wrap {
@@ -17,3 +18,70 @@
     text-align: center;
     background: #999;
 }
+
+.p_container {
+    margin:40px auto;
+    position: relative;
+    border: 1px solid black;
+    background: #D5F3CB; 
+    width: 504px;
+    overflow: hidden;;
+}
+
+.p_header {
+    height:40px;
+    margin: 5px;
+}
+
+.p_header h2 {
+    font-size: 20px;
+    display: inline;
+}
+
+.highlight_tip {
+    display: inline-block;
+}
+
+.highlight_tip span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background: #95BEE8;
+    margin: 0px 3px;
+    text-indent: -1000px;
+}
+
+span.current {
+    background: #0917E5;
+}
+
+.p_header button {
+    width: 50px;
+    height: 23px;
+    line-height: 23px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.p_content ul{
+    position: relative;
+    overflow: hidden;
+    width: 1680px;
+}
+
+.p_content li {
+    float: left;
+}
+
+/*.p_content li:after{
+    display: block;
+    clear: both;
+}*/
+.p_content ul li img {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    margin: 8px;
+}
+
