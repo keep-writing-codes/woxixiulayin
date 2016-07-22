@@ -38,5 +38,48 @@ function SetHome(obj,vrl){
 }
 
 function $(selector) {
-    return document.querySelectorAll(selector);
+    return document.querySelector(selector);
 }
+
+function carousel(dom) {
+     var lis = dom.getElementsByTagName("li"),
+         len=lis.length,
+     //标记当前显示索引
+         index = 0,
+         currentli = lis[index],
+         time = 4000;
+
+     dom.style.position = "relative";
+     for(var i=0; i<len; i++){
+        lis[i].style.position = "absolute";
+        lis[i].style.top = 0;
+        //初始化显示顺序,使用负zindex
+        lis[i].style.zIndex = String(-i);
+     }
+
+
+     //实际显示过程中使用0和1来表示zindex关系
+     function next() {
+        var currentli = lis[index],
+            nextindex = index + 1 >= len ? 0 : index + 1,
+            nextli = lis[nextindex];
+        currentli.style.zIndex = "0";
+        nextli.style.zIndex = "1";
+        nextli.style.animation = "in 1.5s";
+        setTimeout(function () {
+            nextli.style.animation = "";
+            currentli.style.zIndex = "-1";
+        }, 2000);
+        index = nextindex;
+     }
+
+     var timer = setInterval(next, time);
+
+     return {
+        ele: dom,
+        idnex: index,
+        next: next,
+        time:timer
+     }
+}
+

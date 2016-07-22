@@ -121,4 +121,51 @@ div.top_content a:visited
     padding:0 29px 0 4px;
 }
 
+.ad
+{   
+    height: 310px;
+    margin-top:5px;
+    overflow: hidden;
+    position: relative;
+}
+.ad span
+{
+    position: absolute;
+    font-size: 80px;
+    color: #aaa;
+    top: 80px;
+    z-index: 100;
+}
+.ad span:hover
+{
+    color: #fff;
+}
+.ad_pre
+{
+    left: 10px;
+}
+.ad_next
+{
+    left:940px;
+}
 
+@keyframes in
+{
+    from {top: 0;left: 1000px;}
+    to {top: 0;left:0;}
+}
+@keyframes out
+{
+    from {top: 0;left: 0;}
+    to {top: 0;left: -1000px;}
+}
+@keyframes invisible
+{
+    from {}
+    to {z-index: -1}
+}
+
+.right_in
+{
+    animation: in 1.5s;
+}
