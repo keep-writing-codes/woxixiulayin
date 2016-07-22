@@ -46,8 +46,8 @@ function carousel(dom) {
          len=lis.length,
      //标记当前显示索引
          index = 0,
-         currentli = lis[index],
-         time = 4000;
+         time = 5000,
+         movingli = lis[0];
 
      dom.style.position = "relative";
      for(var i=0; i<len; i++){
@@ -63,23 +63,64 @@ function carousel(dom) {
         var currentli = lis[index],
             nextindex = index + 1 >= len ? 0 : index + 1,
             nextli = lis[nextindex];
+        movingli = currentli;
         currentli.style.zIndex = "0";
         nextli.style.zIndex = "1";
-        nextli.style.animation = "in 1.5s";
+        nextli.style.animation = "right-in 1.3s";
         setTimeout(function () {
             nextli.style.animation = "";
             currentli.style.zIndex = "-1";
-        }, 2000);
+            nextli.style.left = "0";
+        }, 1600);
         index = nextindex;
+     }
+
+     function prev() {
+        var currentli = lis[index],
+            previndex = index - 1 < 0 ? len-1 : index - 1,
+            prevli = lis[previndex];
+        movingli = currentli;
+        currentli.style.zIndex = "1";
+        //动画结束后会保持原来的状态，即动画前的位置
+        currentli.style.left = "-1000px";
+        currentli.style.animation = "left-out 1.3s";
+        prevli.style.zIndex = "0";
+        setTimeout(function () {
+            currentli.style.animation = "";
+            currentli.style.zIndex = "-1";
+            currentli.style.left = "0";
+        }, 1600);
+        index = previndex;
      }
 
      var timer = setInterval(next, time);
 
-     return {
+     dom.onmouseover = function () {
+        enableTimer(false);
+     };
+     dom.onmouseout = function () {
+        enableTimer(true);
+     }
+
+     function enableTimer(enable) {
+        if (enable == true && timer == null) {
+            timer = setInterval(next, time);
+        } else if ( enable == false && timer !== null) {
+            clearInterval(timer);
+            timer = null;
+        }
+     }
+
+
+    return {
         ele: dom,
-        idnex: index,
+        index: index,
         next: next,
-        time:timer
+        enableTimer: enableTimer,
+        lis: lis,
+        prev: prev,
+        next: next,
+        movingli: movingli
      }
 }
 

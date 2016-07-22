@@ -128,6 +128,11 @@ div.top_content a:visited
     overflow: hidden;
     position: relative;
 }
+.ad ul
+{
+   height: 310px;
+   border: solid 1px black;
+}
 .ad span
 {
     position: absolute;
@@ -140,32 +145,23 @@ div.top_content a:visited
 {
     color: #fff;
 }
-.ad_pre
+#ad_pre
 {
     left: 10px;
 }
-.ad_next
+#ad_next
 {
     left:940px;
 }
 
-@keyframes in
+@keyframes right-in
 {
     from {top: 0;left: 1000px;}
     to {top: 0;left:0;}
 }
-@keyframes out
+@keyframes left-out
 {
     from {top: 0;left: 0;}
     to {top: 0;left: -1000px;}
 }
-@keyframes invisible
-{
-    from {}
-    to {z-index: -1}
-}
 
-.right_in
-{
-    animation: in 1.5s;
-}
