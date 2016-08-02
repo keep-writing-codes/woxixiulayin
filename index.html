@@ -9,6 +9,9 @@
         h1 {
         text-align: center;
         }
+        h1 a{
+            text-decoration: none
+        }
         ul {
             padding: 0px;
         }
@@ -20,7 +23,7 @@
         li a {
         font-size: 18px;
         display: block;
-        background: #eeeeee;
+        background: #eee;
         height: 50px;
         width: 350px;
         line-height: 50px;
@@ -30,11 +33,14 @@
         text-decoration: none;
         
         }
-        a:hover {
-        background: #ccc;
-        color: #fff;
+        li a:hover,li a:active {
+            background: #ccc;
+            color: #fff;
         }
-
+        li a:link, li a:visited {
+            color: #764567;
+            text-decoration: none;
+        }
         .container {
             width: 800px;
             margin: 0 auto;
@@ -47,17 +53,24 @@
             width: 400px;
             float: left;
         }
-        a:link, a:visited {
-            color: #764567;
+        .link-center{
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 20px;
             text-decoration: none;
         }
+
         </style>
     </head>
     <body>
-        <h1>百度前端技术学院练习集: <a href="http://ife.baidu.com/task/all" target="_blank">任务地址</a></h1>
+        <h1>前端练习合集</h1>
+        <a class="link-center" href="https://github.com/keep-writing-codes/woxixiulayin" target="_blank">github传送门</a>
         <div class="container">
             <div class="col">
-                <h3>百度ife前端学院练习</h3>
+                <div>
+                <h3>百度ife前端学院题目: <a href="http://ife.baidu.com/task/all"  target="_blank">任务地址</a></h3>
+                </div>
                 <ul id="ife-ul">
                     <!-- <li><a href="/woxixiulayin/task20">js中定义href的地址</a></li> -->
                     <li><a href="" title="三栏式布局" index="3"></a></li>
@@ -95,7 +108,7 @@
                 </ul>
             </div>
             <div class="col">
-                <h3>jQueryl练习</h3>
+                <h3>jQuery练习</h3>
                 <ul>
                     <li><a href="/woxixiulayin/jQuerypractice/linkAndImg/index.html">链接和图片展示效果</a></li>
                 </ul>
